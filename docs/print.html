@@ -1,0 +1,1694 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Cloud Functors using tc</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="assets/custom.css">
+        <link rel="stylesheet" href="assets/mdbook-admonish.css">
+        <link rel="stylesheet" href="./mdbook-admonish.css">
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/differ.html">Differ</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li><li class="chapter-item "><a href="reference/patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/etl.html">ETL</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Cloud Functors using tc</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/informed-labs/tc" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p><code>tc</code> is a graph-based, stateless, serverless application &amp; infrastructure composer.</p>
+<p><code>tc</code> defines, creates and manages serveless entities such as functions, mutations, events, routes, states, queues and channels. tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a <code>Cloud Functor</code>.</p>
+<p>The word functor was popularized by Ocaml's parameterized modules. These modules, called functors, are first class. Cloud functors are similar in that they are treated as first class and are composable much like Ocaml's elegant modules.</p>
+<h3 id="why-tc-"><a class="header" href="#why-tc-">Why tc ?</a></h3>
+<p>tc is a tool that empowers developers, architects and release engineers to build a serverless system that is simple to define and easy to evolve.</p>
+<ol>
+<li>Developers should not be drowning in permissions and provider-specific (AWS, GCP etc) services. Instead, tc provides a framework for developers to focus on domain-specific functions and abstract entities.</li>
+<li>Architects should not be defining systems that are hard to implement or disconnected from the system definition. Instead, tc's topology is the system definition. The definition is representative of the entire system to a large extent with most of it inferred by tc.</li>
+<li>Release engineers should not be managing manifests manually. Instead, tc provides a mechanism to deploy collection of namespaced topologies as an atomic unit. Canarys, A/B testing and rollbacks are much simpler to configure using tc</li>
+</ol>
+<h2 id="key-features-of-functors-using-tc"><a class="header" href="#key-features-of-functors-using-tc">Key features of functors using tc</a></h2>
+<h3 id="1-composable-entities"><a class="header" href="#1-composable-entities">1. Composable Entities</a></h3>
+<p>At it's core, <code>tc</code> provides 7 entities (functions, events, mutations, queues, routes, states and channels) that are agnostic to any cloud provider. These entities are core primitives to define the topology of any serverless system. For example, consider the following topology definition:</p>
+<pre><code class="language-yaml">
+name: example
+
+routes:
+  myposts:
+    path: /api/posts
+    method: GET
+    function: bar
+    event: MyEvent
+
+events:
+  consumes:
+    MyEvent:
+      function: foo
+      channel: room1
+
+channels:
+  room1:
+    handler: default
+
+functions:
+  remote:
+    foo: github.com/bar/bar
+  local:
+    bar: ./bar
+
+</code></pre>
+<p>Now, <code>/api/posts</code> route calls function <code>bar</code> and generates an event <code>MyEvent</code> which are handled by functions that are locally defined (subdirectories) or remote (git repos). In this example, the event finally triggers a channel notification with the event's payload. We just defined the flow without specifying anything about infrastructure, permissions or the provider. This definition is good enough to render it in the cloud as services, as architecture diagrams and release manifests.</p>
+<p><code>tc compile</code> maps these entities to the provider's serverless constructs. If the provider is AWS (default), tc maps <code>routes</code> to API Gateway, events to <code>Eventbridge</code>, <code>functions</code> to either <code>Lambda</code> or <code>ECS Fargate</code>, <code>channels</code> to <code>Appsync Events</code>, <code>mutations</code> to <code>Appsync Graphql</code> and <code>queues</code> to <code>SQS</code></p>
+<h3 id="2-namespacing"><a class="header" href="#2-namespacing">2. Namespacing</a></h3>
+<p>If we run <code>tc compile</code> in the directory containing the above topology (topology.yml), we see that all the entities are namespaced. This implies there is room for several <code>foo</code>,<code>bar</code> or <code>MyEvent</code> entities in another topology. This also encourages developers to name the entities succinctly similar to function names in a module. With namespacing comes the benefit of having a single version of the namespace and thereby avoiding the need to manage the versions of sub-components.</p>
+<h3 id="3-sandboxing"><a class="header" href="#3-sandboxing">3. Sandboxing</a></h3>
+<p>You can create a sandbox of this topology in the cloud (AWS is the default provider) using</p>
+<pre><code>tc create -s &lt;sandbox-name&gt; -e &lt;aws-profile&gt;
+</code></pre>
+<p>and can invoke (<code>tc invoke -s sandbox -e env -p payload.json</code>) this topology. This sandbox is also versioned and we can update specific entities or components in it. Sandboxing is fundamental to canary-based routing and deploys. <code>tc create</code> also knows how to build the functions, implicitly, for various language runtimes.</p>
+<pre><code>tc update -s sandbox -e env -c events|routes|mutations|functions|flow
+</code></pre>
+<h3 id="4-infrastructure-agnostic-topology"><a class="header" href="#4-infrastructure-agnostic-topology">4. Infrastructure-agnostic Topology</a></h3>
+<p><code>tc compile</code> generates a lot of the infrastructure (permissions, default configurations etc) boilerplate needed for the configured provider. Think of infrastructure as <em>Types</em> in a dynamic programming language. We can override the defaults or inferred configurations separate from the topology definition. For example we can have a repository layout as follows:</p>
+<pre><code>services/&lt;topology&gt;/&lt;function&gt;
+infrastructure/&lt;topology&gt;/vars/&lt;function&gt;.json
+infrastructure/&lt;topology&gt;/roles/&lt;function&gt;.json
+</code></pre>
+<p>This encourages developers to not leak infrastructure into domain-specific code or topology definition and vice versa. A topology definition could be rendered in with different infrastructure providers.</p>
+<h3 id="5-recursive-topology"><a class="header" href="#5-recursive-topology">5. Recursive Topology</a></h3>
+<p>Functors can be created at any level in the code repository's heirarchy. They are like fractals where we can zoom in or out. For example, consider the following retail order management topology:</p>
+<pre><code>order/
+|-- payment
+|   |-- other-payment-processor
+|   |   `-- handler.py
+|   |-- stripe
+|   |   |-- handler
+|   |   `-- topology.yml
+|   `-- topology.yml
+`-- topology.yml
+</code></pre>
+<p>There are two sub-topologies in the root topology. <code>order</code>, <code>payment</code> and <code>stripe</code> are valid topologies. <code>tc</code> can create and manage sandboxes at any level preserving the integrity of the overall graph.</p>
+<pre><code>cd order
+tc create -s &lt;sandbox&gt; -e &lt;env&gt; --recursive
+</code></pre>
+<p>This feature helps evolve the system and test individual nodes in isolation.</p>
+<h3 id="6-isomorphic-topology"><a class="header" href="#6-isomorphic-topology">6. Isomorphic Topology</a></h3>
+<p>The output of <code>tc compile</code> is a self-contained, templated topology (or manifest) that can be rendered in any sandbox. The template variables are specific to the provider, sandbox and configuration. When we create (<code>tc create</code>) the sandbox with this templated topology, it implicitly resolves it by querying the provider. We can write custom resolvers to resolve these template variables by querying the configured provider (AWS, GCP etc).</p>
+<pre><code>tc compile | tc resolve -s sandbox -e env | tc create
+</code></pre>
+<p>We can replace the resolver with <code>sed</code> or a template renderer with values from ENV variables, SSM parameter store, Vault etc. For example:</p>
+<pre><code>tc compile | sed -i 's/{{API_GATEWAY}}/my-gateway/g' |tc create
+</code></pre>
+<p>The resolver can also be written in any language that is easy to use and query the provider, efficiently. The output of the compiler, the resolver and the sandbox's metadata as seen above are <em>isomorphic</em>. They are structurally the same and can be diffed like git-diff. Diffable infrastructure without having external state is a simple yet powerful feature.</p>
+<p>This is all too abstract you say ? It is! Let's <a href="/tc/getting-started">Get Started</a></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
+<p>Download the executable for your OS</p>
+<div class="table-wrapper"><table><thead><tr><th>GNU/Linux x86</th><th>MacOSX M1/M2</th></tr></thead><tbody>
+<tr><td><a href="https://github.com/informed-labs/tc/releases/download/0.8.31/tc-x86_64-linux">0.8.31</a></td><td><a href="https://github.com/informed-labs/tc/releases/download/0.8.31/tc-aarch64-macos">0.8.31</a></td></tr>
+</tbody></table>
+</div><div id="admonition-for-mac-users" class="admonition admonish-warning" role="note" aria-labelledby="admonition-for-mac-users-title">
+<div class="admonition-title">
+<div id="admonition-for-mac-users-title">
+<p>For Mac users</p>
+</div>
+<a class="admonition-anchor-link" href="installation.html#admonition-for-mac-users"></a>
+</div>
+<div>
+<p>Allow tc in Privacy &amp; Security</p>
+<p>The first time you run the downloaded executable you will get a popup that says it may be &quot;malicious software&quot;</p>
+<p>Do the following:</p>
+<ul>
+<li>Go to <code>Privacy &amp; Security</code> panel to the <code>Security/Settings</code> section</li>
+<li>Should have <code>App Store and identified developers</code> selected</li>
+<li>Where it says <code>tc was blocked from use becasue it is not from an identified developer</code>
+<ul>
+<li>Click on <code>Allow Anyway</code></li>
+</ul>
+</li>
+</ul>
+<p>mv ~/Downloads/tc /usr/local/bin/tc</p>
+<p>chmod +x /usr/local/bin/tc</p>
+</div>
+</div>
+<h3 id="building-your-own"><a class="header" href="#building-your-own">Building your own</a></h3>
+<p><code>tc</code> is written in <a href="https://www.youtube.com/watch?v=ul9vyWuT8SU">Rust</a>.</p>
+<p>If you prefer to build <code>tc</code> yourself, install rustc/cargo.</p>
+<p>Install Cargo/Rust https://www.rust-lang.org/tools/install</p>
+<pre><code class="language-sh">cd tc
+cargo build --release
+sudo mv target/release/tc /usr/local/bin/tc
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
+<ul>
+<li><a href="getting-started.html#a-basic-function">A basic function</a></li>
+<li><a href="getting-started.html#namespacing-your-functions">Namespacing your functions</a></li>
+<li><a href="getting-started.html#create-your-sandbox">Create your sandbox</a></li>
+<li><a href="getting-started.html#configuring-infrastructure">Configuring infrastructure</a></li>
+</ul>
+<h2 id="a-basic-function"><a class="header" href="#a-basic-function">A basic function</a></h2>
+<h2 id="namespacing-your-functions"><a class="header" href="#namespacing-your-functions">Namespacing your functions</a></h2>
+<h2 id="create-your-sandbox"><a class="header" href="#create-your-sandbox">Create your sandbox</a></h2>
+<h2 id="configuring-infrastructure"><a class="header" href="#configuring-infrastructure">Configuring infrastructure</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="compiler"><a class="header" href="#compiler">Compiler</a></h1>
+<p><code>tc compile</code> does the following:</p>
+<ol>
+<li>Discovers functions recursively in the current directory.</li>
+<li>Generates build instructions for the discovered functions.</li>
+<li>Interns remote, shared and local functions</li>
+<li>Reads the topology.yml file and validates it using input specification</li>
+<li>Generates the target representations for these entities specific to a provider</li>
+<li>Generates graphql output for mutations definition in topology.yml</li>
+<li>Transpiles flow definitions to stepfn etc.</li>
+<li>Generates checksum of all function directories</li>
+<li>Detects circular flows</li>
+</ol>
+<p>To generate the topology in curent directory</p>
+<pre><code>tc compile [--recursive]
+
+</code></pre>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="modules/compiler.html#admonition-info"></a>
+</div>
+<div>
+<p>We can also set TC_DIR environment variable to not compile in the current directory</p>
+</div>
+</div>
+<p>To generate tree of all functions</p>
+<pre><code>cd examples/apps/retail
+tc compile -c functions -f tree
+
+retail
+├╌╌ payment
+┆   ├╌╌ payment_stripe_{{sandbox}}
+┆   ┆   ├╌╌ python3.10
+┆   ┆   ├╌╌ provided
+┆   ┆   └╌╌
+┆   └╌╌ payment_klarna_{{sandbox}}
+┆       ├╌╌ python3.10
+┆       ├╌╌ provided
+┆       └╌╌
+├╌╌ pricing
+┆   └╌╌ pricing_resolver_{{sandbox}}
+┆       ├╌╌ python3.10
+┆       ├╌╌ provided
+┆       └╌╌
+
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="builder"><a class="header" href="#builder">Builder</a></h1>
+<ul>
+<li><a href="modules/builder.html#inline">Inline</a></li>
+<li><a href="modules/builder.html#layer">Layer</a></li>
+<li><a href="modules/builder.html#image">Image</a>
+<ul>
+<li><a href="modules/builder.html#external-parent-image">External parent image</a></li>
+</ul>
+</li>
+<li><a href="modules/builder.html#slab">Slab</a></li>
+<li><a href="modules/builder.html#library">Library</a></li>
+<li><a href="modules/builder.html#extension">Extension</a></li>
+<li><a href="modules/builder.html#recursive-builds">Recursive Builds</a></li>
+</ul>
+<p><code>tc</code> has a sophisticated <code>builder</code> that can build different kinds of artifacts with various language runtimes (Clojure, Janet, Rust, Ruby, Python, Node)</p>
+<p>In the simplest case, when there are no dependencies in a function, we can specify how the code is packed (zipped) as follows in <code>function.json</code>:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;simple-function&quot;,
+  &quot;runtime&quot;: {
+    &quot;lang&quot;: &quot;python3.10&quot;,
+    &quot;package_type&quot;: &quot;zip&quot;,
+    &quot;handler&quot;: &quot;handler.handler&quot;,
+  },
+  &quot;build&quot;: {
+    &quot;command&quot;: &quot;zip -9 lambda.zip *.py&quot;,
+    &quot;kind&quot;: &quot;Code&quot;
+  }
+}
+
+</code></pre>
+<p><a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-basic/function.json">Example</a></p>
+<p>and then <code>tc create -s &lt;sandbox&gt; -e &lt;env&gt;</code> builds this function using the given <code>command</code> and creates it in the given sandbox and env.</p>
+<h2 id="inline"><a class="header" href="#inline">Inline</a></h2>
+<p>The above is a pretty trivial example and it gets complicated as we start adding more dependencies. If the dependencies are reasonably small (&lt; 50MB), we can inline those in the code's artifact (lambda.zip).</p>
+<pre><code>{
+  &quot;name&quot;: &quot;python-inline-example&quot;,
+  &quot;runtime&quot;: {
+    &quot;lang&quot;: &quot;python3.12&quot;,
+    &quot;package_type&quot;: &quot;zip&quot;,
+    &quot;handler&quot;: &quot;handler.handler&quot;,
+    &quot;layers&quot;: []
+  },
+  &quot;build&quot;: {
+    &quot;kind&quot;: &quot;Inline&quot;,
+    &quot;command&quot;: &quot;zip -9 -q lambda.zip *.py&quot;
+  },
+  &quot;test&quot;: {
+    &quot;fixture&quot;: &quot;python run-fixture.py&quot;,
+    &quot;command&quot;: &quot;poetry test&quot;
+  }
+
+}
+</code></pre>
+<p><a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-inline/function.json">Example</a></p>
+<p><code>tc create -s &lt;sandbox&gt; -e &lt;env&gt;</code> will implicitly build the artifact with <em>inlined</em> deps and create the function in the given sandbox and env. The dependencies are typically in <code>lib/</code> including shared objects (.so files).</p>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="modules/builder.html#admonition-info"></a>
+</div>
+<div>
+<p>tc builds the <em>inlined</em> zip using docker and the builder image that is compatible with the lambda runtime image.</p>
+</div>
+</div>
+<h2 id="layer"><a class="header" href="#layer">Layer</a></h2>
+<p>If <code>inline</code> build is heavy, we can try to layer the dependencies:</p>
+<pre><code>{
+  &quot;name&quot;: &quot;ppd&quot;,
+  &quot;description&quot;: &quot;my python layer&quot;,
+  &quot;runtime&quot;: {
+    &quot;lang&quot;: &quot;python3.10&quot;,
+    &quot;package_type&quot;: &quot;zip&quot;,
+    &quot;handler&quot;: &quot;handler.handler&quot;,
+    &quot;layers&quot;: [&quot;ppd-layer&quot;]
+  },
+  &quot;build&quot;: {
+    &quot;pre&quot;: [
+      &quot;yum install -y git&quot;,
+      &quot;yum install -y gcc gcc-c++&quot;
+    ],
+    &quot;kind&quot;: &quot;Layer&quot;,
+
+  }
+}
+
+</code></pre>
+<p>Note that we have specified the list of layers the function uses. The layer itself can be built independent of the function, unlike <code>Inline</code> build kind.</p>
+<pre><code>tc build --kind layer
+tc publish --name ppd-layer
+</code></pre>
+<p>We can then create or update the function with this layer. At times, we may want to update just the layers in an existing sandboxed function</p>
+<pre><code>tc update -s &lt;sandbox&gt; -e &lt;env&gt; -c layers
+
+</code></pre>
+<div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
+<div class="admonition-title">
+<div id="admonition-info-1-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="modules/builder.html#admonition-info-1"></a>
+</div>
+<div>
+<p>AWS has a limit on the number of layers and size of each zipped layer. tc automatically splits the layer into chunks if it exceeds the size limit (and still within the upper total limit of 256MB)</p>
+</div>
+</div>
+<h2 id="image"><a class="header" href="#image">Image</a></h2>
+<p>While <code>Layer</code> and <code>Inline</code> build kind should suffice to pack most dependencies, there are cases where 250MB is not good enough. Container <code>Image</code> kind is a good option. However, building the deps and updating just the code is challenging using pure docker as you need to know the sequence to build. <code>tc</code> provides a mechanism to build a <code>tree</code> of images. For example:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;python-image-tree-example&quot;,
+  &quot;runtime&quot;: {
+    &quot;lang&quot;: &quot;python3.10&quot;,
+    &quot;package_type&quot;: &quot;image&quot;,
+    &quot;handler&quot;: &quot;handler.handler&quot;
+  },
+
+  &quot;build&quot;: {
+    &quot;kind&quot;: &quot;Image&quot;,
+    &quot;images&quot;: {
+      &quot;base&quot;: {
+		  &quot;version&quot;: &quot;0.1.1&quot;,
+		  &quot;commands&quot;: [
+			  &quot;yum install -y git wget unzip&quot;,
+			  &quot;yum install -y gcc gcc-c++ libXext libSM libXrender&quot;
+		  ]
+      },
+      &quot;code&quot;: {
+		  &quot;parent&quot;: &quot;base&quot;,
+		  &quot;commands&quot;: []
+      }
+    }
+  }
+}
+</code></pre>
+<p><a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-image/req/function.json#L1">Example</a></p>
+<p>In the above example, we define the <code>base</code> image with dependencies and <code>code</code> image that packs just the code. Note that <code>code</code>  references <code>base</code> as the <em>parent</em>. Effectively, we can build a tree of images (say base dependencies, models, assets and code). These <code>images</code> can be built at any point in the lifecycle of the function. To build the <code>base</code> image do:</p>
+<pre><code class="language-sh">tc build --image base --publish
+</code></pre>
+<p>When <code>--publish</code> is specified, it publishes to the configured ECR repo [See Configuration]. Alternatively, <code>TC_ECR_REPO</code> env variable can be specified to override the config. The value of variable is the ECR repo URI</p>
+<p>With python functions, the image can be built either by having a 'requirements.txt' file in the function directory or a pyproject.toml. <code>tc build</code> works with requirements.txt and poetry. See <a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-image/pyp/function.json#L6">poetry example</a></p>
+<p>When all &quot;parent&quot; images have been built, <code>tc create</code> will create the <code>code</code> image just-in-time. The tag is the SHA1 checksum of the function directory. The code tag is typically of the format &quot;{{repo}}/code:req-0d4043e5ae0ebc83f486ff26e8e30f3bd404b707&quot;&quot;</p>
+<p>We can also optionally build the <code>code</code> image.</p>
+<pre><code>tc build --image code --publish
+</code></pre>
+<p>Note that the child image uses the parent's version of the image as specified in the parent's block</p>
+<div id="admonition-info-2" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-2-title">
+<div class="admonition-title">
+<div id="admonition-info-2-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="modules/builder.html#admonition-info-2"></a>
+</div>
+<div>
+<p>It is recommended that the ECR repo has a <namespace>/<label> format. The label can be the image labels specified in function.json:build (base, code etc)</p>
+</div>
+</div>
+<h3 id="external-parent-image"><a class="header" href="#external-parent-image">External parent image</a></h3>
+<p>At times, we may need to use a parent image that is shared and defined in another function or build. The following function definition is an example that shows how to specify a parent URI in code image-spec.</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;req-external-example&quot;,
+  &quot;description&quot;: &quot;With external parent&quot;,
+  &quot;runtime&quot;: {
+    &quot;lang&quot;: &quot;python3.10&quot;,
+    &quot;package_type&quot;: &quot;image&quot;,
+    &quot;handler&quot;: &quot;handler.handler&quot;
+  },
+
+  &quot;build&quot;: {
+    &quot;kind&quot;: &quot;Image&quot;,
+    &quot;images&quot;: {
+      &quot;code&quot;: {
+	&quot;parent&quot;: &quot;{{repo}}/base:req-0.1.1&quot;,
+	&quot;commands&quot;: []
+      }
+    }
+  }
+}
+</code></pre>
+<p><a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-image/req-external/function.json#L20">Example</a></p>
+<p><code>parent</code> in the <code>code</code> image-spec is an URI. This is also a way to pin the parent image.</p>
+<h2 id="slab"><a class="header" href="#slab">Slab</a></h2>
+<p><code>slab</code> is an abstraction for building depedencies, assets and serving it via a network filesystem (EFS). An example function with slab looks like:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;python-example-snap&quot;,
+  &quot;description&quot;: &quot;example function&quot;,
+  &quot;runtime&quot;: {
+    &quot;lang&quot;: &quot;python3.12&quot;,
+    &quot;package_type&quot;: &quot;zip&quot;,
+    &quot;mount_fs&quot;: true,
+    &quot;handler&quot;: &quot;handler.handler&quot;,
+    &quot;layers&quot;: []
+  },
+  &quot;build&quot;: {
+    &quot;kind&quot;: &quot;slab&quot;
+  }
+  &quot;test&quot;: {
+    &quot;fixture&quot;: &quot;python run-fixture.py&quot;,
+    &quot;command&quot;: &quot;poetry test&quot;
+  }
+
+}
+</code></pre>
+<pre><code>tc build --kind slab --publish
+
+</code></pre>
+<p>This publishes the slab  to EFS as configured (See Configuration)</p>
+<h2 id="library"><a class="header" href="#library">Library</a></h2>
+<p>A library is a kind of build that recursively packs a collection of directories to serve as a single library in the target runtime.</p>
+<p>For example, let's say we have the following directory structure</p>
+<pre><code>lib/
+|-- bar
+|   `-- lib.rb
+|-- baz
+|   `-- lib.rb
+`-- foo
+    `-- lib.rb
+
+</code></pre>
+<p>We can pack this as a library and publish it as a layer or a node in the image-tree. By default, tc publishes it as a layer.</p>
+<pre><code>cd lib
+tc build --kind library --name mylib --publish --lang ruby
+</code></pre>
+<p>Why can't this just be of kind <code>layer</code> ? Layers typically have the dependencies resolved. Library is just standalone.</p>
+<h2 id="extension"><a class="header" href="#extension">Extension</a></h2>
+<p>Lambda extensions are like sidecars that intercept the input/output payload events and can do arbitrary processing on them.</p>
+<pre><code>tc build --kind extension
+</code></pre>
+<h2 id="recursive-builds"><a class="header" href="#recursive-builds">Recursive Builds</a></h2>
+<p>To traverse through the topology and build the depedencies or code in parallel, do the following:</p>
+<pre><code>tc build [-kind code|image|layer] --recursive --publish
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="resolver"><a class="header" href="#resolver">Resolver</a></h1>
+<p>WIP</p>
+<ol>
+<li>Resolves the environment variables from stores ssm:/, s3:/</li>
+<li>Renders templates</li>
+<li>Resolves versions</li>
+</ol>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="deployer"><a class="header" href="#deployer">Deployer</a></h1>
+<h3 id="creating-a-sandbox"><a class="header" href="#creating-a-sandbox">Creating a Sandbox</a></h3>
+<pre><code class="language-sh">cd services/extraction
+tc create [--sandbox SANDBOX] [-e ENV]
+</code></pre>
+<h3 id="incremental-updates"><a class="header" href="#incremental-updates">Incremental updates</a></h3>
+<p>While developing, we often need to incrementally deploy certain components without recreating the entire topology. <code>tc</code> provides an update command that updates given component(s).</p>
+<p>To update the code for a function (say page-mapper) in the current directory</p>
+<pre><code class="language-sh">tc update --sandbox test -e dev-af -c page-mapper
+</code></pre>
+<p>To update the IAM roles and policies</p>
+<pre><code class="language-sh">tc update --sandbox test -e dev-af -c roles
+</code></pre>
+<p>To update the eventbridge event rules:</p>
+<pre><code class="language-sh">tc update --sandbox test -e dev-af -c events
+</code></pre>
+<p>To update the environment variables or runtime parameters. Usually these are defined in infrastucture/tc/<topology>/vars dir</p>
+<pre><code class="language-sh">tc update --sandbox test -e dev-af -c vars
+</code></pre>
+<p>To build and update layers</p>
+<pre><code class="language-sh">tc update --sandbox test -e dev-af -c layers
+</code></pre>
+<p>To update the Statemachine flow</p>
+<pre><code class="language-sh">tc update --sandbox test -e dev-af -c flow
+
+</code></pre>
+<p>To update tags across stepfns, lambdas, roles, policies, eventbridge rules etc</p>
+<pre><code class="language-sh">tc update --sandbox test -e dev-af -c tags
+</code></pre>
+<p>To update logging and tracing config</p>
+<pre><code class="language-sh">tc update --sandbox test -e dev-af -c logs
+</code></pre>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="modules/deployer.html#admonition-info"></a>
+</div>
+<div>
+<p>Note that update works on unfrozen sandboxes. Most stable sandboxes are immutable and thus update is disabled for those. To mutate, unfreeze it.</p>
+</div>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="invoker"><a class="header" href="#invoker">Invoker</a></h1>
+<ul>
+<li><a href="modules/invoker.html#specifying-payload">Specifying Payload</a>
+<ul>
+<li><a href="modules/invoker.html#invoking-events-and-lambdas">Invoking Events and Lambdas</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="specifying-payload"><a class="header" href="#specifying-payload">Specifying Payload</a></h2>
+<p>To simply invoke a functor</p>
+<pre><code>tc invoke --sandbox main --env dev
+</code></pre>
+<p>By default, tc picks up a <code>payload.json</code> file in the current directory. You could optionally specify a payload file</p>
+<pre><code>tc invoke --sandbox main --env dev --payload payload.json
+</code></pre>
+<p>or via stdin</p>
+<pre><code>cat payload.json | tc invoke --sandbox main --env dev
+</code></pre>
+<p>or as a param</p>
+<pre><code>tc invoke --sandbox main --env dev --payload '{&quot;data&quot;: &quot;foo&quot;}'
+</code></pre>
+<h3 id="invoking-events-and-lambdas"><a class="header" href="#invoking-events-and-lambdas">Invoking Events and Lambdas</a></h3>
+<p>By default, <code>tc</code> invokes a stepfn. We can also invoke a lambda or trigger an Eventbridge event</p>
+<pre><code>tc invoke --kind lambda -e dev --payload '{&quot;data&quot;...}'
+tc invoke --kind event -e dev --payload '{&quot;data&quot;...}'
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="releaser"><a class="header" href="#releaser">Releaser</a></h1>
+<ul>
+<li><a href="modules/releaser.html#versioning">Versioning</a></li>
+<li><a href="modules/releaser.html#changelog">Changelog</a></li>
+</ul>
+<p>WIP</p>
+<h2 id="versioning"><a class="header" href="#versioning">Versioning</a></h2>
+<h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="emulator"><a class="header" href="#emulator">Emulator</a></h1>
+<ul>
+<li><a href="modules/emulator.html#lambdas">Lambdas</a></li>
+<li><a href="modules/emulator.html#stepfunctions">Stepfunctions</a></li>
+</ul>
+<h3 id="lambdas"><a class="header" href="#lambdas">Lambdas</a></h3>
+<p>To emulate the Lambda Runtime environment. The following command spins up a docker container with the defined layers in function.json, sets up the paths, environment variables, AWS access, local code and runtime parameters (mem, handlers etc)</p>
+<pre><code class="language-sh">cd &lt;function-dir&gt;
+tc emulate
+</code></pre>
+<p>To run in foreground</p>
+<pre><code>tc emulate
+</code></pre>
+<p>You can now invoke a payload locally with this emulator</p>
+<pre><code>tc invoke --local [--payload &lt;payload.json | json-str&gt;]
+</code></pre>
+<h3 id="stepfunctions"><a class="header" href="#stepfunctions">Stepfunctions</a></h3>
+<p><code>tc</code> also provides a stepfunction emulator. In your top-level topology directory, do:</p>
+<pre><code>tc emulate
+</code></pre>
+<p>This spins up a container and runs the emulator on http://localhost:8083</p>
+<p>Details to follow on creating and executing [wip]</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="differ"><a class="header" href="#differ">Differ</a></h1>
+<p>WIP</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="inspector"><a class="header" href="#inspector">Inspector</a></h1>
+<p><code>tc</code> provides a lightweight http-based app to inspect the topologies. This is still experimental.</p>
+<p>To run the inspector, run <code>tc inspect --trace</code> in the root topology directory. For example:</p>
+<pre><code>cd examples/patterns
+tc inspect --trace
+</code></pre>
+<p><img src="modules//images/inspector.gif" alt="Inspector" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
+<p>The topology definition is primarily to define flows.</p>
+<p><code>topology.yml</code></p>
+<pre><code class="language-yaml">name: &lt;topology-name&gt;
+infra: path/to/infra  [optional]
+nodes: [optional]
+	ignore:
+		- &lt;unrelated-node&gt;
+functions: [optional]
+	shared:
+		- ../shared/function1
+	    - ../shared/function2
+events: [optional]
+  consumes:
+    &lt;EventName&gt;:
+      producer: &lt;producerName&gt;
+    &lt;EventName&gt;:
+      producer: &lt;producerName&gt;
+  produces:
+    &lt;EventName&gt;:
+      consumer: consumerName
+routes: [optional]
+  &lt;name&gt;:
+	kind: rest|http|websocket
+    gateway: &lt;API-NAME&gt;
+    authorizer: &lt;AUTHORIZER-NAME&gt;
+	proxy: none|default|&lt;function-name&gt;
+    timeout: INT
+    async: BOOL
+    method: POST|GET|DELETE
+    path: STRING
+
+flow: ./states.json | &lt;definition&gt;  [optional]
+</code></pre>
+<p><code>infra</code> is either an absolute or relative path to the infrastructure configs (vars, roles etc). This field is optional and tc tries best to discover the infrastructure path in the current git repo.</p>
+<p><code>events</code>, <code>routes</code> and <code>flow</code> are optional.</p>
+<p><code>flow</code> can contain a path to a step-function definition or an inline definition. tc automatically namespaces any inlined or external flow definition.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="function-specification"><a class="header" href="#function-specification">Function Specification</a></h2>
+<p>function.json file in the function directory is optional. <code>tc</code> infers the language and build instructions from the function code. However, for custom options, add a function.json that looks like the following</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;string&quot;,
+  // Optional
+  &quot;dir&quot;: &quot;string&quot;,
+  // Optional
+  &quot;description&quot;: &quot;string&quot;,
+  // Optional
+  &quot;namespace&quot;: &quot;string&quot;,
+  // Optional
+  &quot;fqn&quot;: &quot;string&quot;,
+  // Optional
+  &quot;layer_name&quot;: &quot;string&quot;,
+  // Optional
+  &quot;version&quot;: &quot;string&quot;,
+  // Optional
+  &quot;revision&quot;: &quot;string&quot;,
+  // Optional
+  &quot;runtime&quot;: {
+    &quot;lang&quot;: &quot;Python39&quot; | &quot;Python310&quot; | &quot;Python311&quot; | &quot;Python312&quot; | &quot;Python313&quot; | &quot;Ruby32&quot; | &quot;Java21&quot; | &quot;Rust&quot; | &quot;Node22&quot; | &quot;Node20&quot;,
+    &quot;handler&quot;: &quot;string&quot;,
+    &quot;package_type&quot;: &quot;string&quot;,
+    // Optional
+    &quot;uri&quot;: &quot;string&quot;,
+    // Optional
+    &quot;mount_fs&quot;: true,
+    // Optional
+    &quot;snapstart&quot;: true,
+    &quot;layers&quot;: [
+      &quot;string&quot;,
+      /* ... */
+    ],
+    &quot;extensions&quot;: [
+      &quot;string&quot;,
+      /* ... */
+    ]
+  },
+  // Optional
+  &quot;build&quot;: {
+    &quot;kind&quot;: &quot;Code&quot; | &quot;Inline&quot; | &quot;Layer&quot; | &quot;Slab&quot; | &quot;Library&quot; | &quot;Extension&quot; | &quot;Runtime&quot; | &quot;Image&quot;,
+    &quot;pre&quot;: [
+      &quot;dnf install git -yy&quot;,
+      /* ... */
+    ],
+    &quot;post&quot;: [
+      &quot;string&quot;,
+      /* ... */
+    ],
+    // Command to use when build kind is Code
+    &quot;command&quot;: &quot;zip -9 lambda.zip *.py&quot;,
+    &quot;images&quot;: {
+      &quot;string&quot;: {
+        // Optional
+        &quot;dir&quot;: &quot;string&quot;,
+        // Optional
+        &quot;parent&quot;: &quot;string&quot;,
+        // Optional
+        &quot;version&quot;: &quot;string&quot;,
+        &quot;commands&quot;: [
+          &quot;string&quot;,
+          /* ... */
+        ]
+      },
+      /* ... */
+    },
+    &quot;layers&quot;: {
+      &quot;string&quot;: {
+        &quot;commands&quot;: [
+          &quot;string&quot;,
+          /* ... */
+        ]
+      },
+      /* ... */
+    }
+  },
+  // Optional
+  &quot;infra&quot;: {
+    &quot;dir&quot;: &quot;string&quot;,
+    // Optional
+    &quot;vars_file&quot;: &quot;string&quot;,
+    &quot;role&quot;: {
+      &quot;name&quot;: &quot;string&quot;,
+      &quot;path&quot;: &quot;string&quot;
+    }
+  }
+}
+</code></pre>
+<h3 id="runtime-spec"><a class="header" href="#runtime-spec">Runtime Spec</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Default</th><th>Optional?</th><th>Comments</th></tr></thead><tbody>
+<tr><td>lang</td><td>Inferred</td><td>yes</td><td></td></tr>
+<tr><td>handler</td><td>handler.handler</td><td></td><td></td></tr>
+<tr><td>package_type</td><td>zip</td><td></td><td>possible values: zip, image</td></tr>
+<tr><td>uri</td><td>file:./lambda.zip</td><td></td><td></td></tr>
+<tr><td>mount_fs</td><td>false</td><td>yes</td><td></td></tr>
+<tr><td>snapstart</td><td>false</td><td>yes</td><td></td></tr>
+<tr><td>memory</td><td>128</td><td>yes</td><td></td></tr>
+<tr><td>provisioned_concurrency</td><td>0</td><td>yes</td><td></td></tr>
+<tr><td>reserved_concurrency</td><td>0</td><td>yes</td><td></td></tr>
+<tr><td>layers</td><td>[]</td><td>yes</td><td></td></tr>
+<tr><td>extensions</td><td>[]</td><td>yes</td><td></td></tr>
+<tr><td>environment</td><td>{}</td><td>yes</td><td>Environment variables</td></tr>
+</tbody></table>
+</div>
+<h3 id="infra-spec"><a class="header" href="#infra-spec">Infra Spec</a></h3>
+<h3 id="build-spec"><a class="header" href="#build-spec">Build Spec</a></h3>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="infrastructure-spec"><a class="header" href="#infrastructure-spec">Infrastructure Spec</a></h1>
+<h2 id="runtime-variables"><a class="header" href="#runtime-variables">Runtime Variables</a></h2>
+<p>Default Path: infrastructure/tc/<topology>/vars/<function>.json
+Override: infra.vars_file in function.json</p>
+<pre><code class="language-json">{
+  // Optional
+  &quot;memory_size&quot;: 123,
+  // Optional
+  &quot;timeout&quot;: 123,
+  // Optional
+  &quot;image_uri&quot;: &quot;string&quot;,
+  // Optional
+  &quot;provisioned_concurrency&quot;: 123,
+  // Optional
+  &quot;reserved_concurrency&quot;: 123,
+  // Optional
+  &quot;environment&quot;: {
+    &quot;string&quot;: &quot;string&quot;,
+    /* ... */
+  },
+  // Optional
+  &quot;network&quot;: {
+    &quot;subnets&quot;: [
+      &quot;string&quot;,
+      /* ... */
+    ],
+    &quot;security_groups&quot;: [
+      &quot;string&quot;,
+      /* ... */
+    ]
+  },
+  // Optional
+  &quot;filesystem&quot;: {
+    &quot;arn&quot;: &quot;string&quot;,
+    &quot;mount_point&quot;: &quot;string&quot;
+  },
+  // Optional
+  &quot;tags&quot;: {
+    &quot;string&quot;: &quot;string&quot;,
+    /* ... */
+  }
+}
+</code></pre>
+<h2 id="roles"><a class="header" href="#roles">Roles</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="config-specification"><a class="header" href="#config-specification">Config Specification</a></h1>
+<p>The following is a sample config file that you can place in your infrastructure root (infrastructure/tc/) or the path in <code>TC_CONFIG_PATH</code>. The configs have sections specific to the module and are optional with sane defaults.</p>
+<pre><code class="language-yaml">compiler:
+  verify: false
+  graph_depth: 4
+  default_infra_path: infrastructure/tc
+
+resolver:
+  incremental: false
+  cache: false
+  stable_sandbox: stable
+  layer_promotions: true
+
+deployer:
+  guard_stable_updates: true
+  rolling: false
+
+builder:
+  parallel: false
+  autosplit: true
+  max_package_size: 50000000
+  ml_builder: true
+
+aws:
+  eventbridge:
+    bus: EVENT_BUS
+    rule_prefix: tc-
+    default_role: tc-base-event-role
+    default_region: us-west-2
+    sandboxes: [&quot;stable&quot;]
+
+  ecs:
+    subnets: [&quot;subnet-tag&quot;]
+    cluster: my-cluster
+
+  stepfunction:
+    default_role: tc-base-sfn-role
+    default_region: us-west-2
+
+  lambda:
+    default_timeout: 180
+    default_role: tc-base-lambda-role
+    default_region: us-west-2
+    layers_profile: LAYER_AWS_PROFILE
+    fs_mountpoint: /mnt/assets
+
+  api_gateway:
+    api_name: GATEWAY_NAME
+    default_region: us-west-2
+</code></pre>
+<h3 id="environment-variables"><a class="header" href="#environment-variables">Environment variables</a></h3>
+<p><code>tc</code> uses special environment variables as feature bits and config overrides. The following is the list of TC environment variables:</p>
+<p><strong>TC_DIR</strong></p>
+<p>We don't have to always be in the topology or function directory to run a contextual tc command. TC_DIR env var sets the directory context</p>
+<pre><code>TC_DIR=/path/to/services/fubar tc create -s sandbox -e env
+</code></pre>
+<p><strong>TC_USE_STABLE_LAYERS</strong></p>
+<p>At times we may need to use stable layers in non-stable sandboxes. This env variable allows us to use stable layers</p>
+<pre><code>TC_USE_STABLE_LAYERS=1 tc create -s sandbox -e env
+</code></pre>
+<p><strong>TC_USE_SHARED_DEPS</strong></p>
+<p>This feature flag uses common deps (in EFS) instead of function-specific deps.</p>
+<pre><code>TC_USE_SHARED_DEPS=1 tc create -s sandbox -e env
+</code></pre>
+<p><strong>TC_FORCE_BUILD</strong></p>
+<p>Tries various fallback strategies to build layers. One of the strategies is to build locally instead of a docker container. Another fallback is to use a specific version of python even if the transitive dependencies need specific version of Ruby or Python</p>
+<pre><code>TC_FORCE_BUILD=1 tc build --trace
+</code></pre>
+<p><strong>TC_FORCE_DEPLOY</strong></p>
+<p>To create or update stable sandboxes (which are prohibited by default), use this var to override.</p>
+<pre><code>TC_FORCE_DEPLOY=1 tc create -s sandbox -e env
+</code></pre>
+<p><strong>TC_UPDATE_METADATA</strong></p>
+<p>To update <code>deploy metadata</code> to a dynamodb table (the only stateful stuff in TC) for stable sandboxes</p>
+<pre><code>TC_UPDATE_METADATA=1 tc create -s staging -e env
+</code></pre>
+<p><strong>TC_ECS_CLUSTER</strong></p>
+<p>Use this to override the ECS Cluster name</p>
+<pre><code>TC_ECS_CLUSTER=my-cluster tc create -s sandbox -e env
+</code></pre>
+<p><strong>TC_USE_DEV_EFS</strong></p>
+<p>Experimental EFS with deduped deps and models</p>
+<pre><code>TC_USE_DEV_EFS=1 tc create ...
+
+</code></pre>
+<p><strong>TC_SANDBOX</strong></p>
+<p>Set this to have a fixed sandbox name for all your sandboxes</p>
+<pre><code>TC_SANDBOX=my-branch tc create -e env
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cli-reference"><a class="header" href="#cli-reference">CLI Reference</a></h1>
+<p>This document contains the help content for the <code>tc</code> command-line program.</p>
+<p><strong>Command Overview:</strong></p>
+<ul>
+<li><a href="reference/cli.html#tc"><code>tc</code>↴</a></li>
+<li><a href="reference/cli.html#tc-bootstrap"><code>tc bootstrap</code>↴</a></li>
+<li><a href="reference/cli.html#tc-build"><code>tc build</code>↴</a></li>
+<li><a href="reference/cli.html#tc-cache"><code>tc cache</code>↴</a></li>
+<li><a href="reference/cli.html#tc-compile"><code>tc compile</code>↴</a></li>
+<li><a href="reference/cli.html#tc-config"><code>tc config</code>↴</a></li>
+<li><a href="reference/cli.html#tc-create"><code>tc create</code>↴</a></li>
+<li><a href="reference/cli.html#tc-delete"><code>tc delete</code>↴</a></li>
+<li><a href="reference/cli.html#tc-freeze"><code>tc freeze</code>↴</a></li>
+<li><a href="reference/cli.html#tc-emulate"><code>tc emulate</code>↴</a></li>
+<li><a href="reference/cli.html#tc-inspect"><code>tc inspect</code>↴</a></li>
+<li><a href="reference/cli.html#tc-invoke"><code>tc invoke</code>↴</a></li>
+<li><a href="reference/cli.html#tc-list"><code>tc list</code>↴</a></li>
+<li><a href="reference/cli.html#tc-publish"><code>tc publish</code>↴</a></li>
+<li><a href="reference/cli.html#tc-resolve"><code>tc resolve</code>↴</a></li>
+<li><a href="reference/cli.html#tc-route"><code>tc route</code>↴</a></li>
+<li><a href="reference/cli.html#tc-scaffold"><code>tc scaffold</code>↴</a></li>
+<li><a href="reference/cli.html#tc-test"><code>tc test</code>↴</a></li>
+<li><a href="reference/cli.html#tc-tag"><code>tc tag</code>↴</a></li>
+<li><a href="reference/cli.html#tc-unfreeze"><code>tc unfreeze</code>↴</a></li>
+<li><a href="reference/cli.html#tc-update"><code>tc update</code>↴</a></li>
+<li><a href="reference/cli.html#tc-upgrade"><code>tc upgrade</code>↴</a></li>
+<li><a href="reference/cli.html#tc-version"><code>tc version</code>↴</a></li>
+<li><a href="reference/cli.html#tc-doc"><code>tc doc</code>↴</a></li>
+</ul>
+<h2 id="tc"><a class="header" href="#tc"><code>tc</code></a></h2>
+<p><strong>Usage:</strong> <code>tc &lt;COMMAND&gt;</code></p>
+<h6 id="subcommands"><a class="header" href="#subcommands"><strong>Subcommands:</strong></a></h6>
+<ul>
+<li><code>bootstrap</code> — Bootstrap IAM roles, extensions etc</li>
+<li><code>build</code> — Build layers, extensions and pack function code</li>
+<li><code>cache</code> — List or clear resolver cache</li>
+<li><code>compile</code> — Compile a Topology</li>
+<li><code>config</code> — Show config</li>
+<li><code>create</code> — Create a sandboxed topology</li>
+<li><code>delete</code> — Delete a sandboxed topology</li>
+<li><code>freeze</code> — Freeze a sandbox and make it immutable</li>
+<li><code>emulate</code> — Emulate Runtime environments</li>
+<li><code>inspect</code> — Inspect via browser</li>
+<li><code>invoke</code> — Invoke a topology synchronously or asynchronously</li>
+<li><code>list</code> — List created entities</li>
+<li><code>publish</code> — Publish layers</li>
+<li><code>resolve</code> — Resolve a topology from functions, events, states description</li>
+<li><code>route</code> — Route events to functors</li>
+<li><code>scaffold</code> — Scaffold roles and infra vars</li>
+<li><code>test</code> — Run unit tests for functions in the topology dir</li>
+<li><code>tag</code> — Create semver tags scoped by a topology</li>
+<li><code>unfreeze</code> — Unfreeze a sandbox and make it mutable</li>
+<li><code>update</code> — Update components</li>
+<li><code>upgrade</code> — upgrade tc version</li>
+<li><code>version</code> — display current tc version</li>
+<li><code>doc</code> — Generate documentation</li>
+</ul>
+<h2 id="tc-bootstrap"><a class="header" href="#tc-bootstrap"><code>tc bootstrap</code></a></h2>
+<p>Bootstrap IAM roles, extensions etc</p>
+<p><strong>Usage:</strong> <code>tc bootstrap [OPTIONS]</code></p>
+<h6 id="options"><a class="header" href="#options"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-R</code>, <code>--role &lt;ROLE&gt;</code></li>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>--create</code></li>
+<li><code>--delete</code></li>
+<li><code>--show</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-build"><a class="header" href="#tc-build"><code>tc build</code></a></h2>
+<p>Build layers, extensions and pack function code</p>
+<p><strong>Usage:</strong> <code>tc build [OPTIONS]</code></p>
+<h6 id="options-1"><a class="header" href="#options-1"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-k</code>, <code>--kind &lt;KIND&gt;</code></li>
+<li><code>-n</code>, <code>--name &lt;NAME&gt;</code></li>
+<li><code>-i</code>, <code>--image &lt;IMAGE&gt;</code></li>
+<li><code>--clean</code></li>
+<li><code>-r</code>, <code>--recursive</code></li>
+<li><code>--dirty</code></li>
+<li><code>--merge</code></li>
+<li><code>--split</code></li>
+<li><code>--task &lt;TASK&gt;</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+<li><code>-p</code>, <code>--publish</code></li>
+</ul>
+<h2 id="tc-cache"><a class="header" href="#tc-cache"><code>tc cache</code></a></h2>
+<p>List or clear resolver cache</p>
+<p><strong>Usage:</strong> <code>tc cache [OPTIONS]</code></p>
+<h6 id="options-2"><a class="header" href="#options-2"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>--clear</code></li>
+<li><code>--list</code></li>
+<li><code>-n</code>, <code>--namespace &lt;NAMESPACE&gt;</code></li>
+<li><code>-e</code>, <code>--env &lt;ENV&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-compile"><a class="header" href="#tc-compile"><code>tc compile</code></a></h2>
+<p>Compile a Topology</p>
+<p><strong>Usage:</strong> <code>tc compile [OPTIONS]</code></p>
+<h6 id="options-3"><a class="header" href="#options-3"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>--versions</code></li>
+<li><code>-r</code>, <code>--recursive</code></li>
+<li><code>-c</code>, <code>--component &lt;COMPONENT&gt;</code></li>
+<li><code>-f</code>, <code>--format &lt;FORMAT&gt;</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-config"><a class="header" href="#tc-config"><code>tc config</code></a></h2>
+<p>Show config</p>
+<p><strong>Usage:</strong> <code>tc config</code></p>
+<h2 id="tc-create"><a class="header" href="#tc-create"><code>tc create</code></a></h2>
+<p>Create a sandboxed topology</p>
+<p><strong>Usage:</strong> <code>tc create [OPTIONS]</code></p>
+<h6 id="options-4"><a class="header" href="#options-4"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-R</code>, <code>--role &lt;ROLE&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>-T</code>, <code>--topology &lt;TOPOLOGY&gt;</code></li>
+<li><code>--notify</code></li>
+<li><code>-r</code>, <code>--recursive</code></li>
+<li><code>--no-cache</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-delete"><a class="header" href="#tc-delete"><code>tc delete</code></a></h2>
+<p>Delete a sandboxed topology</p>
+<p><strong>Usage:</strong> <code>tc delete [OPTIONS]</code></p>
+<h6 id="options-5"><a class="header" href="#options-5"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-R</code>, <code>--role &lt;ROLE&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>-c</code>, <code>--component &lt;COMPONENT&gt;</code></li>
+<li><code>-r</code>, <code>--recursive</code></li>
+<li><code>--no-cache</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-freeze"><a class="header" href="#tc-freeze"><code>tc freeze</code></a></h2>
+<p>Freeze a sandbox and make it immutable</p>
+<p><strong>Usage:</strong> <code>tc freeze [OPTIONS] --sandbox &lt;SANDBOX&gt;</code></p>
+<h6 id="options-6"><a class="header" href="#options-6"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-d</code>, <code>--service &lt;SERVICE&gt;</code></li>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>--all</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-emulate"><a class="header" href="#tc-emulate"><code>tc emulate</code></a></h2>
+<p>Emulate Runtime environments</p>
+<p><strong>Usage:</strong> <code>tc emulate [OPTIONS]</code></p>
+<h6 id="options-7"><a class="header" href="#options-7"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-s</code>, <code>--shell</code></li>
+<li><code>-d</code>, <code>--dev</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-inspect"><a class="header" href="#tc-inspect"><code>tc inspect</code></a></h2>
+<p>Inspect via browser</p>
+<p><strong>Usage:</strong> <code>tc inspect [OPTIONS]</code></p>
+<h6 id="options-8"><a class="header" href="#options-8"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-invoke"><a class="header" href="#tc-invoke"><code>tc invoke</code></a></h2>
+<p>Invoke a topology synchronously or asynchronously</p>
+<p><strong>Usage:</strong> <code>tc invoke [OPTIONS]</code></p>
+<h6 id="options-9"><a class="header" href="#options-9"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-p</code>, <code>--payload &lt;PAYLOAD&gt;</code></li>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-R</code>, <code>--role &lt;ROLE&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>-n</code>, <code>--name &lt;NAME&gt;</code></li>
+<li><code>-S</code>, <code>--step &lt;STEP&gt;</code></li>
+<li><code>-k</code>, <code>--kind &lt;KIND&gt;</code></li>
+<li><code>--local</code></li>
+<li><code>--dumb</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-list"><a class="header" href="#tc-list"><code>tc list</code></a></h2>
+<p>List created entities</p>
+<p><strong>Usage:</strong> <code>tc list [OPTIONS]</code></p>
+<h6 id="options-10"><a class="header" href="#options-10"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-r</code>, <code>--role &lt;ROLE&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>-c</code>, <code>--component &lt;COMPONENT&gt;</code></li>
+<li><code>-f</code>, <code>--format &lt;FORMAT&gt;</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-publish"><a class="header" href="#tc-publish"><code>tc publish</code></a></h2>
+<p>Publish layers</p>
+<p><strong>Usage:</strong> <code>tc publish [OPTIONS]</code></p>
+<h6 id="options-11"><a class="header" href="#options-11"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-R</code>, <code>--role &lt;ROLE&gt;</code></li>
+<li><code>-k</code>, <code>--kind &lt;KIND&gt;</code></li>
+<li><code>--name &lt;NAME&gt;</code></li>
+<li><code>--list</code></li>
+<li><code>--promote</code></li>
+<li><code>--demote</code></li>
+<li><code>--download</code></li>
+<li><code>--version &lt;VERSION&gt;</code></li>
+<li><code>--task &lt;TASK&gt;</code></li>
+<li><code>--target &lt;TARGET&gt;</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-resolve"><a class="header" href="#tc-resolve"><code>tc resolve</code></a></h2>
+<p>Resolve a topology from functions, events, states description</p>
+<p><strong>Usage:</strong> <code>tc resolve [OPTIONS]</code></p>
+<h6 id="options-12"><a class="header" href="#options-12"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-R</code>, <code>--role &lt;ROLE&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>-c</code>, <code>--component &lt;COMPONENT&gt;</code></li>
+<li><code>-q</code>, <code>--quiet</code></li>
+<li><code>-r</code>, <code>--recursive</code></li>
+<li><code>--diff</code></li>
+<li><code>--no-cache</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-route"><a class="header" href="#tc-route"><code>tc route</code></a></h2>
+<p>Route events to functors</p>
+<p><strong>Usage:</strong> <code>tc route [OPTIONS] --service &lt;SERVICE&gt;</code></p>
+<h6 id="options-13"><a class="header" href="#options-13"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-E</code>, <code>--event &lt;EVENT&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>-S</code>, <code>--service &lt;SERVICE&gt;</code></li>
+<li><code>-r</code>, <code>--rule &lt;RULE&gt;</code></li>
+<li><code>--list</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-scaffold"><a class="header" href="#tc-scaffold"><code>tc scaffold</code></a></h2>
+<p>Scaffold roles and infra vars</p>
+<p><strong>Usage:</strong> <code>tc scaffold</code></p>
+<h2 id="tc-test"><a class="header" href="#tc-test"><code>tc test</code></a></h2>
+<p>Run unit tests for functions in the topology dir</p>
+<p><strong>Usage:</strong> <code>tc test [OPTIONS]</code></p>
+<h6 id="options-14"><a class="header" href="#options-14"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-d</code>, <code>--dir &lt;DIR&gt;</code></li>
+<li><code>-l</code>, <code>--lang &lt;LANG&gt;</code></li>
+<li><code>--with-deps</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-tag"><a class="header" href="#tc-tag"><code>tc tag</code></a></h2>
+<p>Create semver tags scoped by a topology</p>
+<p><strong>Usage:</strong> <code>tc tag [OPTIONS]</code></p>
+<h6 id="options-15"><a class="header" href="#options-15"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-n</code>, <code>--next &lt;NEXT&gt;</code></li>
+<li><code>-s</code>, <code>--service &lt;SERVICE&gt;</code></li>
+<li><code>--dry-run</code></li>
+<li><code>--push</code></li>
+<li><code>--unwind</code></li>
+<li><code>-S</code>, <code>--suffix &lt;SUFFIX&gt;</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-unfreeze"><a class="header" href="#tc-unfreeze"><code>tc unfreeze</code></a></h2>
+<p>Unfreeze a sandbox and make it mutable</p>
+<p><strong>Usage:</strong> <code>tc unfreeze [OPTIONS] --sandbox &lt;SANDBOX&gt;</code></p>
+<h6 id="options-16"><a class="header" href="#options-16"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-d</code>, <code>--service &lt;SERVICE&gt;</code></li>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>--all</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-update"><a class="header" href="#tc-update"><code>tc update</code></a></h2>
+<p>Update components</p>
+<p><strong>Usage:</strong> <code>tc update [OPTIONS]</code></p>
+<h6 id="options-17"><a class="header" href="#options-17"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-e</code>, <code>--profile &lt;PROFILE&gt;</code></li>
+<li><code>-R</code>, <code>--role &lt;ROLE&gt;</code></li>
+<li><code>-s</code>, <code>--sandbox &lt;SANDBOX&gt;</code></li>
+<li><code>-c</code>, <code>--component &lt;COMPONENT&gt;</code></li>
+<li><code>-a</code>, <code>--asset &lt;ASSET&gt;</code></li>
+<li><code>--notify</code></li>
+<li><code>-r</code>, <code>--recursive</code></li>
+<li><code>--no-cache</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-upgrade"><a class="header" href="#tc-upgrade"><code>tc upgrade</code></a></h2>
+<p>upgrade tc version</p>
+<p><strong>Usage:</strong> <code>tc upgrade [OPTIONS]</code></p>
+<h6 id="options-18"><a class="header" href="#options-18"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-v</code>, <code>--version &lt;VERSION&gt;</code></li>
+<li><code>-t</code>, <code>--trace</code></li>
+</ul>
+<h2 id="tc-version"><a class="header" href="#tc-version"><code>tc version</code></a></h2>
+<p>display current tc version</p>
+<p><strong>Usage:</strong> <code>tc version</code></p>
+<h2 id="tc-doc"><a class="header" href="#tc-doc"><code>tc doc</code></a></h2>
+<p>Generate documentation</p>
+<p><strong>Usage:</strong> <code>tc doc [OPTIONS]</code></p>
+<h6 id="options-19"><a class="header" href="#options-19"><strong>Options:</strong></a></h6>
+<ul>
+<li><code>-s</code>, <code>--spec &lt;SPEC&gt;</code></li>
+</ul>
+<hr/>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="library-1"><a class="header" href="#library-1">Library</a></h1>
+<p>WIP</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="patterns"><a class="header" href="#patterns">Patterns</a></h1>
+<ul>
+<li><a href="reference/patterns.html#1-request-response">1. Request-Response</a></li>
+<li><a href="reference/patterns.html#2-request-async-response">2. Request-async-Response</a></li>
+<li><a href="reference/patterns.html#3-request-queue">3. Request-Queue</a></li>
+<li><a href="reference/patterns.html#4-request-event-routing">4. Request-Event-Routing</a></li>
+<li><a href="reference/patterns.html#5-events-choreography">5. Events Choreography</a></li>
+<li><a href="reference/patterns.html#6-event-filters">6. Event Filters</a></li>
+<li><a href="reference/patterns.html#7-request-stepfunction">7. Request Stepfunction</a></li>
+<li><a href="reference/patterns.html#8-request-map">8. Request Map</a></li>
+</ul>
+<p>WIP</p>
+<h2 id="1-request-response"><a class="header" href="#1-request-response">1. Request-Response</a></h2>
+<pre><code class="language-yaml">
+name: request-response
+
+routes:
+  get-user:
+    gateway: api-test
+    kind: http
+    method: GET
+	sync: true
+    path: &quot;/api/user&quot;
+    function: fetcher
+</code></pre>
+<p>This is a simple topology which creates a HTTP route backed by a function. In AWS, this creates the API Gateway configuration and creates the lambda function with the right permissions.</p>
+<h2 id="2-request-async-response"><a class="header" href="#2-request-async-response">2. Request-async-Response</a></h2>
+<pre><code class="language-yaml">name: 06-request-async-response
+
+routes:
+  post-message:
+    gateway: api-test
+    kind: http
+    timeout: 10
+    method: POST
+    path: &quot;/api/message&quot;
+    function: processor
+  get-messages:
+    gateway: api-test
+    kind: http
+    method: GET
+    path: &quot;/api/messages&quot;
+    function: fetcher
+
+events:
+  consumes:
+    GetMessages:
+      producer: fetcher
+      channel: messages
+
+channels:
+  messages:
+    on_publish:
+      handler: default
+</code></pre>
+<h2 id="3-request-queue"><a class="header" href="#3-request-queue">3. Request-Queue</a></h2>
+<h2 id="4-request-event-routing"><a class="header" href="#4-request-event-routing">4. Request-Event-Routing</a></h2>
+<h2 id="5-events-choreography"><a class="header" href="#5-events-choreography">5. Events Choreography</a></h2>
+<h2 id="6-event-filters"><a class="header" href="#6-event-filters">6. Event Filters</a></h2>
+<h2 id="7-request-stepfunction"><a class="header" href="#7-request-stepfunction">7. Request Stepfunction</a></h2>
+<h2 id="8-request-map"><a class="header" href="#8-request-map">8. Request Map</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="example---etl"><a class="header" href="#example---etl">Example - ETL</a></h1>
+<p>The following is an example of developing and creating a basic topology to enhance, transform and load data.</p>
+<p>A Basic Example: ETL</p>
+<p>Let's call the topology <code>etl</code>. Our requirements are (I'm just making this up):</p>
+<ul>
+<li>Trigger the topology via a REST API and an Eventbridge event</li>
+<li>Create nano functions that do minimal things by decoupling them from their dependencies.</li>
+<li>Build a linear flow of the <code>enhancer</code>, <code>transformer</code> and <code>loader</code> functions.</li>
+<li>Write the enhancer and transformer functions in <code>Python</code> and loader in <code>Ruby</code> (huh, don't ask me why)</li>
+<li>Build and use a <code>transformer</code> ML model (oh, it's 5GB in size and has weird build steps they say)</li>
+<li>Deploy and test the entire thing interactively in dev sandboxes and atomically in prod sandboxes</li>
+</ul>
+<p>Let's get started!</p>
+<ol>
+<li>
+<p>Create a new directory called <code>etl</code> and add a file called topology.yml to it.</p>
+</li>
+<li>
+<p>Add the following to topology.yml in the <code>etl</code> directory</p>
+<p>topology.yml</p>
+<pre><code class="language-yaml">name: etl
+routes:
+	etl:
+		gateway: api-test
+		proxy: '{{namespace}}_enhancer_{{sandbox}}'
+		kind: http
+		timeout: 10
+		async: false
+		method: POST
+		path: &quot;/api/etl&quot;
+
+</code></pre>
+<p>We now have defined a basic topology that exposes an API endpoint to a function or proxy called <code>enhancer</code>. However, we haven't written or built <code>enhancer</code> function. Let's do that in the next step.</p>
+</li>
+<li>
+<p>Create a directory called <code>enhancer</code> in the etl directory. Create a file called handler.py in etl/enhancer directory</p>
+<p>etl/enhancer/handler.py</p>
+<pre><code class="language-python">	def handler(event, context):
+		return {&quot;data&quot;: &quot;enhanced-data&quot;}
+</code></pre>
+<p>Now this ain't doing much is it ? That's all we need for a function though with some business logic.</p>
+<p>Now we may need some libraries (shared etc). Let's go ahead add a pyproject.toml with our dependencies. Since we are using python, the size of the dependencies can increase thus beating the purpose of having a nano function. However, dependencies are inevitable and let's go with it.</p>
+</li>
+<li>
+<p>Now that we added dependencies, we may need to define some additional metadata about the function. This definition is optional if we keep our functions lean with no dependencies. Anyway, let's create a file called <code>function.json</code> and add the following to it.</p>
+<pre><code class="language-json">{
+	&quot;name&quot;: &quot;enhancer&quot;,
+	&quot;description&quot;: &quot;enhance wer data&quot;,
+	&quot;runtime&quot;: {
+		&quot;lang&quot;: &quot;python3.10&quot;,
+		&quot;package_type&quot;: &quot;zip&quot;,
+		&quot;handler&quot;: &quot;handler.handler&quot;,
+		&quot;layers&quot;: [&quot;etl-enhancer&quot;],
+		&quot;extensions&quot;: []
+	},
+	&quot;tasks&quot;: {
+		&quot;build&quot;: &quot;zip lambda.zip handler.py&quot;,
+		&quot;clean&quot;: &quot;rm *.zip&quot;
+	}
+}
+</code></pre>
+<p>The above definition describes what our <code>enhancer</code> is, how to invoke it etc. Note that we need to specify the layer name for the dependencies. Follow along ...</p>
+</li>
+<li>
+<p>Let's now build the dependencies. At this point, we may want to consider downloading <a href="examples/./installation.html">tc</a> (it's 5MB executable containing 15K lines of magic written in Rust). We need to login to an AWS env (say dev):</p>
+<pre><code class="language-sh">tc login -e dev
+
+cd etl
+tc build --publish
+</code></pre>
+<p>The above command builds and publishes the dependencies as a <code>lambda layer</code> to a centralized account (CICD). Now if our dependencies are really bloated, <code>tc build</code> will split the layers into 40MB (x 3) chunks. If we have nested directories (lib/ vendor/ etc), it will merge it. It will also be able to pull private repos, pull AWS assets when needed.</p>
+<p>To see if the dependency layer actually got published, run <code>tc build --list</code></p>
+<pre><code class="language-sh">name                                      | version | created_date
+-------------------------------------------+---------+------------------------------
+etl-enhancer                              | 1       | 2024-01-04T17:24:28.363+0000
+</code></pre>
+<p>Note that the layer only contains the dependencies we added for etl-enhancer, not the enhancer code itself. That gets packed and deployed separately to our sandbox. <em>The reason the layer build and code packing steps are decoupled is because the former is heavy and the latter is leaner</em>.</p>
+</li>
+<li>
+<p>Phew! building dependencies is not straightforward. It has to be built for the right CPU architecture, find shared objects, resolve shared libs, fetch private repositories, autofix incompatible transitive dependencies. That's a lot of complexity to absorb. Incidental complexity you say, eh ?
+Anyhow, let's create a sandbox with our &quot;enhanced&quot; code.</p>
+<pre><code class="language-sh">tc create -s bob -e dev
+
+2024-01-15T19:57:03.865 Composing topology...
+2024-01-15T19:57:04.168 Initializing functor: etl@bob.dev/0.0.1
+2024-01-15T19:57:04.431 Creating function etl_enhancer_bob (214 B)
+2024-01-15T19:57:04.431 Creating route /api/etl (OK)
+</code></pre>
+<p>Voila! Our <code>enhancer</code> function is tiny and the bloated dependencies got layered away in the previous step. Dependencies don't change much do they ? Things that move fast ought to be lean.</p>
+</li>
+<li>
+<p>Let's say we modify our code and would like to incrementally update the sandbox.</p>
+<p>We can do <code>tc diff -s bob -e dev</code> to see what the diff is between our local edits and the code in our remote lambda function. When satisfied:</p>
+<pre><code class="language-sh">cd etl
+tc update -s bob -e dev -c enhancer
+</code></pre>
+</li>
+<li>
+<p>Well, there are other infrastructure components in a topology and that is something we prefer to isolate from the code. We can scaffold roles and vars json files to an <code>infrastructure</code> directory</p>
+<pre><code class="language-sh">tc scaffold --create functions
+</code></pre>
+<p>The above command will create roles and vars files in infrastructure/tc/etl/{vars, roles}/enhancer.json. We can add any additional env vars, secret uris and other function-specific IAM permissions.</p>
+<p>We can incrementally update the vars, roles etc</p>
+<pre><code class="language-sh">tc update -s bob -e dev -c roles
+tc update -s bob -e dev -c vars
+tc update -s bob -e dev -c routes
+</code></pre>
+</li>
+<li>
+<p>Now we may need to create an eventbridge event to trigger our enhancer (Remember, that is a requirement). So let's add that to the topology defintiion.</p>
+<pre><code class="language-yaml">name: etl
+routes:
+	etl:
+	gateway: api-test
+	proxy: '{{namespace}}_enhancer_{{sandbox}}'
+	kind: http
+	timeout: 10
+	async: false
+	method: POST
+	path: &quot;/api/etl&quot;
+
+events:
+	consumes:
+		StartETL:
+			producer: default
+			function: '{{namespace}}_enhancer_{{sandbox}}'
+
+</code></pre>
+<p>Now just update the <code>events</code> component</p>
+<pre><code class="language-sh">tc update -s bob -e dev -c events
+</code></pre>
+</li>
+<li>
+<p>One of the requirements is to build and use a ML model for the transformer.</p>
+<pre><code class="language-json">{
+	&quot;name&quot;: &quot;transformer&quot;,
+	&quot;description&quot;: &quot;tranform your soul&quot;,
+	&quot;runtime&quot;: {
+		&quot;lang&quot;: &quot;python3.10&quot;,
+		&quot;package_type&quot;: &quot;zip&quot;,
+		&quot;handler&quot;: &quot;handler.handler&quot;,
+		&quot;layers&quot;: [],
+		&quot;extensions&quot;: []
+	},
+	&quot;assets&quot;: {
+		&quot;MODEL_PATH&quot;: &quot;/mnt/assets/etl/transformer/1.0/artifacts&quot;,
+		&quot;DEPS_PATH&quot;: &quot;/mnt/assets/etl/transformer/deps&quot;
+	},
+	&quot;tasks&quot;: {
+		&quot;build&quot;: &quot;zip lambda.zip handler.py&quot;,
+		&quot;clean&quot;: &quot;rm *.zip&quot;
+	}
+}
+</code></pre>
+<p>Now building model (primarily using pytorch) is no child's play. Yet, <code>tc build</code> makes it simple</p>
+<pre><code class="language-sh">cd transformer
+tc build --kind artifacts --publish
+</code></pre>
+<p>If an <code>assets</code> key in present in <code>function.json</code> file, <code>tc build --kind deps --publish</code> publishes it to EFS. The models and deps are available to the function automagically.</p>
+</li>
+<li>
+<p>Now, let's write our <code>loader</code> function in Ruby. Can <code>tc</code> build it ? Let's see.</p>
+<p>Add a Gemfile, a handler (handler.rb or a module) and function.json in loader directory.</p>
+<pre><code class="language-json">{
+	&quot;name&quot;: &quot;loader&quot;,
+	&quot;description&quot;: &quot;load your jiggle wiggle&quot;,
+	&quot;runtime&quot;: {
+		&quot;lang&quot;: &quot;ruby3.2&quot;,
+		&quot;package_type&quot;: &quot;zip&quot;,
+		&quot;handler&quot;: &quot;handler.handler&quot;,
+		&quot;layers&quot;: [],
+		&quot;extensions&quot;: []
+	},
+	&quot;tasks&quot;: {
+		&quot;build&quot;: &quot;zip lambda.zip handler.rb&quot;,
+		&quot;clean&quot;: &quot;rm *.zip&quot;
+	}
+}
+</code></pre>
+<p>Like we did with python dependencies, we can create a layer and publish it</p>
+<pre><code class="language-sh">cd loader
+tc build --publish
+</code></pre>
+<p><code>tc build --list</code> to see if it got published</p>
+<pre><code class="language-sh">name                                      | version | created_date
+-------------------------------------------+---------+------------------------------
+etl-enhancer                              | 1       | 2024-01-04T17:24:28.363+0000
+etl-loader                                | 1       | 2024-01-04T18:24:28.363+0000
+</code></pre>
+</li>
+<li>
+<p>Let's create the function:</p>
+<pre><code>cd etl
+tc create -s bob -e dev
+
+2024-01-15T19:57:03.865 Composing topology...
+2024-01-15T19:57:04.168 Initializing functor: etl@bob.dev/0.0.1
+2024-01-15T19:57:04.431 Creating function etl_enhancer_bob (214 B)
+2024-01-15T19:57:04.431 Creating function etl_transformer_bob (10 KiB)
+2024-01-15T19:57:04.431 Creating function etl_loader_bob (629 B)
+2024-01-15T19:57:04.431 Creating route /api/test (OK)
+</code></pre>
+</li>
+<li>
+<p>Perhaps we can now create a flow of data between <code>enhancer</code> and <code>transformer</code> functions. We can define the flow using the AWS stepfunction ASL.</p>
+<pre><code class="language-yaml">name: etl
+routes:
+	etl:
+   	gateway: api-test
+	proxy: '{{namespace}}_enhancer_{{sandbox}}'
+	kind: http
+	timeout: 10
+	async: false
+	method: POST
+	path: &quot;/api/etl&quot;
+
+events:
+	consumes:
+		StartETL:
+			producer: default
+			function: '{{namespace}}_enhancer_{{sandbox}}'
+flow:
+	Comment: ETL
+	StartAt: enhance
+	TimeoutSeconds: 1200
+	States:
+		enhance:
+			Type: Task
+			Resource: arn:aws:states:::lambda:invoke
+			OutputPath: $.Payload
+			InputPath: $
+			Parameters:
+				FunctionName: '{{namespace}}_enhancer_{{sandbox}}'
+				Payload:
+					data.$: $
+	        Next: transform
+		transform:
+			Type: Task
+			Resource: arn:aws:states:::lambda:invoke
+			OutputPath: $.Payload
+			InputPath: $
+			Parameters:
+				FunctionName: '{{namespace}}_transformer_{{sandbox}}'
+				Payload:
+					data.$: $
+	        Next: transform
+		load:
+			Type: Task
+			Resource: arn:aws:states:::lambda:invoke
+			OutputPath: $.Payload
+			InputPath: $
+			Parameters:
+				FunctionName: '{{namespace}}_loader_{{sandbox}}'
+				Payload:
+					data.$: $
+	        End: true
+</code></pre>
+<p>To update the flow do:</p>
+<pre><code class="language-sh">tc update -s bob -e dev -c flow
+</code></pre>
+</li>
+<li>
+<p>To invoke the stepfunction flow:</p>
+<pre><code class="language-sh">tc invoke -s bob -e dev --payload payload.json [--sync]
+</code></pre>
+</li>
+<li>
+<p>Finally, lets delete our dev sandbox and deploy this to a stable sandbox in upper envs</p>
+<pre><code>tc delete -s bob -e dev
+</code></pre>
+</li>
+</ol>
+<h3 id="release-and-ci-workflow"><a class="header" href="#release-and-ci-workflow">Release and CI workflow</a></h3>
+<p>Well, the above steps work well if we need to interactively build, test and try in our sandbox. Wouldn't it be nice to atomically create a sandbox and attach all the infrastructure components. Oh, while we are it, can we also version the topology ?</p>
+<pre><code>tc deploy --sandbox stable --env qa --service etl --version 0.1.4
+</code></pre>
+<p>How do we bump the versions and <em>release</em> it to a QA env ? <code>tc</code> provides a simplified versioning scheme. The following command bumps the <em>minor</em> part of the semver and deploys to a QA sandbox</p>
+<pre><code>tc release --service etl
+;=&gt; 0.2.0
+</code></pre>
+<p>To see a meaningful changelog between releases:</p>
+<pre><code>cd etl
+tc diff --changelog
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="job-tracker"><a class="header" href="#job-tracker">Job Tracker</a></h1>
+<p>wip - a frontend app</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="assets/mermaid.min.js"></script>
+        <script src="assets/mermaid-init.js"></script>
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>
