@@ -14,15 +14,14 @@
       <div class="flex flex-row items-center justify-between">
         <!-- Logo -->
         <div class="pt-2">
-          <img src="img/logo.png" alt="logo" width="24px"/>
+          <a href="/"><img src="img/logo.png" alt="logo" width="24px"/></a>
         </div>
         <!-- Menu Items -->
         <div class="hidden space-x-6 md:flex">
           <a href="/docs" class="hover:text-darkGrayishBlue" target="_new">Docs</a>
-          <a href="#" class="hover:text-darkGrayishBlue">Videos</a>
-          <a href="#" class="hover:text-darkGrayishBlue">Discussion</a>
-          <a href="#" class="hover:text-darkGrayishBlue">Blog</a>
-          <a href="#" class="hover:text-darkGrayishBlue">News</a>
+          <a href="/videos.html" class="hover:text-darkGrayishBlue">Videos</a>
+          <a href="/blog.html" class="hover:text-darkGrayishBlue">Blog</a>
+          <a href="/news.html" class="hover:text-darkGrayishBlue">News</a>
         </div>
         <!-- Button -->
         <a href="https://github.com/informed-labs/tc"><img src="img/github.png" width=28/>
@@ -41,10 +40,9 @@
         <div
           id="menu"
           class="absolute flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
-        >
+          >
           <a href="#">Docs</a>
           <a href="#">Videos</a>
-          <a href="#">Discussion</a>
           <a href="#">Blog</a>
           <a href="#">News</a>
         </div>
@@ -54,23 +52,27 @@
     <!-- Hero -->
     <section id="hero">
       <!-- Flex Container -->
-      <div class="container flex flex-col-reverse items-center px-6 mx-auto mt-8 space-y-0 md:flex-row md:space-y-0">
+      <div class="container flex flex-col-reverse items-center px-6 mx-auto mt-10 space-y-0 md:flex-row md:space-y-0">
         <!-- Left Item -->
         <div class="flex flex-col mb-32 space-y-12 md:w-1/2">
-          <h1 class="max-w-md text-4xl font-bold text-center md:text-5xl md:text-left">A graph-based serverless composer.</h1>
+          <h1 class="max-w-md text-4xl font-bold text-center md:text-5xl md:text-left">Simplifying Cloud Functors.</h1>
           <p class="max-w-sm text-center text-black md:text-left">
-            tc defines, creates and manages the lifecycle of serveless entities such as functions, mutations, events, routes, states, queues and channels.
+            tc defines, creates and manages the lifecycle of serveless entities such as functions, mutations, events, routes, states, queues and channels collectively known as a cloud functor.
           </p>
-          <div class="flex justify-center md:justify-start">
-            <a href="#" class="p-3 px-6 pt-2 text-white bg-brightRed rounded-full baseline hover:bg-brightRedLight">
-	      Get Started
+	  <div class="flex justify-center md:justify-start">
+	    <a href="https://github.com/informed-labs/tc/releases/download/0.8.42/tc-x86_64-linux" class="p-3 px-6 pt-2 text-white bg-brightRed rounded-full baseline hover:bg-brightRedLight">
+	      Linux x86_64
 	    </a>
-          </div>
-        </div>
-        <!-- Image -->
-        <div class="md:w-1/2">
-          <img src="img/pic.png">
-        </div>
+	    <span class="px-5"></span>
+	    <a href="https://github.com/informed-labs/tc/releases/download/0.8.42/tc-aarch64-macos" class="p-3 px-6 pt-2 text-white bg-brightRed rounded-full baseline hover:bg-brightRedLight">
+	      MacOSX aarch64
+	    </a>
+	  </div>
+	</div>
+	<!-- Image -->
+	<div class="md:w-1/2">
+	  <img src="img/pic.png">
+	</div>
       </div>
     </section>
 
@@ -78,59 +80,59 @@
     <section id="features">
       <!-- Flex container -->
       <div class="container flex flex-col px-4 mx-auto mt-10 space-y-12 md:space-y-0 md:flex-row">
-        <!-- What's Different -->
-        <div class="flex flex-col space-y-12 md:w-1/2">
-          <h2 class="max-w-md text-4xl font-bold text-center md::text-left">What is a cloud functor ?</h2>
-          <p class="max-w-sm text-center text-darkGrayishBlue md:text-left">
+	<!-- What's Different -->
+	<div class="flex flex-col space-y-12 md:w-1/2">
+	  <h2 class="max-w-md text-4xl font-bold text-center md::text-left">What is a cloud functor ?</h2>
+	  <p class="max-w-sm text-center text-darkGrayishBlue md:text-left">
 	    A composable, namespaced, sandboxed, recursive, versioned and isomorphic topology of serverless entities is called a Cloud Functor.
-          </p>
-        </div>
-        <!-- Numbered List -->
-        <div class="flex flex-col space-y-8 md:w-1/2">
-          <!-- List Item 1 -->
-          <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+	  </p>
+	</div>
+	<!-- Numbered List -->
+	<div class="flex flex-col space-y-8 md:w-1/2">
+	  <!-- List Item 1 -->
+	  <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
             <!-- Heading -->
             <div class="rounded-l-full bg-brightRedSupLight md:bg-transparent">
               <div class="flex items-center space-x-2">
-                <div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">01</div>
-                <h3 class="text-base font-bold md:mb-4 md:hidden">Composable Entities</h3>
+		<div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">01</div>
+		<h3 class="text-base font-bold md:mb-4 md:hidden">Composable Entities</h3>
               </div>
             </div>
 
             <div>
               <h3 class="hidden mb-4 text-lg font-bold md:block">Composable Entities</h3>
               <p class="text-darkGrayishBlue">
-At it's core, `tc` provides 7 entities (functions, events, mutations, queues, routes, states and channels) that are agnostic to any cloud provider.
+		At it's core, `tc` provides 7 entities (functions, events, mutations, queues, routes, states and channels) that are agnostic to any cloud provider.
 
               </p>
             </div>
-          </div>
+	  </div>
 
-          <!-- List Item 2 -->
-          <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+	  <!-- List Item 2 -->
+	  <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
             <!-- Heading -->
             <div class="rounded-l-full bg-brightRedSupLight md:bg-transparent">
               <div class="flex items-center space-x-2">
-                <div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">02</div>
-                <h3 class="text-base font-bold md:mb-4 md:hidden">Namespacing</h3>
+		<div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">02</div>
+		<h3 class="text-base font-bold md:mb-4 md:hidden">Namespacing</h3>
               </div>
             </div>
 
             <div>
               <h3 class="hidden mb-4 text-lg font-bold md:block">Namespacing</h3>
               <p class="text-darkGrayishBlue">
-                Scope and group your functions, events, routes and other entities like modules in a programming language.
+		Scope and group your functions, events, routes and other entities like modules in a programming language.
               </p>
             </div>
-          </div>
+	  </div>
 
-          <!-- List Item 3 -->
-          <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+	  <!-- List Item 3 -->
+	  <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
             <!-- Heading -->
             <div class="rounded-l-full bg-brightRedSupLight md:bg-transparent">
               <div class="flex items-center space-x-2">
-                <div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">03</div>
-                <h3 class="text-base font-bold md:mb-4 md:hidden">Sandboxing</h3>
+		<div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">03</div>
+		<h3 class="text-base font-bold md:mb-4 md:hidden">Sandboxing</h3>
               </div>
             </div>
 
@@ -140,15 +142,15 @@ At it's core, `tc` provides 7 entities (functions, events, mutations, queues, ro
 		Sandboxing is fundamental to canary-based routing and deploys.
               </p>
             </div>
-          </div>
+	  </div>
 
-          <!-- List Item 4 -->
-          <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+	  <!-- List Item 4 -->
+	  <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
             <!-- Heading -->
             <div class="rounded-l-full bg-brightRedSupLight md:bg-transparent">
               <div class="flex items-center space-x-2">
-                <div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">04</div>
-                <h3 class="text-base font-bold md:mb-4 md:hidden">Inference</h3>
+		<div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">04</div>
+		<h3 class="text-base font-bold md:mb-4 md:hidden">Inference</h3>
               </div>
             </div>
 
@@ -158,16 +160,16 @@ At it's core, `tc` provides 7 entities (functions, events, mutations, queues, ro
 		Generate infrastructure boilerplate
               </p>
             </div>
-          </div>
+	  </div>
 
 
-          <!-- List Item 5 -->
-          <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+	  <!-- List Item 5 -->
+	  <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
             <!-- Heading -->
             <div class="rounded-l-full bg-brightRedSupLight md:bg-transparent">
               <div class="flex items-center space-x-2">
-                <div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">05</div>
-                <h3 class="text-base font-bold md:mb-4 md:hidden">Recursive Topology</h3>
+		<div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">05</div>
+		<h3 class="text-base font-bold md:mb-4 md:hidden">Recursive Topology</h3>
               </div>
             </div>
 
@@ -177,16 +179,16 @@ At it's core, `tc` provides 7 entities (functions, events, mutations, queues, ro
 		Generate infrastructure boilerplate
               </p>
             </div>
-          </div>
+	  </div>
 
 
-          <!-- List Item 6 -->
-          <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
+	  <!-- List Item 6 -->
+	  <div class="flex flex-col space-y-3 md:space-y-0 md:space-x-6 md:flex-row">
             <!-- Heading -->
             <div class="rounded-l-full bg-brightRedSupLight md:bg-transparent">
               <div class="flex items-center space-x-2">
-                <div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">06</div>
-                <h3 class="text-base font-bold md:mb-4 md:hidden">Isomorphic Topology</h3>
+		<div class="px-4 py-2 text-white rounded-full md:py-1 bg-brightRed">06</div>
+		<h3 class="text-base font-bold md:mb-4 md:hidden">Isomorphic Topology</h3>
               </div>
             </div>
 
@@ -196,13 +198,12 @@ At it's core, `tc` provides 7 entities (functions, events, mutations, queues, ro
 		Diffable infrastructure between generated and rendered topologies.
               </p>
             </div>
-          </div>
+	  </div>
 
 
-
-
-        </div>
+	</div>
       </div>
+      <br/><br/>
     </section>
 
 
@@ -210,12 +211,12 @@ At it's core, `tc` provides 7 entities (functions, events, mutations, queues, ro
     <section id="cta" class="bg-brightRed pt-10">
       <!-- Flex Container -->
       <div class="container flex flex-col items-center justify-between px-6 py-24 mx-auto space-y-12 md:py-12 md:flex-row md:space-y-0">
-        <!-- Heading -->
-        <h2 class="text-5xl font-bold leading-tight text-center text-white md:text-4xl md:max-w-xl md:text-left">Simplify your serverless workflows</h2>
-        <!-- Button -->
-        <div>
-          <a href="#" class="p-3 px-6 pt-2 text-brightRed bg-white rounded-full shadow-2xl baseline hover:bg-gray-300">Get Started</a>
-        </div>
+	<!-- Heading -->
+	<h2 class="text-5xl font-bold leading-tight text-center text-white md:text-4xl md:max-w-xl md:text-left">Simplify your serverless workflows</h2>
+	<!-- Button -->
+	<div>
+	  <a href="#" class="p-3 px-6 pt-2 text-brightRed bg-white rounded-full shadow-2xl baseline hover:bg-gray-300">Get Started</a>
+	</div>
       </div>
     </section>
 
@@ -223,16 +224,16 @@ At it's core, `tc` provides 7 entities (functions, events, mutations, queues, ro
     <footer class="bg-veryDarkBlue">
       <!-- Flex Container-->
       <div class="container flex flex-col-reverse justify-between px-6 py-10 mx-auto space-y-8 md:flex-row md:space-y-0">
-        <!-- Logo and Social Links Container -->
-        <div class="flex flex-col-reverse items-center justify-between space-y-12 md:flex-col md:space-y-0 md:items-start">
-          <div class="mx-auto my-6 text-center text-white md:hidden">Copyright &copy; 2025, all rights reserved</div>
-          <!-- Logo -->
-          <div>
+	<!-- Logo and Social Links Container -->
+	<div class="flex flex-col-reverse items-center justify-between space-y-12 md:flex-col md:space-y-0 md:items-start">
+	  <div class="mx-auto my-6 text-center text-white md:hidden">Copyright &copy; 2025, all rights reserved</div>
+	  <!-- Logo -->
+	  <div>
             <!-- <img src="img/logo-white.svg" class="h-8" alt="logo" />-->
 	    <strong>tc</strong>
-          </div>
-          <!-- Social Links Container -->
-          <div class="flex justify-center space-x-4">
+	  </div>
+	  <!-- Social Links Container -->
+	  <div class="flex justify-center space-x-4">
             <!-- Link 1 -->
             <a href="#">
               <img src="img/icon-facebook.svg" alt="facebook" class="h-8" />
@@ -253,34 +254,34 @@ At it's core, `tc` provides 7 entities (functions, events, mutations, queues, ro
             <a href="#">
               <img src="img/icon-instagram.svg" alt="instagram" class="h-8" />
             </a>
-          </div>
-        </div>
+	  </div>
+	</div>
 
-        <!-- List Container -->
-        <div class="flex justify-around space-x-32">
-          <div class="flex flex-col space-y-3 text-white">
+	<!-- List Container -->
+	<div class="flex justify-around space-x-32">
+	  <div class="flex flex-col space-y-3 text-white">
             <a href="/docs" class="hover:text-brightRed">Docs</a>
             <a href="#" class="hover:text-brightRed">Videos</a>
             <a href="#" class="hover:text-brightRed">Discussion</a>
-          </div>
-          <div class="flex flex-col space-y-3 text-white">
+	  </div>
+	  <div class="flex flex-col space-y-3 text-white">
             <a href="#" class="hover:text-brightRed">Blog</a>
             <a href="#" class="hover:text-brightRed">News</a>
             <a href="#" class="hover:text-brightRed">Code</a>
-          </div>
-        </div>
+	  </div>
+	</div>
 
-        <!-- Input Container -->
-        <div class="flex flex-col justify-between">
-          <form>
+	<!-- Input Container -->
+	<div class="flex flex-col justify-between">
+	  <form>
             <div class="flex space-x-3">
               <input type="text" class="flex-1 px-4 rounded-full focus:outline-none" placeholder="Updates in your inbox" />
               <button class="px-6 py-2 text-white rounded-full bg-brightRed hover:bg-brightRedLight focus:outline-none">Go</button>
             </div>
-          </form>
+	  </form>
 
-          <div class="hidden text-white md:block">Copyright &copy; 2025, All rights reserved</div>
-        </div>
+	  <div class="hidden text-white md:block">Copyright &copy; 2025, All rights reserved</div>
+	</div>
       </div>
     </footer>
 
