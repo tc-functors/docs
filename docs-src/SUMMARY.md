@@ -12,7 +12,8 @@
 - [Invoker](./modules/invoker.md)
 - [Releaser](./modules/releaser.md)
 - [Emulator](./modules/emulator.md)
-- [Differ](./modules/differ.md)
+- [Bootstrapper](./modules/bootstrapper.md)
+- [Grokker](./modules/grokker.md)
 - [Inspector](./modules/inspector.md)
 
 # Specification
