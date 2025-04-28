@@ -180,41 +180,62 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
-<p>The topology definition is primarily to define flows.</p>
 <p><code>topology.yml</code></p>
-<pre><code class="language-yaml">name: &lt;topology-name&gt;
-infra: path/to/infra  [optional]
-nodes: [optional]
-	ignore:
-		- &lt;unrelated-node&gt;
-functions: [optional]
-	shared:
-		- ../shared/function1
-	    - ../shared/function2
-events: [optional]
-  consumes:
-    &lt;EventName&gt;:
-      producer: &lt;producerName&gt;
-    &lt;EventName&gt;:
-      producer: &lt;producerName&gt;
-  produces:
-    &lt;EventName&gt;:
-      consumer: consumerName
-routes: [optional]
-  &lt;name&gt;:
-	kind: rest|http|websocket
-    gateway: &lt;API-NAME&gt;
-    authorizer: &lt;AUTHORIZER-NAME&gt;
-	proxy: none|default|&lt;function-name&gt;
-    timeout: INT
-    async: BOOL
-    method: POST|GET|DELETE
-    path: STRING
+<pre><code class="language-yaml">name: &lt;namespace&gt;
+infra: &lt;infra-path&gt;
 
-flow: ./states.json | &lt;definition&gt;  [optional]
+nodes:
+  ignore: [&lt;path&gt;]
+  dirs: [&lt;path&gt;]
+
+functions:
+  shared: [&lt;rel path&gt;]
+  remote: [&lt;git url&gt;]
+  dirs: [&lt;dir path&gt;]
+
+events:
+  EventName:
+    producer: &lt;String&gt;
+    functions: [&lt;String&gt;]
+    function: &lt;String&gt;
+    mutation: &lt;String&gt;
+    channel: &lt;String&gt;
+    queue: &lt;String&gt;
+    state: &lt;String&gt;
+
+routes:
+  Path:
+    gateway: &lt;String&gt;
+    authorizer: &lt;String&gt;
+    method: &lt;POST|GET|DELETE&gt;
+	path: &lt;String&gt;
+    sync: &lt;true&gt;
+    request_template: &lt;String&gt;
+    response_template: &lt;String&gt;
+    stage: &lt;String&gt;
+    stage_variables: &lt;String&gt;
+    function: &lt;String&gt;
+    state: &lt;String&gt;
+    queue: &lt;String&gt;
+
+channels:
+  ChannelName:
+    function: &lt;String&gt;
+    event: &lt;String&gt;
+
+mutations:
+  MutationName:
+    function: &lt;String&gt;
+
+queues:
+  QueueName:
+    function: &lt;String&gt;
+
+states: ./states.json | &lt;definition&gt;  [optional]
+
 </code></pre>
 <p><code>infra</code> is either an absolute or relative path to the infrastructure configs (vars, roles etc). This field is optional and tc tries best to discover the infrastructure path in the current git repo.</p>
-<p><code>events</code>, <code>routes</code> and <code>flow</code> are optional.</p>
+<p><code>events</code>, <code>routes</code>, <code>functions</code>, <code>mutations</code>, <code>channels</code> and <code>flow</code> are optional.</p>
 <p><code>flow</code> can contain a path to a step-function definition or an inline definition. tc automatically namespaces any inlined or external flow definition.</p>
 
                     </main>

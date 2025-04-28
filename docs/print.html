@@ -699,7 +699,15 @@ tc emulate
 <p>This spins up a container and runs the emulator on http://localhost:8083</p>
 <p>Details to follow on creating and executing [wip]</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="bootstrapper"><a class="header" href="#bootstrapper">Bootstrapper</a></h1>
-<p>WIP</p>
+<p>To create or update the base roles:</p>
+<pre><code class="language-sh">tc bootstrap --roles
+
+Updating role tc-base-lambda-role
+Updating role tc-base-sfn-role
+Updating role tc-base-event-role
+Updating role tc-base-api-role
+Updating role tc-base-appsync-role
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="grokker"><a class="header" href="#grokker">Grokker</a></h1>
 <p>WIP</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="inspector"><a class="header" href="#inspector">Inspector</a></h1>
@@ -710,44 +718,94 @@ tc inspect --trace
 </code></pre>
 <p><img src="modules//images/inspector.gif" alt="Inspector" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
-<p>The topology definition is primarily to define flows.</p>
 <p><code>topology.yml</code></p>
-<pre><code class="language-yaml">name: &lt;topology-name&gt;
-infra: path/to/infra  [optional]
-nodes: [optional]
-	ignore:
-		- &lt;unrelated-node&gt;
-functions: [optional]
-	shared:
-		- ../shared/function1
-	    - ../shared/function2
-events: [optional]
-  consumes:
-    &lt;EventName&gt;:
-      producer: &lt;producerName&gt;
-    &lt;EventName&gt;:
-      producer: &lt;producerName&gt;
-  produces:
-    &lt;EventName&gt;:
-      consumer: consumerName
-routes: [optional]
-  &lt;name&gt;:
-	kind: rest|http|websocket
-    gateway: &lt;API-NAME&gt;
-    authorizer: &lt;AUTHORIZER-NAME&gt;
-	proxy: none|default|&lt;function-name&gt;
-    timeout: INT
-    async: BOOL
-    method: POST|GET|DELETE
-    path: STRING
+<pre><code class="language-yaml">name: &lt;namespace&gt;
+infra: &lt;infra-path&gt;
 
-flow: ./states.json | &lt;definition&gt;  [optional]
+nodes:
+  ignore: [&lt;path&gt;]
+  dirs: [&lt;path&gt;]
+
+functions:
+  shared: [&lt;rel path&gt;]
+  remote: [&lt;git url&gt;]
+  dirs: [&lt;dir path&gt;]
+
+events:
+  EventName:
+    producer: &lt;String&gt;
+    functions: [&lt;String&gt;]
+    function: &lt;String&gt;
+    mutation: &lt;String&gt;
+    channel: &lt;String&gt;
+    queue: &lt;String&gt;
+    state: &lt;String&gt;
+
+routes:
+  Path:
+    gateway: &lt;String&gt;
+    authorizer: &lt;String&gt;
+    method: &lt;POST|GET|DELETE&gt;
+	path: &lt;String&gt;
+    sync: &lt;true&gt;
+    request_template: &lt;String&gt;
+    response_template: &lt;String&gt;
+    stage: &lt;String&gt;
+    stage_variables: &lt;String&gt;
+    function: &lt;String&gt;
+    state: &lt;String&gt;
+    queue: &lt;String&gt;
+
+channels:
+  ChannelName:
+    function: &lt;String&gt;
+    event: &lt;String&gt;
+
+mutations:
+  MutationName:
+    function: &lt;String&gt;
+
+queues:
+  QueueName:
+    function: &lt;String&gt;
+
+states: ./states.json | &lt;definition&gt;  [optional]
+
 </code></pre>
 <p><code>infra</code> is either an absolute or relative path to the infrastructure configs (vars, roles etc). This field is optional and tc tries best to discover the infrastructure path in the current git repo.</p>
-<p><code>events</code>, <code>routes</code> and <code>flow</code> are optional.</p>
+<p><code>events</code>, <code>routes</code>, <code>functions</code>, <code>mutations</code>, <code>channels</code> and <code>flow</code> are optional.</p>
 <p><code>flow</code> can contain a path to a step-function definition or an inline definition. tc automatically namespaces any inlined or external flow definition.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="function-specification"><a class="header" href="#function-specification">Function Specification</a></h2>
 <p>function.json file in the function directory is optional. <code>tc</code> infers the language and build instructions from the function code. However, for custom options, add a function.json that looks like the following</p>
+<pre><code class="language-json">
+{
+  &quot;name&quot;: String,
+  &quot;runtime&quot;: RuntimeSpec,
+  &quot;build&quot;: BuildSpec,
+  &quot;infra&quot;: InfraSpec,
+  &quot;test&quot;: TestSpec
+}
+
+</code></pre>
+<h3 id="runtimespec"><a class="header" href="#runtimespec">RuntimeSpec</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Default</th><th>Optional?</th><th>Comments</th></tr></thead><tbody>
+<tr><td>lang</td><td>Inferred</td><td>yes</td><td></td></tr>
+<tr><td>handler</td><td>handler.handler</td><td></td><td></td></tr>
+<tr><td>package_type</td><td>zip</td><td></td><td>possible values: zip, image</td></tr>
+<tr><td>uri</td><td>file:./lambda.zip</td><td></td><td></td></tr>
+<tr><td>mount_fs</td><td>false</td><td>yes</td><td></td></tr>
+<tr><td>snapstart</td><td>false</td><td>yes</td><td></td></tr>
+<tr><td>memory</td><td>128</td><td>yes</td><td></td></tr>
+<tr><td>timeout</td><td>30</td><td>yes</td><td></td></tr>
+<tr><td>provisioned_concurrency</td><td>0</td><td>yes</td><td></td></tr>
+<tr><td>reserved_concurrency</td><td>0</td><td>yes</td><td></td></tr>
+<tr><td>layers</td><td>[]</td><td>yes</td><td></td></tr>
+<tr><td>extensions</td><td>[]</td><td>yes</td><td></td></tr>
+<tr><td>environment</td><td>{}</td><td>yes</td><td>Environment variables</td></tr>
+</tbody></table>
+</div>
+<h3 id="buildspec"><a class="header" href="#buildspec">BuildSpec</a></h3>
+<h3 id="json-spec"><a class="header" href="#json-spec">JSON Spec</a></h3>
 <pre><code class="language-json">{
   &quot;name&quot;: &quot;string&quot;,
   // Optional
@@ -834,24 +892,6 @@ flow: ./states.json | &lt;definition&gt;  [optional]
   }
 }
 </code></pre>
-<h3 id="runtime-spec"><a class="header" href="#runtime-spec">Runtime Spec</a></h3>
-<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Default</th><th>Optional?</th><th>Comments</th></tr></thead><tbody>
-<tr><td>lang</td><td>Inferred</td><td>yes</td><td></td></tr>
-<tr><td>handler</td><td>handler.handler</td><td></td><td></td></tr>
-<tr><td>package_type</td><td>zip</td><td></td><td>possible values: zip, image</td></tr>
-<tr><td>uri</td><td>file:./lambda.zip</td><td></td><td></td></tr>
-<tr><td>mount_fs</td><td>false</td><td>yes</td><td></td></tr>
-<tr><td>snapstart</td><td>false</td><td>yes</td><td></td></tr>
-<tr><td>memory</td><td>128</td><td>yes</td><td></td></tr>
-<tr><td>provisioned_concurrency</td><td>0</td><td>yes</td><td></td></tr>
-<tr><td>reserved_concurrency</td><td>0</td><td>yes</td><td></td></tr>
-<tr><td>layers</td><td>[]</td><td>yes</td><td></td></tr>
-<tr><td>extensions</td><td>[]</td><td>yes</td><td></td></tr>
-<tr><td>environment</td><td>{}</td><td>yes</td><td>Environment variables</td></tr>
-</tbody></table>
-</div>
-<h3 id="infra-spec"><a class="header" href="#infra-spec">Infra Spec</a></h3>
-<h3 id="build-spec"><a class="header" href="#build-spec">Build Spec</a></h3>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="infrastructure-spec"><a class="header" href="#infrastructure-spec">Infrastructure Spec</a></h1>
 <h2 id="runtime-variables"><a class="header" href="#runtime-variables">Runtime Variables</a></h2>
 <p>Default Path: infrastructure/tc/<topology>/vars/<function>.json

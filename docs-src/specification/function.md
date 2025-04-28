@@ -4,6 +4,44 @@ function.json file in the function directory is optional. `tc` infers the langua
 
 
 ```json
+
+{
+  "name": String,
+  "runtime": RuntimeSpec,
+  "build": BuildSpec,
+  "infra": InfraSpec,
+  "test": TestSpec
+}
+
+```
+
+
+### RuntimeSpec
+
+| Key                     | Default           | Optional? | Comments                    |
+|-------------------------|-------------------|-----------|-----------------------------|
+| lang                    | Inferred          | yes       |                             |
+| handler                 | handler.handler   |           |                             |
+| package_type            | zip               |           | possible values: zip, image |
+| uri                     | file:./lambda.zip |           |                             |
+| mount_fs                | false             | yes       |                             |
+| snapstart               | false             | yes       |                             |
+| memory                  | 128               | yes       |                             |
+| timeout                 | 30                | yes       |                             |
+| provisioned_concurrency | 0                 | yes       |                             |
+| reserved_concurrency    | 0                 | yes       |                             |
+| layers                  | []                | yes       |                             |
+| extensions              | []                | yes       |                             |
+| environment             | {}                | yes       | Environment variables       |
+
+
+
+### BuildSpec
+
+
+### JSON Spec
+
+```json
 {
   "name": "string",
   // Optional
@@ -90,28 +128,3 @@ function.json file in the function directory is optional. `tc` infers the langua
   }
 }
 ```
-
-
-### Runtime Spec
-
-| Key                     | Default           | Optional? | Comments                    |
-|-------------------------|-------------------|-----------|-----------------------------|
-| lang                    | Inferred          | yes       |                             |
-| handler                 | handler.handler   |           |                             |
-| package_type            | zip               |           | possible values: zip, image |
-| uri                     | file:./lambda.zip |           |                             |
-| mount_fs                | false             | yes       |                             |
-| snapstart               | false             | yes       |                             |
-| memory                  | 128               | yes       |                             |
-| provisioned_concurrency | 0                 | yes       |                             |
-| reserved_concurrency    | 0                 | yes       |                             |
-| layers                  | []                | yes       |                             |
-| extensions              | []                | yes       |                             |
-| environment             | {}                | yes       | Environment variables       |
-
-
-### Infra Spec
-
-
-
-### Build Spec

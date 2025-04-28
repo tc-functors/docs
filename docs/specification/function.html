@@ -181,6 +181,35 @@
                     <main>
                         <h2 id="function-specification"><a class="header" href="#function-specification">Function Specification</a></h2>
 <p>function.json file in the function directory is optional. <code>tc</code> infers the language and build instructions from the function code. However, for custom options, add a function.json that looks like the following</p>
+<pre><code class="language-json">
+{
+  &quot;name&quot;: String,
+  &quot;runtime&quot;: RuntimeSpec,
+  &quot;build&quot;: BuildSpec,
+  &quot;infra&quot;: InfraSpec,
+  &quot;test&quot;: TestSpec
+}
+
+</code></pre>
+<h3 id="runtimespec"><a class="header" href="#runtimespec">RuntimeSpec</a></h3>
+<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Default</th><th>Optional?</th><th>Comments</th></tr></thead><tbody>
+<tr><td>lang</td><td>Inferred</td><td>yes</td><td></td></tr>
+<tr><td>handler</td><td>handler.handler</td><td></td><td></td></tr>
+<tr><td>package_type</td><td>zip</td><td></td><td>possible values: zip, image</td></tr>
+<tr><td>uri</td><td>file:./lambda.zip</td><td></td><td></td></tr>
+<tr><td>mount_fs</td><td>false</td><td>yes</td><td></td></tr>
+<tr><td>snapstart</td><td>false</td><td>yes</td><td></td></tr>
+<tr><td>memory</td><td>128</td><td>yes</td><td></td></tr>
+<tr><td>timeout</td><td>30</td><td>yes</td><td></td></tr>
+<tr><td>provisioned_concurrency</td><td>0</td><td>yes</td><td></td></tr>
+<tr><td>reserved_concurrency</td><td>0</td><td>yes</td><td></td></tr>
+<tr><td>layers</td><td>[]</td><td>yes</td><td></td></tr>
+<tr><td>extensions</td><td>[]</td><td>yes</td><td></td></tr>
+<tr><td>environment</td><td>{}</td><td>yes</td><td>Environment variables</td></tr>
+</tbody></table>
+</div>
+<h3 id="buildspec"><a class="header" href="#buildspec">BuildSpec</a></h3>
+<h3 id="json-spec"><a class="header" href="#json-spec">JSON Spec</a></h3>
 <pre><code class="language-json">{
   &quot;name&quot;: &quot;string&quot;,
   // Optional
@@ -267,24 +296,6 @@
   }
 }
 </code></pre>
-<h3 id="runtime-spec"><a class="header" href="#runtime-spec">Runtime Spec</a></h3>
-<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Default</th><th>Optional?</th><th>Comments</th></tr></thead><tbody>
-<tr><td>lang</td><td>Inferred</td><td>yes</td><td></td></tr>
-<tr><td>handler</td><td>handler.handler</td><td></td><td></td></tr>
-<tr><td>package_type</td><td>zip</td><td></td><td>possible values: zip, image</td></tr>
-<tr><td>uri</td><td>file:./lambda.zip</td><td></td><td></td></tr>
-<tr><td>mount_fs</td><td>false</td><td>yes</td><td></td></tr>
-<tr><td>snapstart</td><td>false</td><td>yes</td><td></td></tr>
-<tr><td>memory</td><td>128</td><td>yes</td><td></td></tr>
-<tr><td>provisioned_concurrency</td><td>0</td><td>yes</td><td></td></tr>
-<tr><td>reserved_concurrency</td><td>0</td><td>yes</td><td></td></tr>
-<tr><td>layers</td><td>[]</td><td>yes</td><td></td></tr>
-<tr><td>extensions</td><td>[]</td><td>yes</td><td></td></tr>
-<tr><td>environment</td><td>{}</td><td>yes</td><td>Environment variables</td></tr>
-</tbody></table>
-</div>
-<h3 id="infra-spec"><a class="header" href="#infra-spec">Infra Spec</a></h3>
-<h3 id="build-spec"><a class="header" href="#build-spec">Build Spec</a></h3>
 
                     </main>
 
