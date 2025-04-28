@@ -19,6 +19,10 @@ functions:
 events:
   EventName:
     producer: <String>
+	doc_only: <false>
+	nth: <sequence int>
+	filter: <String>
+	rule_name: <String>
     functions: [<String>]
     function: <String>
     mutation: <String>
