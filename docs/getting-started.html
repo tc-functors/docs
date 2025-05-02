@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="getting-started.html" class="active">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/etl-mutations.html">ETL-mutations</a></li><li class="chapter-item "><a href="examples/etl-states.html">ETL-states</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Chat</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="getting-started.html" class="active">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/etl-mutations.html">ETL-mutations</a></li><li class="chapter-item "><a href="examples/etl-states.html">ETL-states</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Chat</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -193,10 +193,14 @@
 <li><a href="#5-adding-a-trigger-to-the-topology">5. Adding a trigger to the topology</a>
 <ul>
 <li><a href="#6-implementing-the-functions">6. Implementing the functions</a></li>
-<li><a href="#7-creating-the-first-release">7. Creating the first release</a></li>
 </ul>
 </li>
-<li><a href="#8-configuring-infrastructure">8. Configuring infrastructure</a></li>
+<li><a href="#7-making-it-recursive">7. Making it recursive</a>
+<ul>
+<li><a href="#8-creating-the-first-release">8. Creating the first release</a></li>
+</ul>
+</li>
+<li><a href="#9-configuring-infrastructure">9. Configuring infrastructure</a></li>
 </ul>
 <p>Caveat: this is a rough draft and we are still working on the documentation.</p>
 <p>Now that we have installed <code>tc</code> and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.</p>
@@ -206,7 +210,7 @@
 </code></pre>
 <h2 id="2-our-first-function"><a class="header" href="#2-our-first-function">2. Our first function</a></h2>
 <p>A simple function looks like this. Let's call this function <code>enhancer</code>. Add a file named <code>handler.py</code> in a directory etl/enhancer.</p>
-<p>handler.py:</p>
+<p>etl/enhancer/handler.py:</p>
 <pre><code class="language-python">def handler(event, context):
   return {'enhancer': 'abc'}
 </code></pre>
@@ -216,11 +220,20 @@
 Example: tc create -s john -e dev
 </code></pre>
 <p>This creates a lambda function named <code>enhancer_john</code> with the base role (tc-base-lambda-role) as the execution role.</p>
-<pre><code class="language-admonish. info">AWS Lambda is the default implementation for the function entity. env here is typically the AWS profile.
-</code></pre>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info"></a>
+</div>
+<div>
+<p>AWS Lambda is the default implementation for the function entity. env here is typically the AWS profile.</p>
+</div>
+</div>
 <h2 id="3-namespacing-your-functions"><a class="header" href="#3-namespacing-your-functions">3. Namespacing your functions</a></h2>
 <p>Our <code>etl</code> directory now contains just one function called <code>enhancer</code>. Let's create the <code>transformer</code> and <code>loader</code> functions. Add the following files.</p>
-<p>transformer/handler.py</p>
+<p>etl/transformer/handler.py</p>
 <pre><code class="language-python">def handler(event, context):
   return {'transformer': 'ABC'}
 
@@ -266,12 +279,12 @@ Time elapsed: 5.585 seconds
 <pre><code>cd enhancer
 tc invoke -s john -e dev -p '{&quot;somedata&quot;: 123}'
 </code></pre>
-<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
 <div class="admonition-title">
-<div id="admonition-info-title">
+<div id="admonition-info-1-title">
 <p>Info</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-info"></a>
+<a class="admonition-anchor-link" href="#admonition-info-1"></a>
 </div>
 <div>
 <p>The word service is overloaded. tc encourages the use of functor or topology to define the collection of entities.</p>
@@ -432,12 +445,12 @@ pyyaml = &quot;6.0.2&quot;
 <pre><code class="language-sh">tc update -s john -e dev -c enhancer
 </code></pre>
 <p>The above command will build the dependencies in a docker container locally and update the function code with the depedencies.</p>
-<div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
+<div id="admonition-info-2" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-2-title">
 <div class="admonition-title">
-<div id="admonition-info-1-title">
+<div id="admonition-info-2-title">
 <p>Info</p>
 </div>
-<a class="admonition-anchor-link" href="#admonition-info-1"></a>
+<a class="admonition-anchor-link" href="#admonition-info-2"></a>
 </div>
 <div>
 <p>-c argument takes an entity category (events, functions, mutations, routes etc) or the name of the entity itself. In this case the function name.</p>
@@ -463,12 +476,21 @@ tc build --kind layer --name transformer-deps --publish -e dev
 tc update -s john -e dev -c layers
 </code></pre>
 <p>With the above command, we built the dependencies in a docker container and updated the function(s) to use the latest version of the layer. See <a href="/docs/modules/builder.html">Build</a> for details about building functions.</p>
-<h3 id="7-creating-the-first-release"><a class="header" href="#7-creating-the-first-release">7. Creating the first release</a></h3>
+<h2 id="7-making-it-recursive"><a class="header" href="#7-making-it-recursive">7. Making it recursive</a></h2>
+<p>We can make loader itself another sub-topology with it's own DAG of entities and still treat etl as the root topology (or functor). Let's add a topology file in loader.</p>
+<p>etl/loader/topology.yml</p>
+<pre><code>name: loader
+
+</code></pre>
+<p>Now we can recursrively create the topologies from the root topology directory</p>
+<pre><code>tc create -s john -e dev --recursive
+</code></pre>
+<h3 id="8-creating-the-first-release"><a class="header" href="#8-creating-the-first-release">8. Creating the first release</a></h3>
 <p>tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level</p>
 <pre><code class="language-sh">tc tag -s etl --next minor|major
 </code></pre>
 <p>This creates a tag in git for the ETL topology.</p>
-<h2 id="8-configuring-infrastructure"><a class="header" href="#8-configuring-infrastructure">8. Configuring infrastructure</a></h2>
+<h2 id="9-configuring-infrastructure"><a class="header" href="#9-configuring-infrastructure">9. Configuring infrastructure</a></h2>
 <p>At times, we require more infrastructure-specific configuration, specific permissions, environment variables, runtime configuration.</p>
 <p>We can specify an infra path in the topology</p>
 <pre><code class="language-yaml">name: etl

@@ -18,7 +18,7 @@ tc bootstrap --roles -e dev
 
 A simple function looks like this. Let's call this function `enhancer`. Add a file named `handler.py` in a directory etl/enhancer.
 
-handler.py:
+etl/enhancer/handler.py:
 
 ```python
 def handler(event, context):
@@ -36,7 +36,7 @@ Example: tc create -s john -e dev
 This creates a lambda function named `enhancer_john` with the base role (tc-base-lambda-role) as the execution role.
 
 
-```admonish. info
+```admonish info
 AWS Lambda is the default implementation for the function entity. env here is typically the AWS profile.
 ```
 
@@ -44,7 +44,7 @@ AWS Lambda is the default implementation for the function entity. env here is ty
 
 Our `etl` directory now contains just one function called `enhancer`. Let's create the `transformer` and `loader` functions. Add the following files.
 
-transformer/handler.py
+etl/transformer/handler.py
 
 ```python
 def handler(event, context):
@@ -345,7 +345,24 @@ tc update -s john -e dev -c layers
 With the above command, we built the dependencies in a docker container and updated the function(s) to use the latest version of the layer. See [Build](/docs/modules/builder.html) for details about building functions.
 
 
-### 7. Creating the first release
+## 7. Making it recursive
+
+We can make loader itself another sub-topology with it's own DAG of entities and still treat etl as the root topology (or functor). Let's add a topology file in loader.
+
+etl/loader/topology.yml
+```
+name: loader
+
+```
+
+Now we can recursrively create the topologies from the root topology directory
+
+```
+tc create -s john -e dev --recursive
+```
+
+
+### 8. Creating the first release
 
 tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level
 
@@ -356,7 +373,7 @@ tc tag -s etl --next minor|major
 
 This creates a tag in git for the ETL topology.
 
-## 8. Configuring infrastructure
+## 9. Configuring infrastructure
 
 At times, we require more infrastructure-specific configuration, specific permissions, environment variables, runtime configuration.
 

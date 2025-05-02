@@ -11,6 +11,16 @@
 - [Chat](./examples/job-tracker.md)
 - [Patterns](./patterns.md)
 
+# Specification
+- [Topology](./specification/topology.md)
+- [Function](./specification/function.md)
+- [Infrastructure](./specification/infrastructure.md)
+- [Config](./specification/config.md)
+
+# Reference
+- [CLI](./reference/cli.md)
+- [Library](./reference/library.md)
+
 # Modules
 - [Compiler](./modules/compiler.md)
 - [Builder](./modules/builder.md)
@@ -22,13 +32,3 @@
 - [Bootstrapper](./modules/bootstrapper.md)
 - [Grokker](./modules/grokker.md)
 - [Inspector](./modules/inspector.md)
-
-# Specification
-- [Topology](./specification/topology.md)
-- [Function](./specification/function.md)
-- [Infrastructure](./specification/infrastructure.md)
-- [Config](./specification/config.md)
-
-# Reference
-- [CLI](./reference/cli.md)
-- [Library](./reference/library.md)
