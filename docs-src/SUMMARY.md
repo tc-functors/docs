@@ -3,6 +3,7 @@
 - [Introduction](./introduction.md)
 - [Installation](./installation.md)
 - [Getting Started](./getting-started.md)
+- [Patterns](./patterns.md)
 
 # Modules
 - [Compiler](./modules/compiler.md)
@@ -25,7 +26,6 @@
 # Reference
 - [CLI](./reference/cli.md)
 - [Library](./reference/library.md)
-- [Patterns](./reference/patterns.md)
 
 # Examples
 - [ETL](./examples/etl.md)
