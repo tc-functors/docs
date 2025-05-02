@@ -3,6 +3,12 @@
 - [Introduction](./introduction.md)
 - [Installation](./installation.md)
 - [Getting Started](./getting-started.md)
+
+# Examples
+- [ETL-mutations](./examples/etl-mutations.md)
+- [ETL-states](./examples/etl-states.md)
+- [Job Tracker](./examples/job-tracker.md)
+- [Chat](./examples/job-tracker.md)
 - [Patterns](./patterns.md)
 
 # Modules
@@ -26,7 +32,3 @@
 # Reference
 - [CLI](./reference/cli.md)
 - [Library](./reference/library.md)
-
-# Examples
-- [ETL](./examples/etl.md)
-- [Job Tracker](./examples/job-tracker.md)

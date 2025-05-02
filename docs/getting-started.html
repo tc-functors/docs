@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="getting-started.html" class="active">Getting Started</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/etl.html">ETL</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="getting-started.html" class="active">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/etl-mutations.html">ETL-mutations</a></li><li class="chapter-item "><a href="examples/etl-states.html">ETL-states</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Chat</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -181,31 +181,36 @@
                     <main>
                         <h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
 <ul>
-<li><a href="#bootstrap-permissions">Bootstrap permissions</a></li>
-<li><a href="#a-basic-function">A basic function</a></li>
-<li><a href="#namespacing-your-functions">Namespacing your functions</a></li>
-<li><a href="#defining-the-flow">Defining the flow</a>
+<li><a href="#1-bootstrap-permissions">1. Bootstrap permissions</a></li>
+<li><a href="#2-our-first-function">2. Our first function</a></li>
+<li><a href="#3-namespacing-your-functions">3. Namespacing your functions</a></li>
+<li><a href="#4-defining-the-flow">4. Defining the flow</a>
 <ul>
-<li><a href="#event-based-flow">Event-based flow</a></li>
-<li><a href="#stepfunctions">Stepfunctions</a></li>
-<li><a href="#mutations">Mutations</a></li>
+<li><a href="#41-event-based-flow">4.1 Event-based flow</a></li>
 </ul>
 </li>
-<li><a href="#adding-a-trigger-to-the-topology">Adding a trigger to the topology</a></li>
-<li><a href="#configuring-infrastructure">Configuring infrastructure</a></li>
+<li><a href="#42-state-transitions">4.2 State Transitions</a></li>
+<li><a href="#5-adding-a-trigger-to-the-topology">5. Adding a trigger to the topology</a>
+<ul>
+<li><a href="#6-implementing-the-functions">6. Implementing the functions</a></li>
+<li><a href="#7-creating-the-first-release">7. Creating the first release</a></li>
 </ul>
+</li>
+<li><a href="#8-configuring-infrastructure">8. Configuring infrastructure</a></li>
+</ul>
+<p>Caveat: this is a rough draft and we are still working on the documentation.</p>
 <p>Now that we have installed <code>tc</code> and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.</p>
-<h2 id="bootstrap-permissions"><a class="header" href="#bootstrap-permissions">Bootstrap permissions</a></h2>
+<h2 id="1-bootstrap-permissions"><a class="header" href="#1-bootstrap-permissions">1. Bootstrap permissions</a></h2>
 <p>Let's create some base IAM roles and policies. <code>tc</code> maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called <code>dev</code>. This dev profile/account can have several dev sandboxes.</p>
 <pre><code>tc bootstrap --roles -e dev
 </code></pre>
-<h2 id="a-basic-function"><a class="header" href="#a-basic-function">A basic function</a></h2>
+<h2 id="2-our-first-function"><a class="header" href="#2-our-first-function">2. Our first function</a></h2>
 <p>A simple function looks like this. Let's call this function <code>enhancer</code>. Add a file named <code>handler.py</code> in a directory etl/enhancer.</p>
 <p>handler.py:</p>
 <pre><code class="language-python">def handler(event, context):
   return {'enhancer': 'abc'}
 </code></pre>
-<p>In the foo directory, you can now create the function by running the following command.</p>
+<p>In the etl directory, we can now create the function by running the following command.</p>
 <pre><code class="language-sh">tc create -s &lt;sandbox-name&gt; -e &lt;env&gt;
 
 Example: tc create -s john -e dev
@@ -213,7 +218,7 @@ Example: tc create -s john -e dev
 <p>This creates a lambda function named <code>enhancer_john</code> with the base role (tc-base-lambda-role) as the execution role.</p>
 <pre><code class="language-admonish. info">AWS Lambda is the default implementation for the function entity. env here is typically the AWS profile.
 </code></pre>
-<h2 id="namespacing-your-functions"><a class="header" href="#namespacing-your-functions">Namespacing your functions</a></h2>
+<h2 id="3-namespacing-your-functions"><a class="header" href="#3-namespacing-your-functions">3. Namespacing your functions</a></h2>
 <p>Our <code>etl</code> directory now contains just one function called <code>enhancer</code>. Let's create the <code>transformer</code> and <code>loader</code> functions. Add the following files.</p>
 <p>transformer/handler.py</p>
 <pre><code class="language-python">def handler(event, context):
@@ -256,7 +261,7 @@ Creating function loader (211 B)
 Checking state enhancer (ok)
 Time elapsed: 5.585 seconds
 </code></pre>
-<p>The resulting lambda functions are named '<namespace><em><function-name></em><sandbox>'. If the name is sufficiently long, tc abbreviates it</p>
+<p>The resulting lambda functions are named 'namespace_function-name_sandbox'. If the name is sufficiently long, tc abbreviates it</p>
 <p>We can test these functions, independently</p>
 <pre><code>cd enhancer
 tc invoke -s john -e dev -p '{&quot;somedata&quot;: 123}'
@@ -272,7 +277,7 @@ tc invoke -s john -e dev -p '{&quot;somedata&quot;: 123}'
 <p>The word service is overloaded. tc encourages the use of functor or topology to define the collection of entities.</p>
 </div>
 </div>
-<h2 id="defining-the-flow"><a class="header" href="#defining-the-flow">Defining the flow</a></h2>
+<h2 id="4-defining-the-flow"><a class="header" href="#4-defining-the-flow">4. Defining the flow</a></h2>
 <p>Now that we have these functions, we need to orchestrate the flow between them. tc provides a number of mechanisms to define the flow</p>
 <ol>
 <li>Event-based flow (Eventbridge)</li>
@@ -280,7 +285,7 @@ tc invoke -s john -e dev -p '{&quot;somedata&quot;: 123}'
 <li>Mutations (Appsync/Graphql)</li>
 <li>Function Chaning (Lambda desitinations)</li>
 </ol>
-<h3 id="event-based-flow"><a class="header" href="#event-based-flow">Event-based flow</a></h3>
+<h3 id="41-event-based-flow"><a class="header" href="#41-event-based-flow">4.1 Event-based flow</a></h3>
 <pre><code class="language-yaml">name: etl
 
 events:
@@ -292,70 +297,223 @@ events:
     producer: transformer
     function: '{{namespace}}_loader_{{sandbox}}'
 </code></pre>
+<p>We can update just the <code>events</code> component or entity. The following creates the eventbridge rules wiring up the enhancer, transformer and loader functions</p>
 <pre><code class="language-sh">tc update -s john -e dev -c events
 </code></pre>
-<h3 id="stepfunctions"><a class="header" href="#stepfunctions">Stepfunctions</a></h3>
-<p>Alternatively, we can use stepfunctions to orchestrate the flow.</p>
-<pre><code class="language-yaml">
+<p>We should see an output like:</p>
+<pre><code>Compiling topology
+Resolving events...
+Updating functor etl@john.dev/0.0.1/events
 </code></pre>
-<h3 id="mutations"><a class="header" href="#mutations">Mutations</a></h3>
-<pre><code class="language-yaml">mutations:
-  authorizer: '{{namespace}}_authorizer_{{sandbox}}'
-  types:
-    Input:
-      id: String!
-    Status:
-      id: String!
-      status: String
-      message: String
-      percentage: Int
-
-  resolvers:
-    initialize:
-      function: '{{namespace}}_initializer_{{sandbox}}'
-      input: Input
-      output: Status
-      subscribe: true
-
-    enhance:
-      function: '{{namespace}}_enhancer_{{sandbox}}'
-      input: Event
-      output: Status
-      subscribe: true
-
-    transform:
-      function: '{{namespace}}_transformer_{{sandbox}}'
-      input: Event
-      output: Status
-      subscribe: true
-
-    load:
-      function: '{{namespace}}_loader_{{sandbox}}'
-      input: Event
-      output: Status
-      subscribe: true
-
-    complete:
-      function: '{{namespace}}_completer_{{sandbox}}'
-      input: Event
-      output: Status
-      subscribe: true
+<p>With event-based functions, function needs to explicitly out the eventbridge event. We could alternatively use stepfunction that has a managed orchestrator. Let's define the stepfunction flow.</p>
+<p>We can remove the events above for now</p>
+<pre><code class="language-sh">tc delete -s john -e dev -c events
 </code></pre>
-<h2 id="adding-a-trigger-to-the-topology"><a class="header" href="#adding-a-trigger-to-the-topology">Adding a trigger to the topology</a></h2>
+<p>Much like update, we can delete selectively delete few entities without touching other parts of the topology.</p>
+<h2 id="42-state-transitions"><a class="header" href="#42-state-transitions">4.2 State Transitions</a></h2>
+<p>The following defines a simple linear flow using ASL (Amazon States Language).</p>
 <pre><code class="language-yaml">name: etl
+
+flow:
+    Comment: ETL
+    StartAt: enhance
+    TimeoutSeconds: 1200
+    States:
+      enhance:
+        Type: Task
+        Resource: arn:aws:states:::lambda:invoke
+        OutputPath: $.Payload
+        InputPath: $
+        Parameters:
+          FunctionName: '{{namespace}}_enhancer_{{sandbox}}'
+          Payload:
+            data.$: $
+        Next: transform
+      transform:
+        Type: Task
+        Resource: arn:aws:states:::lambda:invoke
+        OutputPath: $.Payload
+        InputPath: $
+        Parameters:
+          FunctionName: '{{namespace}}_transformer_{{sandbox}}'
+          Payload:
+            data.$: $
+        Next: transform
+      load:
+        Type: Task
+        Resource: arn:aws:states:::lambda:invoke
+        OutputPath: $.Payload
+        InputPath: $
+        Parameters:
+          FunctionName: '{{namespace}}_loader_{{sandbox}}'
+          Payload:
+            data.$: $
+        End: true
+</code></pre>
+<p>To deploy the above flow:</p>
+<pre><code>tc create -s john -e dev -c flow
+</code></pre>
+<p>It should output the following:</p>
+<pre><code>Compiling topology
+Resolving events...
+Updating functor etl@john.dev/0.0.1/flow
+</code></pre>
+<h2 id="5-adding-a-trigger-to-the-topology"><a class="header" href="#5-adding-a-trigger-to-the-topology">5. Adding a trigger to the topology</a></h2>
+<p>We may want to trigger the ETL topology via an API route</p>
+<pre><code class="language-yaml">name: etl
+
+events:
+  EnhancerComplete:
+    producer: enhancer
+    function: '{{namespace}}_transformer_{{sandbox}}'
+
+  TransformerComplete:
+    producer: transformer
+    function: '{{namespace}}_loader_{{sandbox}}'
 
 routes:
   /start-etl:
     gateway: api-test
     function: '{{namespace}}_enhancer_{{sandbox}}'
-    kind: http
-    timeout: 10
-    async: false
+    sync: false
     method: POST
 </code></pre>
+<p>The <code>routes</code> map in the topology defines a set of routes backed by serverless entities. In this example, /start-etl triggers the lambda function. Now, we can incrementally update the routes</p>
 <pre><code class="language-sh">tc update -s john -e dev -c routes
 </code></pre>
-<h2 id="configuring-infrastructure"><a class="header" href="#configuring-infrastructure">Configuring infrastructure</a></h2>
+<p>We should see an output like:</p>
+<pre><code>Compiling topology
+Resolving routes...
+Updating functor etl@john.dev/0.0.1/routes
+</code></pre>
+<p>Now just trigger the ETL topology using</p>
+<pre><code class="language-sh">curl ...
+</code></pre>
+<h3 id="6-implementing-the-functions"><a class="header" href="#6-implementing-the-functions">6. Implementing the functions</a></h3>
+<p>So far, we created a topology with basic functions, events, routes and a flow to connect them all. The functions themselves don't do much. Functions have depedencies, different runtimes or languages, platform-specific shared libraries and so forth. For example, we have want the enhancer to have some dependencies specified in say pyproject.toml or requirements.txt. Let's add a file named <code>function.json</code> in enhancer directory</p>
+<p>enhancer/function.json</p>
+<pre><code class="language-json">
+{
+  &quot;name&quot;: &quot;enhancer&quot;,
+  &quot;description&quot;: &quot;Ultimate enhancer&quot;,
+  &quot;runtime&quot;: {
+    &quot;lang&quot;: &quot;python3.12&quot;,
+    &quot;package_type&quot;: &quot;zip&quot;,
+    &quot;handler&quot;: &quot;handler.handler&quot;,
+  },
+  &quot;build&quot;: {
+    &quot;kind&quot;: &quot;Inline&quot;,
+    &quot;command&quot;: &quot;zip -9 -q lambda.zip *.py&quot;
+  },
+}
+</code></pre>
+<p>and let's say we had the following deps in <code>pyproject.toml</code></p>
+<p>enhancer/pyproject.toml</p>
+<pre><code>[tool.poetry]
+name = &quot;enhancer&quot;
+version = &quot;0.1.0&quot;
+description = &quot;&quot;
+authors = [&quot;fu &lt;foo@fubar.com&gt;&quot;]
+
+[tool.poetry.dependencies]
+simplejson = &quot;^3.19.2&quot;
+botocore = &quot;^1.31.73&quot;
+boto3 = &quot;^1.28.73&quot;
+pyyaml = &quot;6.0.2&quot;
+</code></pre>
+<p>Now update the function we created by running this from the <code>etl</code> directory</p>
+<pre><code class="language-sh">tc update -s john -e dev -c enhancer
+</code></pre>
+<p>The above command will build the dependencies in a docker container locally and update the function code with the depedencies.</p>
+<div id="admonition-info-1" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-1-title">
+<div class="admonition-title">
+<div id="admonition-info-1-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info-1"></a>
+</div>
+<div>
+<p>-c argument takes an entity category (events, functions, mutations, routes etc) or the name of the entity itself. In this case the function name.</p>
+</div>
+</div>
+<p>There are several ways to package the depedencies depending on the runtime, size of the dependencies and so forth. Layering is another kind. Let's try and build the transformer using layers. Add the following in transformer/function.json</p>
+<p>transformer/function.json</p>
+<pre><code class="language-json">
+{
+  &quot;name&quot;: &quot;transformer&quot;,
+  &quot;description&quot;: &quot;Ultimate Transformer&quot;,
+  &quot;runtime&quot;: {
+    &quot;lang&quot;: &quot;python3.12&quot;,
+    &quot;package_type&quot;: &quot;zip&quot;,
+    &quot;handler&quot;: &quot;handler.handler&quot;,
+	&quot;layers&quot;: [&quot;transformer-deps&quot;]
+  }
+}
+</code></pre>
+<p>The layers can be built independent of creating/deploying the code, as they don't change that often.</p>
+<pre><code class="language-sh">
+tc build --kind layer --name transformer-deps --publish -e dev
+tc update -s john -e dev -c layers
+</code></pre>
+<p>With the above command, we built the dependencies in a docker container and updated the function(s) to use the latest version of the layer. See <a href="/docs/modules/builder.html">Build</a> for details about building functions.</p>
+<h3 id="7-creating-the-first-release"><a class="header" href="#7-creating-the-first-release">7. Creating the first release</a></h3>
+<p>tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level</p>
+<pre><code class="language-sh">tc tag -s etl --next minor|major
+</code></pre>
+<p>This creates a tag in git for the ETL topology.</p>
+<h2 id="8-configuring-infrastructure"><a class="header" href="#8-configuring-infrastructure">8. Configuring infrastructure</a></h2>
+<p>At times, we require more infrastructure-specific configuration, specific permissions, environment variables, runtime configuration.</p>
+<p>We can specify an infra path in the topology</p>
+<pre><code class="language-yaml">name: etl
+infra: &quot;../infra/etl&quot;
+routes: ..
+</code></pre>
+<p>In the specified infra directory, we can add environment/runtime variables for let's say enhancer.</p>
+<p>../infra/etl/vars/enhancer.json</p>
+<pre><code class="language-json">{
+  &quot;memory_size&quot;: 1024,
+  &quot;timeout&quot;: 800,
+  &quot;environment&quot;: {
+    &quot;GOOGLE_API_KEY&quot;: &quot;ssm:/goo/api-key&quot;,
+    &quot;KEY&quot;: &quot;VALUE&quot;
+  },
+  &quot;tags&quot;: {
+    &quot;developer&quot;: &quot;john&quot;
+  }
+}
+
+</code></pre>
+<p>If we need specific IAM permissions, do</p>
+<p>../infra/etl/roles/enhancer.json</p>
+<pre><code class="language-json">{
+    &quot;Statement&quot;: [
+        {
+            &quot;Action&quot;: [
+                &quot;s3:PutObject&quot;,
+                &quot;s3:ListBucketVersions&quot;,
+                &quot;s3:ListBucket&quot;
+            ],
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Resource&quot;: [
+                &quot;arn:aws:s3:::bucket/*&quot;,
+                &quot;arn:aws:s3:::bucket&quot;
+                     ],
+            &quot;Sid&quot;: &quot;AllowAccessToS3Bucket1&quot;
+        }
+
+    ],
+    &quot;Version&quot;: &quot;2012-10-17&quot;
+}
+
+</code></pre>
+<p>We may also need additional configuration that are specific to the provider (AWS etc).
+Add a key called config with the value as path to the file.</p>
+<pre><code class="language-yaml">name: etl
+infra: &quot;../infra/etl&quot;
+config: &quot;../tc.yaml&quot;
+routes: ..
+</code></pre>
+<p>See <a href="/docs/specification/config.html">Config</a></p>
 
                     </main>
 
@@ -365,7 +523,7 @@ routes:
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="patterns.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="examples/etl-mutations.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -379,7 +537,7 @@ routes:
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="patterns.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="examples/etl-mutations.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
