@@ -184,20 +184,177 @@
 <li><a href="#bootstrap-permissions">Bootstrap permissions</a></li>
 <li><a href="#a-basic-function">A basic function</a></li>
 <li><a href="#namespacing-your-functions">Namespacing your functions</a></li>
-<li><a href="#create-your-sandbox">Create your sandbox</a></li>
+<li><a href="#defining-the-flow">Defining the flow</a>
+<ul>
+<li><a href="#event-based-flow">Event-based flow</a></li>
+<li><a href="#stepfunctions">Stepfunctions</a></li>
+<li><a href="#mutations">Mutations</a></li>
+</ul>
+</li>
+<li><a href="#adding-a-trigger-to-the-topology">Adding a trigger to the topology</a></li>
 <li><a href="#configuring-infrastructure">Configuring infrastructure</a></li>
 </ul>
-<p>Now that we have installed <code>tc</code> and understood the features in abstract, let's try to walk through</p>
+<p>Now that we have installed <code>tc</code> and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.</p>
 <h2 id="bootstrap-permissions"><a class="header" href="#bootstrap-permissions">Bootstrap permissions</a></h2>
 <p>Let's create some base IAM roles and policies. <code>tc</code> maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called <code>dev</code>. This dev profile/account can have several dev sandboxes.</p>
 <pre><code>tc bootstrap --roles -e dev
 </code></pre>
 <h2 id="a-basic-function"><a class="header" href="#a-basic-function">A basic function</a></h2>
-<p>A simple python function (lambda) looks like this.</p>
-<pre><code class="language-python">
+<p>A simple function looks like this. Let's call this function <code>enhancer</code>. Add a file named <code>handler.py</code> in a directory etl/enhancer.</p>
+<p>handler.py:</p>
+<pre><code class="language-python">def handler(event, context):
+  return {'enhancer': 'abc'}
+</code></pre>
+<p>In the foo directory, you can now create the function by running the following command.</p>
+<pre><code class="language-sh">tc create -s &lt;sandbox-name&gt; -e &lt;env&gt;
+
+Example: tc create -s john -e dev
+</code></pre>
+<p>This creates a lambda function named <code>enhancer_john</code> with the base role (tc-base-lambda-role) as the execution role.</p>
+<pre><code class="language-admonish. info">AWS Lambda is the default implementation for the function entity. env here is typically the AWS profile.
 </code></pre>
 <h2 id="namespacing-your-functions"><a class="header" href="#namespacing-your-functions">Namespacing your functions</a></h2>
-<h2 id="create-your-sandbox"><a class="header" href="#create-your-sandbox">Create your sandbox</a></h2>
+<p>Our <code>etl</code> directory now contains just one function called <code>enhancer</code>. Let's create the <code>transformer</code> and <code>loader</code> functions. Add the following files.</p>
+<p>transformer/handler.py</p>
+<pre><code class="language-python">def handler(event, context):
+  return {'transformer': 'ABC'}
+
+</code></pre>
+<p>loader/handler.py</p>
+<pre><code class="language-python">def handler(event, context):
+  return {'transformer': 'ABC'}
+
+</code></pre>
+<p>We should have the following directory contents:</p>
+<pre><code>etl
+|-- enhancer
+|   `-- handler.py
+|-- loader
+|   `-- handler.py
+|-- topology.yml
+`-- transformer
+    `-- handler.py
+</code></pre>
+<p>Now that we have these 3 functions, we may want to collectively call them as <code>etl</code>. Let's create a file named <code>topology.yml</code> with the following contents:</p>
+<pre><code class="language-yaml">name: etl
+</code></pre>
+<p><code>name</code> is the namespace of these collection of functions.
+Now in the etl directory, we can run the following command to create a sandbox</p>
+<pre><code>tc create -s john -e dev
+</code></pre>
+<p>You should see the following output</p>
+<pre><code>Compiling topology
+Resolving topology etl
+1 nodes, 3 functions, 0 mutations, 0 events, 0 routes, 0 queues
+Building transformer (python3.10/code)
+Building enhancer (python3.10/code)
+Building loader (python3.10/code)
+Creating functor etl@john.dev/0.0.1
+Creating function enhancer (211 B)
+Creating function transformer (211 B)
+Creating function loader (211 B)
+Checking state enhancer (ok)
+Time elapsed: 5.585 seconds
+</code></pre>
+<p>The resulting lambda functions are named '<namespace><em><function-name></em><sandbox>'. If the name is sufficiently long, tc abbreviates it</p>
+<p>We can test these functions, independently</p>
+<pre><code>cd enhancer
+tc invoke -s john -e dev -p '{&quot;somedata&quot;: 123}'
+</code></pre>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<div class="admonition-title">
+<div id="admonition-info-title">
+<p>Info</p>
+</div>
+<a class="admonition-anchor-link" href="#admonition-info"></a>
+</div>
+<div>
+<p>The word service is overloaded. tc encourages the use of functor or topology to define the collection of entities.</p>
+</div>
+</div>
+<h2 id="defining-the-flow"><a class="header" href="#defining-the-flow">Defining the flow</a></h2>
+<p>Now that we have these functions, we need to orchestrate the flow between them. tc provides a number of mechanisms to define the flow</p>
+<ol>
+<li>Event-based flow (Eventbridge)</li>
+<li>State Transitions (Stepfunctions)</li>
+<li>Mutations (Appsync/Graphql)</li>
+<li>Function Chaning (Lambda desitinations)</li>
+</ol>
+<h3 id="event-based-flow"><a class="header" href="#event-based-flow">Event-based flow</a></h3>
+<pre><code class="language-yaml">name: etl
+
+events:
+  EnhancerComplete:
+    producer: enhancer
+    function: '{{namespace}}_transformer_{{sandbox}}'
+
+  TransformerComplete:
+    producer: transformer
+    function: '{{namespace}}_loader_{{sandbox}}'
+</code></pre>
+<pre><code class="language-sh">tc update -s john -e dev -c events
+</code></pre>
+<h3 id="stepfunctions"><a class="header" href="#stepfunctions">Stepfunctions</a></h3>
+<p>Alternatively, we can use stepfunctions to orchestrate the flow.</p>
+<pre><code class="language-yaml">
+</code></pre>
+<h3 id="mutations"><a class="header" href="#mutations">Mutations</a></h3>
+<pre><code class="language-yaml">mutations:
+  authorizer: '{{namespace}}_authorizer_{{sandbox}}'
+  types:
+    Input:
+      id: String!
+    Status:
+      id: String!
+      status: String
+      message: String
+      percentage: Int
+
+  resolvers:
+    initialize:
+      function: '{{namespace}}_initializer_{{sandbox}}'
+      input: Input
+      output: Status
+      subscribe: true
+
+    enhance:
+      function: '{{namespace}}_enhancer_{{sandbox}}'
+      input: Event
+      output: Status
+      subscribe: true
+
+    transform:
+      function: '{{namespace}}_transformer_{{sandbox}}'
+      input: Event
+      output: Status
+      subscribe: true
+
+    load:
+      function: '{{namespace}}_loader_{{sandbox}}'
+      input: Event
+      output: Status
+      subscribe: true
+
+    complete:
+      function: '{{namespace}}_completer_{{sandbox}}'
+      input: Event
+      output: Status
+      subscribe: true
+</code></pre>
+<h2 id="adding-a-trigger-to-the-topology"><a class="header" href="#adding-a-trigger-to-the-topology">Adding a trigger to the topology</a></h2>
+<pre><code class="language-yaml">name: etl
+
+routes:
+  /start-etl:
+    gateway: api-test
+    function: '{{namespace}}_enhancer_{{sandbox}}'
+    kind: http
+    timeout: 10
+    async: false
+    method: POST
+</code></pre>
+<pre><code class="language-sh">tc update -s john -e dev -c routes
+</code></pre>
 <h2 id="configuring-infrastructure"><a class="header" href="#configuring-infrastructure">Configuring infrastructure</a></h2>
 
                     </main>
@@ -229,22 +386,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
