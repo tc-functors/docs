@@ -6,10 +6,8 @@
 
 # Examples
 - [ETL-mutations](./examples/etl-mutations.md)
-- [ETL-states](./examples/etl-states.md)
 - [Job Tracker](./examples/job-tracker.md)
-- [Chat](./examples/job-tracker.md)
-- [Patterns](./patterns.md)
+- [Chat](./examples/chat.md)
 
 # Specification
 - [Topology](./specification/topology.md)
@@ -20,6 +18,7 @@
 # Reference
 - [CLI](./reference/cli.md)
 - [Library](./reference/library.md)
+- [Patterns](./patterns.md)
 
 # Modules
 - [Compiler](./modules/compiler.md)

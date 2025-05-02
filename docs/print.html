@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/etl-mutations.html">ETL-mutations</a></li><li class="chapter-item "><a href="examples/etl-states.html">ETL-states</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Chat</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/etl-mutations.html">ETL-mutations</a></li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="examples/chat.html">Chat</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -730,72 +730,46 @@ mutations:
       output: Status
       subscribe: true
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="etl-states"><a class="header" href="#etl-states">ETL-states</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="job-tracker"><a class="header" href="#job-tracker">Job Tracker</a></h1>
-<p>wip - a frontend app</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="job-tracker-1"><a class="header" href="#job-tracker-1">Job Tracker</a></h1>
-<p>wip - a frontend app</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="patterns"><a class="header" href="#patterns">Patterns</a></h1>
-<ul>
-<li><a href="patterns.html#1-request-response">1. Request-Response</a></li>
-<li><a href="patterns.html#2-request-async-response">2. Request-async-Response</a></li>
-<li><a href="patterns.html#3-request-queue">3. Request-Queue</a></li>
-<li><a href="patterns.html#4-request-event-routing">4. Request-Event-Routing</a></li>
-<li><a href="patterns.html#5-events-choreography">5. Events Choreography</a></li>
-<li><a href="patterns.html#6-event-filters">6. Event Filters</a></li>
-<li><a href="patterns.html#7-request-stepfunction">7. Request Stepfunction</a></li>
-<li><a href="patterns.html#8-request-map">8. Request Map</a></li>
-</ul>
-<p>WIP</p>
-<h2 id="1-request-response"><a class="header" href="#1-request-response">1. Request-Response</a></h2>
+<p>Let's explore another example that uses Mutations to track status of arbitrary jobs</p>
 <pre><code class="language-yaml">
-name: request-response
-
-routes:
-  get-user:
-    gateway: api-test
-    kind: http
-    method: GET
-	sync: true
-    path: &quot;/api/user&quot;
-    function: fetcher
-</code></pre>
-<p>This is a simple topology which creates a HTTP route backed by a function. In AWS, this creates the API Gateway configuration and creates the lambda function with the right permissions.</p>
-<h2 id="2-request-async-response"><a class="header" href="#2-request-async-response">2. Request-async-Response</a></h2>
-<pre><code class="language-yaml">name: 06-request-async-response
-
-routes:
-  post-message:
-    gateway: api-test
-    kind: http
-    timeout: 10
-    method: POST
-    path: &quot;/api/message&quot;
-    function: processor
-  get-messages:
-    gateway: api-test
-    kind: http
-    method: GET
-    path: &quot;/api/messages&quot;
-    function: fetcher
-
+name: job-tracker
 events:
   consumes:
-    GetMessages:
-      producer: fetcher
-      channel: messages
+    CompleteTask:
+      producer: adHoc
+      mutation: completeJob
 
-channels:
-  messages:
-    on_publish:
-      handler: default
+mutations:
+  authorizer: '{{namespace}}_authorizer_{{sandbox}}'
+  types:
+    JobInput:
+      id: String!
+    Job:
+      id: String!
+      status: String
+      message: String
+
+  resolvers:
+    listJobs:
+      function: '{{namespace}}_lister_{{sandbox}}'
+      input: JobInput
+      output: Job
+      subscribe: false
+
+    startJob:
+      function: '{{namespace}}_starter_{{sandbox}}'
+      input: JobInput
+      output: Job
+      subscribe: true
+
+    completeJob:
+      function: '{{namespace}}_completer_{{sandbox}}'
+      input: Event
+      output: Job
+      subscribe: true
 </code></pre>
-<h2 id="3-request-queue"><a class="header" href="#3-request-queue">3. Request-Queue</a></h2>
-<h2 id="4-request-event-routing"><a class="header" href="#4-request-event-routing">4. Request-Event-Routing</a></h2>
-<h2 id="5-events-choreography"><a class="header" href="#5-events-choreography">5. Events Choreography</a></h2>
-<h2 id="6-event-filters"><a class="header" href="#6-event-filters">6. Event Filters</a></h2>
-<h2 id="7-request-stepfunction"><a class="header" href="#7-request-stepfunction">7. Request Stepfunction</a></h2>
-<h2 id="8-request-map"><a class="header" href="#8-request-map">8. Request Map</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="chat"><a class="header" href="#chat">Chat</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
 <p><code>topology.yml</code></p>
 <pre><code class="language-yaml">name: &lt;namespace&gt;
@@ -1446,6 +1420,67 @@ aws:
 <hr/>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="library"><a class="header" href="#library">Library</a></h1>
 <p>WIP</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="patterns"><a class="header" href="#patterns">Patterns</a></h1>
+<ul>
+<li><a href="patterns.html#1-request-response">1. Request-Response</a></li>
+<li><a href="patterns.html#2-request-async-response">2. Request-async-Response</a></li>
+<li><a href="patterns.html#3-request-queue">3. Request-Queue</a></li>
+<li><a href="patterns.html#4-request-event-routing">4. Request-Event-Routing</a></li>
+<li><a href="patterns.html#5-events-choreography">5. Events Choreography</a></li>
+<li><a href="patterns.html#6-event-filters">6. Event Filters</a></li>
+<li><a href="patterns.html#7-request-stepfunction">7. Request Stepfunction</a></li>
+<li><a href="patterns.html#8-request-map">8. Request Map</a></li>
+</ul>
+<p>WIP</p>
+<h2 id="1-request-response"><a class="header" href="#1-request-response">1. Request-Response</a></h2>
+<pre><code class="language-yaml">
+name: request-response
+
+routes:
+  get-user:
+    gateway: api-test
+    kind: http
+    method: GET
+	sync: true
+    path: &quot;/api/user&quot;
+    function: fetcher
+</code></pre>
+<p>This is a simple topology which creates a HTTP route backed by a function. In AWS, this creates the API Gateway configuration and creates the lambda function with the right permissions.</p>
+<h2 id="2-request-async-response"><a class="header" href="#2-request-async-response">2. Request-async-Response</a></h2>
+<pre><code class="language-yaml">name: 06-request-async-response
+
+routes:
+  post-message:
+    gateway: api-test
+    kind: http
+    timeout: 10
+    method: POST
+    path: &quot;/api/message&quot;
+    function: processor
+  get-messages:
+    gateway: api-test
+    kind: http
+    method: GET
+    path: &quot;/api/messages&quot;
+    function: fetcher
+
+events:
+  consumes:
+    GetMessages:
+      producer: fetcher
+      channel: messages
+
+channels:
+  messages:
+    on_publish:
+      handler: default
+</code></pre>
+<h2 id="3-request-queue"><a class="header" href="#3-request-queue">3. Request-Queue</a></h2>
+<h2 id="4-request-event-routing"><a class="header" href="#4-request-event-routing">4. Request-Event-Routing</a></h2>
+<h2 id="5-events-choreography"><a class="header" href="#5-events-choreography">5. Events Choreography</a></h2>
+<h2 id="6-event-filters"><a class="header" href="#6-event-filters">6. Event Filters</a></h2>
+<h2 id="7-request-stepfunction"><a class="header" href="#7-request-stepfunction">7. Request Stepfunction</a></h2>
+<h2 id="8-request-map"><a class="header" href="#8-request-map">8. Request Map</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="compiler"><a class="header" href="#compiler">Compiler</a></h1>
 <p><code>tc compile</code> does the following:</p>
 <ol>
