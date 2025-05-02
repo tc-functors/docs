@@ -505,11 +505,18 @@ routes:
 </code></pre>
 <p>We should see an output like:</p>
 <pre><code>Compiling topology
+Resolving topology...
 Resolving routes...
 Updating functor etl@john.dev/0.0.1/routes
+Creating route POST /start-etl
+Creating integration function
+Creating gateway stage test
+Endpoint https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test
+
 </code></pre>
 <p>Now just trigger the ETL topology using</p>
-<pre><code class="language-sh">curl ...
+<pre><code class="language-sh">curl https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test/start-etl -X POST -d '{&quot;hello&quot;: &quot;world&quot;}'
+=&gt; {&quot;enhancer&quot;: &quot;abc&quot;}
 </code></pre>
 <h3 id="6-implementing-the-functions"><a class="header" href="#6-implementing-the-functions">6. Implementing the functions</a></h3>
 <p>So far, we created a topology with basic functions, events, routes and a flow to connect them all. The functions themselves don't do much. Functions have depedencies, different runtimes or languages, platform-specific shared libraries and so forth. For example, we have want the enhancer to have some dependencies specified in say pyproject.toml or requirements.txt. Let's add a file named <code>function.json</code> in enhancer directory</p>

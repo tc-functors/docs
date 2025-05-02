@@ -250,14 +250,21 @@ tc update -s john -e dev -c routes
 We should see an output like:
 ```
 Compiling topology
+Resolving topology...
 Resolving routes...
 Updating functor etl@john.dev/0.0.1/routes
+Creating route POST /start-etl
+Creating integration function
+Creating gateway stage test
+Endpoint https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test
+
 ```
 
 Now just trigger the ETL topology using
 
 ```sh
-curl ...
+curl https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test/start-etl -X POST -d '{"hello": "world"}'
+=> {"enhancer": "abc"}
 ```
 
 ### 6. Implementing the functions
