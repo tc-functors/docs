@@ -4,9 +4,9 @@
 - [Installation](./installation.md)
 
 # Tutorial
-- [ETL - Getting Started](./getting-started.md)
-- [ETL - Mutations](./tutorial/etl-mutations.md)
-- [ETL - Release](./tutorial/etl-release.md)
+- [Getting Started](./getting-started.md)
+- [Mutations](./tutorial/etl-mutations.md)
+- [Release](./tutorial/etl-release.md)
 
 # Examples
 - [Job Tracker](./examples/job-tracker.md)

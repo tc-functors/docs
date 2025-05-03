@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">ETL - Getting Started</a></li><li class="chapter-item "><a href="../tutorial/etl-mutations.html">ETL - Mutations</a></li><li class="chapter-item "><a href="../tutorial/etl-release.html">ETL - Release</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="../examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="../examples/chat.html">Chat app</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item "><a href="../specification/function.html">Function</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li><li class="chapter-item "><a href="../reference/library.html">Library</a></li><li class="chapter-item "><a href="../patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="../modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="../modules/builder.html">Builder</a></li><li class="chapter-item expanded "><a href="../modules/resolver.html" class="active">Resolver</a></li><li class="chapter-item "><a href="../modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="../modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="../modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="../modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="../modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="../modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="../modules/inspector.html">Inspector</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item "><a href="../tutorial/etl-mutations.html">Mutations</a></li><li class="chapter-item "><a href="../tutorial/etl-release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="../examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="../examples/chat.html">Chat app</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item "><a href="../specification/function.html">Function</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li><li class="chapter-item "><a href="../reference/library.html">Library</a></li><li class="chapter-item "><a href="../patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="../modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="../modules/builder.html">Builder</a></li><li class="chapter-item expanded "><a href="../modules/resolver.html" class="active">Resolver</a></li><li class="chapter-item "><a href="../modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="../modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="../modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="../modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="../modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="../modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="../modules/inspector.html">Inspector</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -216,22 +216,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

@@ -6,6 +6,8 @@ Caveat: this is a rough draft and we are still working on the documentation.
 
 Now that we have installed `tc` and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.
 
+In this tutorial, we will attempt to learn about the core concepts in tc.
+
 ## 1. Bootstrap permissions
 
 Let's create some base IAM roles and policies. `tc` maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called `dev`. This dev profile/account can have several dev sandboxes.

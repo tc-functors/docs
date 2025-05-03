@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">ETL - Getting Started</a></li><li class="chapter-item "><a href="tutorial/etl-mutations.html">ETL - Mutations</a></li><li class="chapter-item "><a href="tutorial/etl-release.html">ETL - Release</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="examples/chat.html">Chat app</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item "><a href="tutorial/etl-mutations.html">Mutations</a></li><li class="chapter-item "><a href="tutorial/etl-release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="examples/chat.html">Chat app</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/bootstrapper.html">Bootstrapper</a></li><li class="chapter-item "><a href="modules/grokker.html">Grokker</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -326,6 +326,7 @@ sudo mv target/release/tc /usr/local/bin/tc
 </ul>
 <p>Caveat: this is a rough draft and we are still working on the documentation.</p>
 <p>Now that we have installed <code>tc</code> and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.</p>
+<p>In this tutorial, we will attempt to learn about the core concepts in tc.</p>
 <h2 id="1-bootstrap-permissions"><a class="header" href="#1-bootstrap-permissions">1. Bootstrap permissions</a></h2>
 <p>Let's create some base IAM roles and policies. <code>tc</code> maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called <code>dev</code>. This dev profile/account can have several dev sandboxes.</p>
 <pre><code>tc bootstrap --roles -e dev
@@ -665,7 +666,71 @@ config: &quot;../tc.yaml&quot;
 routes: ..
 </code></pre>
 <p>See <a href="/docs/specification/config.html">Config</a></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="etl-mutations"><a class="header" href="#etl-mutations">ETL mutations</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="tutorial-etl-mutations"><a class="header" href="#tutorial-etl-mutations">Tutorial ETL-mutations</a></h1>
+<p>In the [Getting Started] example we created an ETL topology using events and stepfunction/states. Appsync Graphql Mutations offer us another way to define the flow between the entities.</p>
+<pre><code class="language-yaml">name: etl-mut
+
+routes:
+  /start-etl:
+    gateway: api-test
+    function: '{{namespace}}_enhancer_{{sandbox}}'
+    kind: http
+    timeout: 10
+    async: false
+    method: POST
+
+
+events:
+  EnhancerComplete:
+    producer: enhancer
+    function: '{{namespace}}_transformer_{{sandbox}}'
+
+  TransformerComplete:
+    producer: transformer
+    function: '{{namespace}}_loader_{{sandbox}}'
+
+mutations:
+  authorizer: '{{namespace}}_authorizer_{{sandbox}}'
+  types:
+    Input:
+      id: String!
+    Status:
+      id: String!
+      status: String
+      message: String
+      percentage: Int
+
+  resolvers:
+    initialize:
+      function: '{{namespace}}_initializer_{{sandbox}}'
+      input: Input
+      output: Status
+      subscribe: true
+
+    enhance:
+      function: '{{namespace}}_enhancer_{{sandbox}}'
+      input: Event
+      output: Status
+      subscribe: true
+
+    transform:
+      function: '{{namespace}}_transformer_{{sandbox}}'
+      input: Event
+      output: Status
+      subscribe: true
+
+    load:
+      function: '{{namespace}}_loader_{{sandbox}}'
+      input: Event
+      output: Status
+      subscribe: true
+
+    complete:
+      function: '{{namespace}}_completer_{{sandbox}}'
+      input: Event
+      output: Status
+      subscribe: true
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="etl---release"><a class="header" href="#etl---release">ETL - Release</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="job-tracker"><a class="header" href="#job-tracker">Job Tracker</a></h1>
 <p>Let's explore another example that uses Mutations to track status of arbitrary jobs</p>
@@ -1841,22 +1906,6 @@ tc inspect --trace
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 
