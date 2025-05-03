@@ -2,12 +2,15 @@
 
 - [Introduction](./introduction.md)
 - [Installation](./installation.md)
-- [Getting Started](./getting-started.md)
+
+# Tutorial
+- [ETL - Getting Started](./getting-started.md)
+- [ETL - Mutations](./tutorial/etl-mutations.md)
+- [ETL - Release](./tutorial/etl-release.md)
 
 # Examples
-- [ETL-mutations](./examples/etl-mutations.md)
 - [Job Tracker](./examples/job-tracker.md)
-- [Chat](./examples/chat.md)
+- [Chat app](./examples/chat.md)
 
 # Specification
 - [Topology](./specification/topology.md)
