@@ -444,6 +444,3 @@ routes: ..
 ```
 
 See [Config](/docs/specification/config.html)
-
-
-{% embed giscus repo="informed-labs/tc-docs" repo-id="R_kgDOOfKp9Q" category="General" category-id="DIC_kwDOOfKp9c4Cpvjp" theme="book" loading="eager" %}

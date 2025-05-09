@@ -11,7 +11,6 @@ deps:
 	cargo install mdbook-admonish
 	cargo install mdbook-mermaid
 	cargo install mdbook-toc
-	cargo install mdbook-embedify
 	mdbook-admonish install
 
 clean:
