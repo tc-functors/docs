@@ -8,7 +8,7 @@ title = "Cloud Functors using tc"
 [output.html]
 additional-css = ["assets/custom.css", "assets/mdbook-admonish.css", "./mdbook-admonish.css"]
 additional-js = ["assets/mermaid.min.js", "assets/mermaid-init.js"]
-git-repository-url = "https://github.com/informed-labs/tc"
+git-repository-url = "https://github.com/tc-functors/tc"
 no-section-label = true
 
 [output.html.fold]
