@@ -21,7 +21,7 @@ In the simplest case, when there are no dependencies in a function, we can speci
 }
 
 ```
-[Example](https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-basic/function.json)
+[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-basic/function.json)
 
 and then `tc create -s <sandbox> -e <env>` builds this function using the given `command` and creates it in the given sandbox and env.
 
@@ -49,7 +49,7 @@ The above is a pretty trivial example and it gets complicated as we start adding
 
 }
 ```
-[Example](https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-inline/function.json)
+[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-inline/function.json)
 
 `tc create -s <sandbox> -e <env>` will implicitly build the artifact with _inlined_ deps and create the function in the given sandbox and env. The dependencies are typically in `lib/` including shared objects (.so files).
 
@@ -136,7 +136,7 @@ While `Layer` and `Inline` build kind should suffice to pack most dependencies, 
 }
 ```
 
-[Example](https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-image/req/function.json#L1)
+[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-image/function.json#L1)
 
 In the above example, we define the `base` image with dependencies and `code` image that packs just the code. Note that `code`  references `base` as the _parent_. Effectively, we can build a tree of images (say base dependencies, models, assets and code). These `images` can be built at any point in the lifecycle of the function. To build the `base` image do:
 
@@ -147,7 +147,7 @@ tc build --image base --publish
 When `--publish` is specified, it publishes to the configured ECR repo [See Configuration]. Alternatively, `TC_ECR_REPO` env variable can be specified to override the config. The value of variable is the ECR repo URI
 
 
-With python functions, the image can be built either by having a 'requirements.txt' file in the function directory or a pyproject.toml. `tc build` works with requirements.txt and poetry. See [poetry example](https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-image/pyp/function.json#L6)
+With python functions, the image can be built either by having a 'requirements.txt' file in the function directory or a pyproject.toml. `tc build` works with requirements.txt and poetry.
 
 When all "parent" images have been built, `tc create` will create the `code` image just-in-time. The tag is the SHA1 checksum of the function directory. The code tag is typically of the format "{{repo}}/code:req-0d4043e5ae0ebc83f486ff26e8e30f3bd404b707""
 
@@ -188,7 +188,6 @@ At times, we may need to use a parent image that is shared and defined in anothe
   }
 }
 ```
-[Example](https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-image/req-external/function.json#L20)
 
 `parent` in the `code` image-spec is an URI. This is also a way to pin the parent image.
 

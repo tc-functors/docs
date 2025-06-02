@@ -161,7 +161,7 @@ tc delete -s john -e dev -c events
 
 Much like update, we can delete selectively delete few entities without touching other parts of the topology.
 
-## 4.2 State Transitions
+### 4.2 State Transitions
 
 The following defines a simple linear flow using ASL (Amazon States Language).
 
@@ -269,7 +269,7 @@ curl https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test/start-etl -X PO
 => {"enhancer": "abc"}
 ```
 
-### 6. Implementing the functions
+## 6. Implementing the functions
 
 
 So far, we created a topology with basic functions, events, routes and a flow to connect them all. The functions themselves don't do much. Functions have depedencies, different runtimes or languages, platform-specific shared libraries and so forth. For example, we have want the enhancer to have some dependencies specified in say pyproject.toml or requirements.txt. Let's add a file named `function.json` in enhancer directory
@@ -364,7 +364,7 @@ tc create -s john -e dev --recursive
 ```
 
 
-### 8. Creating the first release
+## 8. Creating the first release
 
 tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level
 

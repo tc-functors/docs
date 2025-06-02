@@ -19,10 +19,7 @@
 # Modules
 - [Compiler](./modules/compiler.md)
 - [Builder](./modules/builder.md)
-- [Resolver](./modules/resolver.md)
 - [Deployer](./modules/deployer.md)
 - [Invoker](./modules/invoker.md)
-- [Releaser](./modules/releaser.md)
 - [Emulator](./modules/emulator.md)
-- [Differ](./modules/differ.md)
 - [Inspector](./modules/inspector.md)

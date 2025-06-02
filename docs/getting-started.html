@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item expanded "><a href="getting-started.html" class="active">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/differ.html">Differ</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item expanded "><a href="getting-started.html" class="active">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -187,19 +187,13 @@
 <li><a href="#4-defining-the-flow">4. Defining the flow</a>
 <ul>
 <li><a href="#41-event-based-flow">4.1 Event-based flow</a></li>
-</ul>
-</li>
 <li><a href="#42-state-transitions">4.2 State Transitions</a></li>
-<li><a href="#5-adding-a-trigger-to-the-topology">5. Adding a trigger to the topology</a>
-<ul>
+</ul>
+</li>
+<li><a href="#5-adding-a-trigger-to-the-topology">5. Adding a trigger to the topology</a></li>
 <li><a href="#6-implementing-the-functions">6. Implementing the functions</a></li>
-</ul>
-</li>
-<li><a href="#7-making-it-recursive">7. Making it recursive</a>
-<ul>
+<li><a href="#7-making-it-recursive">7. Making it recursive</a></li>
 <li><a href="#8-creating-the-first-release">8. Creating the first release</a></li>
-</ul>
-</li>
 <li><a href="#9-configuring-infrastructure">9. Configuring infrastructure</a></li>
 </ul>
 <p>Caveat: this is a rough draft and we are still working on the documentation.</p>
@@ -324,7 +318,7 @@ Updating functor etl@john.dev/0.0.1/events
 <pre><code class="language-sh">tc delete -s john -e dev -c events
 </code></pre>
 <p>Much like update, we can delete selectively delete few entities without touching other parts of the topology.</p>
-<h2 id="42-state-transitions"><a class="header" href="#42-state-transitions">4.2 State Transitions</a></h2>
+<h3 id="42-state-transitions"><a class="header" href="#42-state-transitions">4.2 State Transitions</a></h3>
 <p>The following defines a simple linear flow using ASL (Amazon States Language).</p>
 <pre><code class="language-yaml">name: etl
 
@@ -410,7 +404,7 @@ Endpoint https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test
 <pre><code class="language-sh">curl https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test/start-etl -X POST -d '{&quot;hello&quot;: &quot;world&quot;}'
 =&gt; {&quot;enhancer&quot;: &quot;abc&quot;}
 </code></pre>
-<h3 id="6-implementing-the-functions"><a class="header" href="#6-implementing-the-functions">6. Implementing the functions</a></h3>
+<h2 id="6-implementing-the-functions"><a class="header" href="#6-implementing-the-functions">6. Implementing the functions</a></h2>
 <p>So far, we created a topology with basic functions, events, routes and a flow to connect them all. The functions themselves don't do much. Functions have depedencies, different runtimes or languages, platform-specific shared libraries and so forth. For example, we have want the enhancer to have some dependencies specified in say pyproject.toml or requirements.txt. Let's add a file named <code>function.json</code> in enhancer directory</p>
 <p>enhancer/function.json</p>
 <pre><code class="language-json">
@@ -486,7 +480,7 @@ tc update -s john -e dev -c layers
 <p>Now we can recursrively create the topologies from the root topology directory</p>
 <pre><code>tc create -s john -e dev --recursive
 </code></pre>
-<h3 id="8-creating-the-first-release"><a class="header" href="#8-creating-the-first-release">8. Creating the first release</a></h3>
+<h2 id="8-creating-the-first-release"><a class="header" href="#8-creating-the-first-release">8. Creating the first release</a></h2>
 <p>tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level</p>
 <pre><code class="language-sh">tc tag -s etl --next minor|major
 </code></pre>

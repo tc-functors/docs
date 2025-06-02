@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/differ.html">Differ</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -309,19 +309,13 @@ sudo mv target/release/tc /usr/local/bin/tc
 <li><a href="getting-started.html#4-defining-the-flow">4. Defining the flow</a>
 <ul>
 <li><a href="getting-started.html#41-event-based-flow">4.1 Event-based flow</a></li>
-</ul>
-</li>
 <li><a href="getting-started.html#42-state-transitions">4.2 State Transitions</a></li>
-<li><a href="getting-started.html#5-adding-a-trigger-to-the-topology">5. Adding a trigger to the topology</a>
-<ul>
+</ul>
+</li>
+<li><a href="getting-started.html#5-adding-a-trigger-to-the-topology">5. Adding a trigger to the topology</a></li>
 <li><a href="getting-started.html#6-implementing-the-functions">6. Implementing the functions</a></li>
-</ul>
-</li>
-<li><a href="getting-started.html#7-making-it-recursive">7. Making it recursive</a>
-<ul>
+<li><a href="getting-started.html#7-making-it-recursive">7. Making it recursive</a></li>
 <li><a href="getting-started.html#8-creating-the-first-release">8. Creating the first release</a></li>
-</ul>
-</li>
 <li><a href="getting-started.html#9-configuring-infrastructure">9. Configuring infrastructure</a></li>
 </ul>
 <p>Caveat: this is a rough draft and we are still working on the documentation.</p>
@@ -446,7 +440,7 @@ Updating functor etl@john.dev/0.0.1/events
 <pre><code class="language-sh">tc delete -s john -e dev -c events
 </code></pre>
 <p>Much like update, we can delete selectively delete few entities without touching other parts of the topology.</p>
-<h2 id="42-state-transitions"><a class="header" href="#42-state-transitions">4.2 State Transitions</a></h2>
+<h3 id="42-state-transitions"><a class="header" href="#42-state-transitions">4.2 State Transitions</a></h3>
 <p>The following defines a simple linear flow using ASL (Amazon States Language).</p>
 <pre><code class="language-yaml">name: etl
 
@@ -532,7 +526,7 @@ Endpoint https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test
 <pre><code class="language-sh">curl https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test/start-etl -X POST -d '{&quot;hello&quot;: &quot;world&quot;}'
 =&gt; {&quot;enhancer&quot;: &quot;abc&quot;}
 </code></pre>
-<h3 id="6-implementing-the-functions"><a class="header" href="#6-implementing-the-functions">6. Implementing the functions</a></h3>
+<h2 id="6-implementing-the-functions"><a class="header" href="#6-implementing-the-functions">6. Implementing the functions</a></h2>
 <p>So far, we created a topology with basic functions, events, routes and a flow to connect them all. The functions themselves don't do much. Functions have depedencies, different runtimes or languages, platform-specific shared libraries and so forth. For example, we have want the enhancer to have some dependencies specified in say pyproject.toml or requirements.txt. Let's add a file named <code>function.json</code> in enhancer directory</p>
 <p>enhancer/function.json</p>
 <pre><code class="language-json">
@@ -608,7 +602,7 @@ tc update -s john -e dev -c layers
 <p>Now we can recursrively create the topologies from the root topology directory</p>
 <pre><code>tc create -s john -e dev --recursive
 </code></pre>
-<h3 id="8-creating-the-first-release"><a class="header" href="#8-creating-the-first-release">8. Creating the first release</a></h3>
+<h2 id="8-creating-the-first-release"><a class="header" href="#8-creating-the-first-release">8. Creating the first release</a></h2>
 <p>tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level</p>
 <pre><code class="language-sh">tc tag -s etl --next minor|major
 </code></pre>
@@ -1454,7 +1448,7 @@ retail
 }
 
 </code></pre>
-<p><a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-basic/function.json">Example</a></p>
+<p><a href="https://github.com/informed-labs/tc/blob/main/examples/functions/python-basic/function.json">Example</a></p>
 <p>and then <code>tc create -s &lt;sandbox&gt; -e &lt;env&gt;</code> builds this function using the given <code>command</code> and creates it in the given sandbox and env.</p>
 <h2 id="inline"><a class="header" href="#inline">Inline</a></h2>
 <p>The above is a pretty trivial example and it gets complicated as we start adding more dependencies. If the dependencies are reasonably small (&lt; 50MB), we can inline those in the code's artifact (lambda.zip).</p>
@@ -1477,7 +1471,7 @@ retail
 
 }
 </code></pre>
-<p><a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-inline/function.json">Example</a></p>
+<p><a href="https://github.com/informed-labs/tc/blob/main/examples/functions/python-inline/function.json">Example</a></p>
 <p><code>tc create -s &lt;sandbox&gt; -e &lt;env&gt;</code> will implicitly build the artifact with <em>inlined</em> deps and create the function in the given sandbox and env. The dependencies are typically in <code>lib/</code> including shared objects (.so files).</p>
 <div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
 <div class="admonition-title">
@@ -1559,12 +1553,12 @@ tc publish --name ppd-layer
   }
 }
 </code></pre>
-<p><a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-image/req/function.json#L1">Example</a></p>
+<p><a href="https://github.com/informed-labs/tc/blob/main/examples/functions/python-image/function.json#L1">Example</a></p>
 <p>In the above example, we define the <code>base</code> image with dependencies and <code>code</code> image that packs just the code. Note that <code>code</code>  references <code>base</code> as the <em>parent</em>. Effectively, we can build a tree of images (say base dependencies, models, assets and code). These <code>images</code> can be built at any point in the lifecycle of the function. To build the <code>base</code> image do:</p>
 <pre><code class="language-sh">tc build --image base --publish
 </code></pre>
 <p>When <code>--publish</code> is specified, it publishes to the configured ECR repo [See Configuration]. Alternatively, <code>TC_ECR_REPO</code> env variable can be specified to override the config. The value of variable is the ECR repo URI</p>
-<p>With python functions, the image can be built either by having a 'requirements.txt' file in the function directory or a pyproject.toml. <code>tc build</code> works with requirements.txt and poetry. See <a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-image/pyp/function.json#L6">poetry example</a></p>
+<p>With python functions, the image can be built either by having a 'requirements.txt' file in the function directory or a pyproject.toml. <code>tc build</code> works with requirements.txt and poetry.</p>
 <p>When all &quot;parent&quot; images have been built, <code>tc create</code> will create the <code>code</code> image just-in-time. The tag is the SHA1 checksum of the function directory. The code tag is typically of the format &quot;{{repo}}/code:req-0d4043e5ae0ebc83f486ff26e8e30f3bd404b707&quot;&quot;</p>
 <p>We can also optionally build the <code>code</code> image.</p>
 <pre><code>tc build --image code --publish
@@ -1603,7 +1597,6 @@ tc publish --name ppd-layer
   }
 }
 </code></pre>
-<p><a href="https://github.com/informed-labs/tc/blob/main/examples/patterns/02-builders/python-image/req-external/function.json#L20">Example</a></p>
 <p><code>parent</code> in the <code>code</code> image-spec is an URI. This is also a way to pin the parent image.</p>
 <h2 id="slab"><a class="header" href="#slab">Slab</a></h2>
 <p><code>slab</code> is an abstraction for building depedencies, assets and serving it via a network filesystem (EFS). An example function with slab looks like:</p>
@@ -1656,13 +1649,6 @@ tc build --kind library --name mylib --publish --lang ruby
 <p>To traverse through the topology and build the depedencies or code in parallel, do the following:</p>
 <pre><code>tc build [-kind code|image|layer] --recursive --publish
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="resolver"><a class="header" href="#resolver">Resolver</a></h1>
-<p>WIP</p>
-<ol>
-<li>Resolves the environment variables from stores ssm:/, s3:/</li>
-<li>Renders templates</li>
-<li>Resolves versions</li>
-</ol>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="deployer"><a class="header" href="#deployer">Deployer</a></h1>
 <h3 id="creating-a-sandbox"><a class="header" href="#creating-a-sandbox">Creating a Sandbox</a></h3>
 <pre><code class="language-sh">cd services/extraction
@@ -1731,14 +1717,6 @@ tc create [--sandbox SANDBOX] [-e ENV]
 <pre><code>tc invoke --kind lambda -e dev --payload '{&quot;data&quot;...}'
 tc invoke --kind event -e dev --payload '{&quot;data&quot;...}'
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="releaser"><a class="header" href="#releaser">Releaser</a></h1>
-<ul>
-<li><a href="modules/releaser.html#versioning">Versioning</a></li>
-<li><a href="modules/releaser.html#changelog">Changelog</a></li>
-</ul>
-<p>WIP</p>
-<h2 id="versioning"><a class="header" href="#versioning">Versioning</a></h2>
-<h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="emulator"><a class="header" href="#emulator">Emulator</a></h1>
 <ul>
 <li><a href="modules/emulator.html#lambdas">Lambdas</a></li>
@@ -1761,8 +1739,6 @@ tc emulate
 </code></pre>
 <p>This spins up a container and runs the emulator on http://localhost:8083</p>
 <p>Details to follow on creating and executing [wip]</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="grokker"><a class="header" href="#grokker">Grokker</a></h1>
-<p>WIP</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="inspector"><a class="header" href="#inspector">Inspector</a></h1>
 <p><code>tc</code> provides a lightweight http-based app to inspect the topologies. This is still experimental.</p>
 <p>To run the inspector, run <code>tc inspect --trace</code> in the root topology directory. For example:</p>
