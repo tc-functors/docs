@@ -5,12 +5,6 @@
 
 # Tutorial
 - [Getting Started](./getting-started.md)
-- [Mutations](./tutorial/etl-mutations.md)
-- [Release](./tutorial/etl-release.md)
-
-# Examples
-- [Job Tracker](./examples/job-tracker.md)
-- [Chat app](./examples/chat.md)
 
 # Specification
 - [Topology](./specification/topology.md)
@@ -20,7 +14,6 @@
 
 # Reference
 - [CLI](./reference/cli.md)
-- [Library](./reference/library.md)
 - [Patterns](./patterns.md)
 
 # Modules

@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item "><a href="tutorial/etl-mutations.html">Mutations</a></li><li class="chapter-item "><a href="tutorial/etl-release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Examples</li><li class="chapter-item "><a href="examples/job-tracker.html">Job Tracker</a></li><li class="chapter-item "><a href="examples/chat.html">Chat app</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="reference/library.html">Library</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/differ.html">Differ</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item "><a href="patterns.html">Patterns</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/resolver.html">Resolver</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/differ.html">Differ</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -666,112 +666,6 @@ config: &quot;../tc.yaml&quot;
 routes: ..
 </code></pre>
 <p>See <a href="/docs/specification/config.html">Config</a></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="tutorial-etl-mutations"><a class="header" href="#tutorial-etl-mutations">Tutorial ETL-mutations</a></h1>
-<p>In the [Getting Started] example we created an ETL topology using events and stepfunction/states. Appsync Graphql Mutations offer us another way to define the flow between the entities.</p>
-<pre><code class="language-yaml">name: etl-mut
-
-routes:
-  /start-etl:
-    gateway: api-test
-    function: '{{namespace}}_enhancer_{{sandbox}}'
-    kind: http
-    timeout: 10
-    async: false
-    method: POST
-
-
-events:
-  EnhancerComplete:
-    producer: enhancer
-    function: '{{namespace}}_transformer_{{sandbox}}'
-
-  TransformerComplete:
-    producer: transformer
-    function: '{{namespace}}_loader_{{sandbox}}'
-
-mutations:
-  authorizer: '{{namespace}}_authorizer_{{sandbox}}'
-  types:
-    Input:
-      id: String!
-    Status:
-      id: String!
-      status: String
-      message: String
-      percentage: Int
-
-  resolvers:
-    initialize:
-      function: '{{namespace}}_initializer_{{sandbox}}'
-      input: Input
-      output: Status
-      subscribe: true
-
-    enhance:
-      function: '{{namespace}}_enhancer_{{sandbox}}'
-      input: Event
-      output: Status
-      subscribe: true
-
-    transform:
-      function: '{{namespace}}_transformer_{{sandbox}}'
-      input: Event
-      output: Status
-      subscribe: true
-
-    load:
-      function: '{{namespace}}_loader_{{sandbox}}'
-      input: Event
-      output: Status
-      subscribe: true
-
-    complete:
-      function: '{{namespace}}_completer_{{sandbox}}'
-      input: Event
-      output: Status
-      subscribe: true
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="etl---release"><a class="header" href="#etl---release">ETL - Release</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="job-tracker"><a class="header" href="#job-tracker">Job Tracker</a></h1>
-<p>Let's explore another example that uses Mutations to track status of arbitrary jobs</p>
-<pre><code class="language-yaml">
-name: job-tracker
-events:
-  consumes:
-    CompleteTask:
-      producer: adHoc
-      mutation: completeJob
-
-mutations:
-  authorizer: '{{namespace}}_authorizer_{{sandbox}}'
-  types:
-    JobInput:
-      id: String!
-    Job:
-      id: String!
-      status: String
-      message: String
-
-  resolvers:
-    listJobs:
-      function: '{{namespace}}_lister_{{sandbox}}'
-      input: JobInput
-      output: Job
-      subscribe: false
-
-    startJob:
-      function: '{{namespace}}_starter_{{sandbox}}'
-      input: JobInput
-      output: Job
-      subscribe: true
-
-    completeJob:
-      function: '{{namespace}}_completer_{{sandbox}}'
-      input: Event
-      output: Job
-      subscribe: true
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="chat"><a class="header" href="#chat">Chat</a></h1>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
 <p><code>topology.yml</code></p>
 <pre><code class="language-yaml">name: &lt;namespace&gt;
@@ -1420,8 +1314,6 @@ aws:
 <li><code>-s</code>, <code>--spec &lt;SPEC&gt;</code></li>
 </ul>
 <hr/>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="library"><a class="header" href="#library">Library</a></h1>
-<p>WIP</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="patterns"><a class="header" href="#patterns">Patterns</a></h1>
 <ul>
 <li><a href="patterns.html#1-request-response">1. Request-Response</a></li>
@@ -1739,7 +1631,7 @@ tc publish --name ppd-layer
 
 </code></pre>
 <p>This publishes the slab  to EFS as configured (See Configuration)</p>
-<h2 id="library-1"><a class="header" href="#library-1">Library</a></h2>
+<h2 id="library"><a class="header" href="#library">Library</a></h2>
 <p>A library is a kind of build that recursively packs a collection of directories to serve as a single library in the target runtime.</p>
 <p>For example, let's say we have the following directory structure</p>
 <pre><code>lib/
