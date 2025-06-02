@@ -1424,6 +1424,8 @@ retail
 <li><a href="modules/builder.html#layer">Layer</a></li>
 <li><a href="modules/builder.html#image">Image</a>
 <ul>
+<li><a href="modules/builder.html#syncing-base-images">Syncing base images</a></li>
+<li><a href="modules/builder.html#inspecting-the-images">Inspecting the images</a></li>
 <li><a href="modules/builder.html#external-parent-image">External parent image</a></li>
 </ul>
 </li>
@@ -1563,7 +1565,11 @@ tc publish --name ppd-layer
 <p>We can also optionally build the <code>code</code> image.</p>
 <pre><code>tc build --image code --publish
 </code></pre>
-<p>Note that the child image uses the parent's version of the image as specified in the parent's block</p>
+<p>Note that the child image uses the parent's version of the image as specified in the parent's block.</p>
+<h3 id="syncing-base-images"><a class="header" href="#syncing-base-images">Syncing base images</a></h3>
+<p>While we can <code>docker pull</code> the base and code images locally, it is cumbersome to do it for all functions recursively by resolving their versions. <code>tc build --sync</code> pulls the base and code images based on current function checksums. Having a copy the base or parent code images allows us to do incremental updates much faster.</p>
+<h3 id="inspecting-the-images"><a class="header" href="#inspecting-the-images">Inspecting the images</a></h3>
+<p>We can run <code>tc build --shell</code> in the function directory and access the bash shell. The shell is always on the <code>code</code> image of the current function checksum. Note that the <code>code</code> image using the Lambda Runtime Image as the source image.</p>
 <div id="admonition-info-2" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-2-title">
 <div class="admonition-title">
 <div id="admonition-info-2-title">

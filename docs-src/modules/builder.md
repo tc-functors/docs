@@ -157,7 +157,16 @@ We can also optionally build the `code` image.
 tc build --image code --publish
 ```
 
-Note that the child image uses the parent's version of the image as specified in the parent's block
+Note that the child image uses the parent's version of the image as specified in the parent's block.
+
+### Syncing base images
+
+While we can `docker pull` the base and code images locally, it is cumbersome to do it for all functions recursively by resolving their versions. `tc build --sync` pulls the base and code images based on current function checksums. Having a copy the base or parent code images allows us to do incremental updates much faster.
+
+### Inspecting the images
+
+We can run `tc build --shell` in the function directory and access the bash shell. The shell is always on the `code` image of the current function checksum. Note that the `code` image using the Lambda Runtime Image as the source image.
+
 
 ```admonish info
 It is recommended that the ECR repo has a <namespace>/<label> format. The label can be the image labels specified in function.json:build (base, code etc)
