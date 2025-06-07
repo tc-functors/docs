@@ -1,10 +1,10 @@
 all: build
 
 build:
-	mkdir -p ../../dist/docs && mdbook build --dest-dir ../../dist/docs
+	mdbook build --dest-dir ../../docs
 
 run:
-	mdbook serve --open --dest-dir ../../dist/docs
+	mdbook serve --open --dest-dir ../../docs
 
 deps:
 	cargo install mdbook --version 0.4.36
