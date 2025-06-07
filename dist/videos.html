@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/main.css" />
+    <title>tc - Functors</title>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="relative container mx-auto p-6">
+      <!-- Flex Container -->
+      <div class="flex flex-row items-center justify-between">
+        <!-- Logo -->
+        <div class="pt-2">
+          <a href="/"><img src="img/logo.png" alt="logo" width="24px"/></a>
+        </div>
+        <!-- Menu Items -->
+        <div class="hidden space-x-6 md:flex">
+          <a href="/" class="hover:text-darkGrayishBlue" target="_new">Home</a>
+          <a href="/docs" class="hover:text-darkGrayishBlue" target="_new">Docs</a>
+          <b>Videos</b>
+          <a href="/blog.html" class="hover:text-darkGrayishBlue">Blog</a>
+          <a href="/news.html" class="hover:text-darkGrayishBlue">News</a>
+        </div>
+        <!-- Button -->
+	<a href="/docs/" class="p-3 px-6 pt-2 text-white bg-brightRed rounded-full baseline hover:bg-brightRedLight">Get Started</a>
+       </a>
+
+        <!-- Hamburger Icon -->
+        <button id="menu-btn" class="block hamburger md:hidden focus:outline-none">
+          <span class="hamburger-top"></span>
+          <span class="hamburger-middle"></span>
+          <span class="hamburger-bottom"></span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="md:hidden">
+        <div
+          id="menu"
+          class="absolute flex-col items-center hidden self-end py-8 mt-10 space-y-6 font-bold bg-white sm:w-auto sm:self-center left-6 right-6 drop-shadow-md"
+        >
+          <a href="#">Docs</a>
+          Videos
+          <a href="#">Blog</a>
+          <a href="#">News</a>
+        </div>
+      </div>
+    </nav>
+
+
+     <div class="container md:center px-4 mx-auto mt-10 space-y-12 md:space-y-0 md:flex-row">
+       <h3> Navigating the tc inspector</h3>
+       <img src="/img/screencast.gif" width=900/>
+
+       <br/>
+       <br/>
+
+       <h3>Video Presentation on tc from AWS Community Day - Bay Area Sept 2024</h3>
+       <iframe
+            width="900"
+            height="600"
+            src="https://www.youtube.com/embed/1gqDGulszzQ"
+            title="Higher Order Tooling"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+        ></iframe>
+
+       <br/>
+     </div>
+
+
+</body>
+</html>

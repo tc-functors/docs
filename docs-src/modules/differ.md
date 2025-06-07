@@ -1,3 +1,0 @@
-# Grokker
-
-WIP
