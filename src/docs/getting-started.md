@@ -139,7 +139,7 @@ functions:
 
 `tc update -s john -e dev` to update and create the flow.
 
-## 5. Adding a REST API
+## 5. Add a REST API to invoke ETL
 
 ```
 name: etl
@@ -169,7 +169,6 @@ name: etl
 routes:
   /api/etl:
     method: POST
-    authorizer: custom-authorizer
     function: enhancer
 
 functions:
@@ -197,7 +196,7 @@ curl https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test/start-etl -X PO
 => {"enhancer": "abc"}
 ```
 
-## 7. Implementing the functions
+## 7. Implement the functions
 
 
 So far, we created a topology with basic functions, events, routes and a flow to connect them all. The functions themselves don't do much. Functions have depedencies, different runtimes or languages, platform-specific shared libraries and so forth. For example, we have want the enhancer to have some dependencies specified in say pyproject.toml or requirements.txt. Let's add a file named `function.json` in enhancer directory

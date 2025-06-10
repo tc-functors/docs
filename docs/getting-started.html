@@ -185,9 +185,9 @@
 <li><a href="#2-our-first-function">2. Our first function</a></li>
 <li><a href="#3-namespace-your-functions">3. Namespace your functions</a></li>
 <li><a href="#4-define-the-function-dag-flow">4. Define the function DAG (flow)</a></li>
-<li><a href="#5-adding-a-rest-api">5. Adding a REST API</a></li>
+<li><a href="#5-add-a-rest-api-to-invoke-etl">5. Add a REST API to invoke ETL</a></li>
 <li><a href="#6-notify-on-completion">6. Notify on completion</a></li>
-<li><a href="#7-implementing-the-functions">7. Implementing the functions</a></li>
+<li><a href="#7-implement-the-functions">7. Implement the functions</a></li>
 <li><a href="#8-making-it-recursive">8. Making it recursive</a></li>
 <li><a href="#9-configuring-infrastructure">9. Configuring infrastructure</a></li>
 </ul>
@@ -296,7 +296,7 @@ functions:
 </code></pre>
 <p><code>tc</code> dynamically figures out the orchestrator to use. By default, it uses Stepfunction (Express) to orchestrate the flow. <code>tc</code> automatically generates an intimidating stepfunction definition. You can inspect that by running <code>tc compile -c flow</code></p>
 <p><code>tc update -s john -e dev</code> to update and create the flow.</p>
-<h2 id="5-adding-a-rest-api"><a class="header" href="#5-adding-a-rest-api">5. Adding a REST API</a></h2>
+<h2 id="5-add-a-rest-api-to-invoke-etl"><a class="header" href="#5-add-a-rest-api-to-invoke-etl">5. Add a REST API to invoke ETL</a></h2>
 <pre><code>name: etl
 
 routes:
@@ -320,7 +320,6 @@ functions:
 routes:
   /api/etl:
     method: POST
-    authorizer: custom-authorizer
     function: enhancer
 
 functions:
@@ -344,7 +343,7 @@ channels:
 <pre><code class="language-sh">curl https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test/start-etl -X POST -d '{&quot;hello&quot;: &quot;world&quot;}'
 =&gt; {&quot;enhancer&quot;: &quot;abc&quot;}
 </code></pre>
-<h2 id="7-implementing-the-functions"><a class="header" href="#7-implementing-the-functions">7. Implementing the functions</a></h2>
+<h2 id="7-implement-the-functions"><a class="header" href="#7-implement-the-functions">7. Implement the functions</a></h2>
 <p>So far, we created a topology with basic functions, events, routes and a flow to connect them all. The functions themselves don't do much. Functions have depedencies, different runtimes or languages, platform-specific shared libraries and so forth. For example, we have want the enhancer to have some dependencies specified in say pyproject.toml or requirements.txt. Let's add a file named <code>function.json</code> in enhancer directory</p>
 <p>enhancer/function.json</p>
 <pre><code class="language-json">
