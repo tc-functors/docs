@@ -6,11 +6,6 @@
 # Tutorial
 - [Getting Started](./getting-started.md)
 
-# Concepts
-- [Namespacing](./concepts/namespacing.md)
-- [Sandboxing](./concepts/sandboxing.md)
-- [Composing](./concepts/composing.md)
-
 # Modules
 - [Compiler](./modules/compiler.md)
 - [Builder](./modules/builder.md)
