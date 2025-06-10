@@ -6,15 +6,10 @@
 # Tutorial
 - [Getting Started](./getting-started.md)
 
-# Specification
-- [Topology](./specification/topology.md)
-- [Function](./specification/function.md)
-- [Infrastructure](./specification/infrastructure.md)
-- [Config](./specification/config.md)
-
-# Reference
-- [CLI](./reference/cli.md)
-- [Patterns](./patterns.md)
+# Concepts
+- [Namespacing](./concepts/namespacing.md)
+- [Sandboxing](./concepts/sandboxing.md)
+- [Composing](./concepts/composing.md)
 
 # Modules
 - [Compiler](./modules/compiler.md)
@@ -23,3 +18,12 @@
 - [Invoker](./modules/invoker.md)
 - [Emulator](./modules/emulator.md)
 - [Inspector](./modules/inspector.md)
+
+# Specification
+- [Topology](./specification/topology.md)
+- [Function](./specification/function.md)
+- [Infrastructure](./specification/infrastructure.md)
+- [Config](./specification/config.md)
+
+# Reference
+- [CLI](./reference/cli.md)

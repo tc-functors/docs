@@ -42,7 +42,7 @@ This creates a lambda function named `enhancer_john` with the base role (tc-base
 AWS Lambda is the default implementation for the function entity. env here is typically the AWS profile.
 ```
 
-## 3. Namespacing your functions
+## 3. Namespace your functions
 
 Our `etl` directory now contains just one function called `enhancer`. Let's create the `transformer` and `loader` functions. Add the following files.
 
@@ -116,160 +116,88 @@ tc invoke -s john -e dev -p '{"somedata": 123}'
 The word service is overloaded. tc encourages the use of functor or topology to define the collection of entities.
 ```
 
-## 4. Defining the flow
+## 4. Define the function DAG (flow)
 
-Now that we have these functions, we need to orchestrate the flow between them. tc provides a number of mechanisms to define the flow
+Now that we have these functions working in isolation, we may want to create a DAG of these functions. Let's define that flow:
 
-1. Event-based flow (Eventbridge)
-2. State Transitions (Stepfunctions)
-3. Mutations (Appsync/Graphql)
-4. Function Chaning (Lambda desitinations)
-
-### 4.1 Event-based flow
-
-```yaml
+```
 name: etl
 
-events:
-  EnhancerComplete:
-    producer: enhancer
-    function: '{{namespace}}_transformer_{{sandbox}}'
+functions:
+  enhancer:
+    root: true
+    function: transformer
+  transformer:
+    function: loader
+  loader:
+	end: true
 
-  TransformerComplete:
-    producer: transformer
-    function: '{{namespace}}_loader_{{sandbox}}'
 ```
 
-We can update just the `events` component or entity. The following creates the eventbridge rules wiring up the enhancer, transformer and loader functions
+`tc` dynamically figures out the orchestrator to use. By default, it uses Stepfunction (Express) to orchestrate the flow. `tc` automatically generates an intimidating stepfunction definition. You can inspect that by running `tc compile -c flow`
 
-```sh
-tc update -s john -e dev -c events
+
+`tc update -s john -e dev` to update and create the flow.
+
+## 5. Adding a REST API
+
 ```
-We should see an output like:
-```
-Compiling topology
-Resolving events...
-Updating functor etl@john.dev/0.0.1/events
-```
-With event-based functions, function needs to explicitly out the eventbridge event. We could alternatively use stepfunction that has a managed orchestrator. Let's define the stepfunction flow.
-
-We can remove the events above for now
-
-```sh
-tc delete -s john -e dev -c events
-```
-
-Much like update, we can delete selectively delete few entities without touching other parts of the topology.
-
-### 4.2 State Transitions
-
-The following defines a simple linear flow using ASL (Amazon States Language).
-
-```yaml
 name: etl
-
-flow:
-    Comment: ETL
-    StartAt: enhance
-    TimeoutSeconds: 1200
-    States:
-      enhance:
-        Type: Task
-        Resource: arn:aws:states:::lambda:invoke
-        OutputPath: $.Payload
-        InputPath: $
-        Parameters:
-          FunctionName: '{{namespace}}_enhancer_{{sandbox}}'
-          Payload:
-            data.$: $
-        Next: transform
-      transform:
-        Type: Task
-        Resource: arn:aws:states:::lambda:invoke
-        OutputPath: $.Payload
-        InputPath: $
-        Parameters:
-          FunctionName: '{{namespace}}_transformer_{{sandbox}}'
-          Payload:
-            data.$: $
-        Next: transform
-      load:
-        Type: Task
-        Resource: arn:aws:states:::lambda:invoke
-        OutputPath: $.Payload
-        InputPath: $
-        Parameters:
-          FunctionName: '{{namespace}}_loader_{{sandbox}}'
-          Payload:
-            data.$: $
-        End: true
-```
-
-To deploy the above flow:
-
-```
-tc create -s john -e dev -c flow
-```
-
-It should output the following:
-```
-Compiling topology
-Resolving events...
-Updating functor etl@john.dev/0.0.1/flow
-```
-
-
-## 5. Adding a trigger to the topology
-
-We may want to trigger the ETL topology via an API route
-
-```yaml
-name: etl
-
-events:
-  EnhancerComplete:
-    producer: enhancer
-    function: '{{namespace}}_transformer_{{sandbox}}'
-
-  TransformerComplete:
-    producer: transformer
-    function: '{{namespace}}_loader_{{sandbox}}'
 
 routes:
-  /start-etl:
-    gateway: api-test
-    function: '{{namespace}}_enhancer_{{sandbox}}'
-    sync: false
+  /api/etl:
     method: POST
+    function: enhancer
+
+functions:
+  enhancer:
+    root: true
+    function: transformer
+  transformer:
+    function: loader
+  loader:
+    event: Notify
 ```
 
-The `routes` map in the topology defines a set of routes backed by serverless entities. In this example, /start-etl triggers the lambda function. Now, we can incrementally update the routes
+Run `tc update -s john -e dev -c routes` to update the routes.
 
-
-```sh
-tc update -s john -e dev -c routes
-```
-We should see an output like:
-```
-Compiling topology
-Resolving topology...
-Resolving routes...
-Updating functor etl@john.dev/0.0.1/routes
-Creating route POST /start-etl
-Creating integration function
-Creating gateway stage test
-Endpoint https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test
+## 6. Notify on completion
 
 ```
+name: etl
 
-Now just trigger the ETL topology using
+routes:
+  /api/etl:
+    method: POST
+    authorizer: custom-authorizer
+    function: enhancer
+
+functions:
+  enhancer:
+    root: true
+    function: transformer
+  transformer:
+    function: loader
+  loader:
+    event: Notify
+
+events:
+  Notify:
+    channel: Subscription
+
+channels:
+  Subscription:
+    function: default
+```
+
+Let's make `loader` output an event that pushes the status message to a websocket channel. `tc update -s john -e dev` to create/update the events and channels.
 
 ```sh
 curl https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test/start-etl -X POST -d '{"hello": "world"}'
 => {"enhancer": "abc"}
 ```
 
-## 6. Implementing the functions
+## 7. Implementing the functions
 
 
 So far, we created a topology with basic functions, events, routes and a flow to connect them all. The functions themselves don't do much. Functions have depedencies, different runtimes or languages, platform-specific shared libraries and so forth. For example, we have want the enhancer to have some dependencies specified in say pyproject.toml or requirements.txt. Let's add a file named `function.json` in enhancer directory
@@ -347,7 +275,7 @@ tc update -s john -e dev -c layers
 With the above command, we built the dependencies in a docker container and updated the function(s) to use the latest version of the layer. See [Build](/docs/modules/builder.html) for details about building functions.
 
 
-## 7. Making it recursive
+## 8. Making it recursive
 
 We can make loader itself another sub-topology with it's own DAG of entities and still treat etl as the root topology (or functor). Let's add a topology file in loader.
 
@@ -362,18 +290,6 @@ Now we can recursrively create the topologies from the root topology directory
 ```
 tc create -s john -e dev --recursive
 ```
-
-
-## 8. Creating the first release
-
-tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level
-
-
-```sh
-tc tag -s etl --next minor|major
-```
-
-This creates a tag in git for the ETL topology.
 
 ## 9. Configuring infrastructure
 
