@@ -12,9 +12,13 @@ nodes:
   dirs: [<path>]
 
 functions:
-  shared: [<rel path>]
-  remote: [<git url>]
-  dirs: [<dir path>]
+  FunctionName:
+    uri: <String>
+    function: <String>
+    event: <String>
+    queue: <String>
+    runtime: RuntimeSpec
+    build: BuildSpec
 
 events:
   EventName:

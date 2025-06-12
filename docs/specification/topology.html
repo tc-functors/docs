@@ -189,9 +189,13 @@ nodes:
   dirs: [&lt;path&gt;]
 
 functions:
-  shared: [&lt;rel path&gt;]
-  remote: [&lt;git url&gt;]
-  dirs: [&lt;dir path&gt;]
+  FunctionName:
+    uri: &lt;String&gt;
+    function: &lt;String&gt;
+    event: &lt;String&gt;
+    queue: &lt;String&gt;
+    runtime: RuntimeSpec
+    build: BuildSpec
 
 events:
   EventName:
