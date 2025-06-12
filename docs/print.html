@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li><li class="chapter-item "><a href="modules/snapshotter.html">Snapshotter</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/function.html">Function</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -977,6 +977,59 @@ tc emulate
 tc inspect --trace
 </code></pre>
 <p><img src="modules//images/inspector.gif" alt="Inspector" /></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="snapshotter"><a class="header" href="#snapshotter">Snapshotter</a></h1>
+<p>The snapshotter module takes a snapshot of a given sandbox and outputs the same datastructure as the compiler output. This <code>isomorphic</code> characteristic is useful to see the diffs between sandboxes.</p>
+<p>For example the following outputs a JSON with the topology structure</p>
+<pre><code class="language-sh">
+cd topology-dir
+tc snapshot -s stable -e qa -c topology
+</code></pre>
+<pre><code class="language-json">
+{
+  &quot;events&quot;: {},
+  &quot;functions&quot;: {
+    &quot;n_f_stable&quot;: {
+      &quot;code_size&quot;: &quot;100 KB&quot;,
+      &quot;layers&quot;: {},
+      &quot;mem&quot;: 1024,
+      &quot;name&quot;: &quot;n_f_stable&quot;,
+      &quot;revision&quot;: &quot;e568c2865203&quot;,
+      &quot;tc_version&quot;: &quot;0.8.71&quot;,
+      &quot;timeout&quot;: 180,
+      &quot;updated&quot;: &quot;06:05:2025-15:48:32&quot;
+    },
+...
+</code></pre>
+<h3 id="versions"><a class="header" href="#versions">Versions</a></h3>
+<p>To see versions of all root topologies in a given sandbox:</p>
+<pre><code class="language-sh">
+tc snapshot -s stable -e qa -f table|json
+</code></pre>
+<pre><code>tc snapshot -s stable -e qa  -f table
+</code></pre>
+<pre><code class="language-pre"> namespace  | sandbox | version  | frozen | tc_version | updated_at
+------------+---------+----------+--------+------------+---------------------
+ node1      | stable  | 0.0.6    |        | 0.0.3      | 04:09:2025-18:20:42
+ node2      | stable  | 0.0.14   |        | 0.0.3      | 04:09:2025-18:19:15
+ node3      | stable  | 0.0.15   |        | 0.0.3      | 04:09:2025-18:19:28
+ node11     | stable  | 0.0.15   |        | 0.0.3      | 04:09:2025-18:19:28
+ node12     | stable  | 0.0.2    |        | 0.6.262    | 12:13:2024-06:46:57
+</code></pre>
+<p>To see versions across profiles for a sandbox, provide a csv of profiles/envs:</p>
+<pre><code class="language-sh">tc snapshot -s stable -e qa,staging
+</code></pre>
+<pre><code> Topology   | qa       | staging
+------------+----------+----------
+ node2      | 0.0.27   | 0.0.24
+ node3      | 0.0.6    | 0.0.6
+ node4      | 0.0.15   | 0.0.15
+ node5      | 0.0.26   | 0.0.26
+ node7      | 0.12.125 | 0.12.125
+ node8      | 0.2.29   | 0.2.29
+ node9      | 0.2.102  | 0.2.102
+ node10     | 0.1.24   | 0.1.24
+ node12     | 0.0.147  | 0.0.143
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
 <p><code>topology.yml</code></p>
 <pre><code class="language-yaml">name: &lt;namespace&gt;
