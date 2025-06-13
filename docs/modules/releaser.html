@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Compiler - Cloud Functors using tc</title>
+        <title>Releaser - Cloud Functors using tc</title>
 
 
         <!-- Custom HTML head -->
@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item expanded "><a href="../modules/compiler.html" class="active">Compiler</a></li><li class="chapter-item "><a href="../modules/builder.html">Builder</a></li><li class="chapter-item "><a href="../modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="../modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="../modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="../modules/inspector.html">Inspector</a></li><li class="chapter-item "><a href="../modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="../modules/snapshotter.html">Snapshotter</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item "><a href="../specification/function.html">Function</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="../modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="../modules/builder.html">Builder</a></li><li class="chapter-item "><a href="../modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="../modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="../modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="../modules/inspector.html">Inspector</a></li><li class="chapter-item expanded "><a href="../modules/releaser.html" class="active">Releaser</a></li><li class="chapter-item "><a href="../modules/snapshotter.html">Snapshotter</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item "><a href="../specification/function.html">Function</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -179,53 +179,28 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="compiler"><a class="header" href="#compiler">Compiler</a></h1>
-<p><code>tc compile</code> does the following:</p>
-<ol>
-<li>Discovers functions recursively in the current directory.</li>
-<li>Generates build instructions for the discovered functions.</li>
-<li>Interns remote, shared and local functions</li>
-<li>Reads the topology.yml file and validates it using input specification</li>
-<li>Generates the target representations for these entities specific to a provider</li>
-<li>Generates graphql output for mutations definition in topology.yml</li>
-<li>Transpiles flow definitions to stepfn etc.</li>
-<li>Generates checksum of all function directories</li>
-<li>Detects circular flows</li>
-</ol>
-<p>To generate the topology in curent directory</p>
-<pre><code>tc compile [--recursive]
-
+                        <h1 id="releaser"><a class="header" href="#releaser">Releaser</a></h1>
+<ul>
+<li><a href="#versioning">Versioning</a></li>
+<li><a href="#changelog">Changelog</a></li>
+</ul>
+<h2 id="versioning"><a class="header" href="#versioning">Versioning</a></h2>
+<p>tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level</p>
+<pre><code>tc tag -s etl --next minor|major
 </code></pre>
-<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
-<div class="admonition-title">
-<div id="admonition-info-title">
-<p>Info</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-info"></a>
-</div>
-<div>
-<p>We can also set TC_DIR environment variable to not compile in the current directory</p>
-</div>
-</div>
-<p>To generate tree of all functions</p>
-<pre><code>cd examples/apps/retail
-tc compile -c functions -f tree
+<p>This creates a tag with the etl prefix.</p>
+<h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>
+<p>To see the changelog of a specific topology</p>
+<pre><code>cd topology-dir
+tc changelog
 
-retail
-├╌╌ payment
-┆   ├╌╌ payment_stripe_{{sandbox}}
-┆   ┆   ├╌╌ python3.10
-┆   ┆   ├╌╌ provided
-┆   ┆   └╌╌
-┆   └╌╌ payment_klarna_{{sandbox}}
-┆       ├╌╌ python3.10
-┆       ├╌╌ provided
-┆       └╌╌
-├╌╌ pricing
-┆   └╌╌ pricing_resolver_{{sandbox}}
-┆       ├╌╌ python3.10
-┆       ├╌╌ provided
-┆       └╌╌
+# or
+
+tc changelog 0.8.1..0.8.6
+</code></pre>
+<p>To search for a specific text in all changelogs</p>
+<pre><code>cd root-topology-dir
+tc changelog --search AI-1234
 
 </code></pre>
 
@@ -233,11 +208,11 @@ retail
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../getting-started.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../modules/inspector.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../modules/builder.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../modules/snapshotter.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -247,11 +222,11 @@ retail
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../getting-started.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../modules/inspector.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../modules/builder.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../modules/snapshotter.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

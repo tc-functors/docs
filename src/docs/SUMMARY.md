@@ -13,6 +13,7 @@
 - [Invoker](./modules/invoker.md)
 - [Emulator](./modules/emulator.md)
 - [Inspector](./modules/inspector.md)
+- [Releaser](./modules/releaser.md)
 - [Snapshotter](./modules/snapshotter.md)
 
 # Specification
