@@ -882,7 +882,7 @@ tc build --kind library --name mylib --publish --lang ruby
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="deployer"><a class="header" href="#deployer">Deployer</a></h1>
 <h3 id="creating-a-sandbox"><a class="header" href="#creating-a-sandbox">Creating a Sandbox</a></h3>
-<pre><code class="language-sh">cd services/extraction
+<pre><code class="language-sh">cd &lt;topology-dir&gt;
 tc create [--sandbox SANDBOX] [-e ENV]
 </code></pre>
 <h3 id="incremental-updates"><a class="header" href="#incremental-updates">Incremental updates</a></h3>
@@ -979,12 +979,14 @@ tc inspect --trace
 <p><img src="modules//images/inspector.gif" alt="Inspector" /></p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="releaser"><a class="header" href="#releaser">Releaser</a></h1>
 <ul>
+<li><a href="modules/releaser.html#workflow">Workflow</a></li>
 <li><a href="modules/releaser.html#versioning">Versioning</a></li>
 <li><a href="modules/releaser.html#changelog">Changelog</a></li>
 </ul>
+<h2 id="workflow"><a class="header" href="#workflow">Workflow</a></h2>
 <h2 id="versioning"><a class="header" href="#versioning">Versioning</a></h2>
 <p>tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level</p>
-<pre><code>tc tag -s etl --next minor|major
+<pre><code>tc tag --service &lt;namespace&gt; --next minor|major
 </code></pre>
 <p>This creates a tag with the etl prefix.</p>
 <h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>

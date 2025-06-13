@@ -181,12 +181,14 @@
                     <main>
                         <h1 id="releaser"><a class="header" href="#releaser">Releaser</a></h1>
 <ul>
+<li><a href="#workflow">Workflow</a></li>
 <li><a href="#versioning">Versioning</a></li>
 <li><a href="#changelog">Changelog</a></li>
 </ul>
+<h2 id="workflow"><a class="header" href="#workflow">Workflow</a></h2>
 <h2 id="versioning"><a class="header" href="#versioning">Versioning</a></h2>
 <p>tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level</p>
-<pre><code>tc tag -s etl --next minor|major
+<pre><code>tc tag --service &lt;namespace&gt; --next minor|major
 </code></pre>
 <p>This creates a tag with the etl prefix.</p>
 <h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>

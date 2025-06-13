@@ -2,12 +2,15 @@
 
 <!-- toc -->
 
+## Workflow
+
+
 ## Versioning
 
 tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level
 
 ```
-tc tag -s etl --next minor|major
+tc tag --service <namespace> --next minor|major
 ```
 
 This creates a tag with the etl prefix.

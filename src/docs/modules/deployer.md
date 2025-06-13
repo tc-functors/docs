@@ -4,7 +4,7 @@
 ### Creating a Sandbox
 
 ```sh
-cd services/extraction
+cd <topology-dir>
 tc create [--sandbox SANDBOX] [-e ENV]
 ```
 
