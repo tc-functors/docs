@@ -13,7 +13,6 @@ tc tag -s etl --next minor|major
 This creates a tag with the etl prefix.
 
 
-
 ## Changelog
 
 
@@ -23,9 +22,12 @@ To see the changelog of a specific topology
 cd topology-dir
 tc changelog
 
+AI-123 Another command
+AI-456 Thing got added
+
 # or
 
-tc changelog 0.8.1..0.8.6
+tc changelog --between 0.8.1..0.8.6
 ```
 
 To search for a specific text in all changelogs
@@ -33,5 +35,7 @@ To search for a specific text in all changelogs
 ```
 cd root-topology-dir
 tc changelog --search AI-1234
+
+=> topology-name, version
 
 ```
