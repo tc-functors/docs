@@ -4,7 +4,7 @@ Download the executable for your OS
 
 | GNU/Linux x86                                                                   | MacOSX M1/M2                                                       |
 |---------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| [0.8.71](https://github.com/tc-functors/tc/releases/download/0.8.71/tc-x86_64-linux) | [0.8.71](https://github.com/tc-functors/tc/releases/download/0.8.71/tc-aarch64-macos)
+| [0.8.82](https://github.com/tc-functors/tc/releases/download/0.8.82/tc-x86_64-linux) | [0.8.82](https://github.com/tc-functors/tc/releases/download/0.8.82/tc-aarch64-macos)
 
 
 ```admonish warning title="For Mac users"
