@@ -887,7 +887,7 @@ tc build --kind library --name mylib --publish --lang ruby
 tc create [--sandbox SANDBOX] [-e ENV]
 </code></pre>
 <h3 id="incremental-updates"><a class="header" href="#incremental-updates">Incremental updates</a></h3>
-<p>While developing, we often need to incrementally deploy certain components without recreating the entire topology. <code>tc</code> provides an update command that updates givens entity and components.
+<p>While developing, we often need to incrementally deploy certain components without recreating the entire topology. <code>tc</code> provides an update command that updates given entity and components.
 An entity is a core composable servereless resource. . A component is an attribute or instance of the entity.</p>
 <p>We can update an entity and/or component as follows:</p>
 <pre><code>tc update -s sandbox -e env -c Entity/Component

@@ -12,7 +12,7 @@ tc create [--sandbox SANDBOX] [-e ENV]
 
 ### Incremental updates
 
-While developing, we often need to incrementally deploy certain components without recreating the entire topology. `tc` provides an update command that updates givens entity and components.
+While developing, we often need to incrementally deploy certain components without recreating the entire topology. `tc` provides an update command that updates given entity and components.
 An entity is a core composable servereless resource. . A component is an attribute or instance of the entity.
 
 
