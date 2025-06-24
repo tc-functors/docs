@@ -181,35 +181,58 @@
                     <main>
                         <h1 id="deployer"><a class="header" href="#deployer">Deployer</a></h1>
 <h3 id="creating-a-sandbox"><a class="header" href="#creating-a-sandbox">Creating a Sandbox</a></h3>
+<p>The following command create a sandbox in the given AWS profile (-e|--profile)</p>
 <pre><code class="language-sh">cd &lt;topology-dir&gt;
 tc create [--sandbox SANDBOX] [-e ENV]
 </code></pre>
 <h3 id="incremental-updates"><a class="header" href="#incremental-updates">Incremental updates</a></h3>
-<p>While developing, we often need to incrementally deploy certain components without recreating the entire topology. <code>tc</code> provides an update command that updates given component(s).</p>
-<p>To update the code for a function (say page-mapper) in the current directory</p>
-<pre><code class="language-sh">tc update --sandbox test -e dev-af -c page-mapper
-</code></pre>
-<p>To update the IAM roles and policies</p>
-<pre><code class="language-sh">tc update --sandbox test -e dev-af -c roles
-</code></pre>
-<p>To update the eventbridge event rules:</p>
-<pre><code class="language-sh">tc update --sandbox test -e dev-af -c events
-</code></pre>
-<p>To update the environment variables or runtime parameters. Usually these are defined in infrastucture/tc/<topology>/vars dir</p>
-<pre><code class="language-sh">tc update --sandbox test -e dev-af -c vars
-</code></pre>
-<p>To build and update layers</p>
-<pre><code class="language-sh">tc update --sandbox test -e dev-af -c layers
-</code></pre>
-<p>To update the Statemachine flow</p>
-<pre><code class="language-sh">tc update --sandbox test -e dev-af -c flow
+<p>While developing, we often need to incrementally deploy certain components without recreating the entire topology. <code>tc</code> provides an update command that updates givens entity and components.
+An entity is a core composable servereless resource. . A component is an attribute or instance of the entity.</p>
+<p>We can update an entity and/or component as follows:</p>
+<pre><code>tc update -s sandbox -e env -c Entity/Component
 
 </code></pre>
-<p>To update tags across stepfns, lambdas, roles, policies, eventbridge rules etc</p>
-<pre><code class="language-sh">tc update --sandbox test -e dev-af -c tags
+<h4 id="updating-entities"><a class="header" href="#updating-entities">Updating Entities</a></h4>
+<pre><code class="language-sh">tc update -s sandbox -e env -c routes
+tc update -s sandbox -e env -c events
+tc update -s sandbox -e env -c functions
+tc update -s sandbox -e env -c mutations
+tc update -s sandbox -e env -c channels
+tc update -s sandbox -e env -c schedules
+tc update -s sandbox -e env -c queues
 </code></pre>
-<p>To update logging and tracing config</p>
-<pre><code class="language-sh">tc update --sandbox test -e dev-af -c logs
+<h4 id="updating-specific-component-in-an-entity"><a class="header" href="#updating-specific-component-in-an-entity">Updating specific component in an entity</a></h4>
+<p>Components in <code>function</code> entity:</p>
+<pre><code class="language-sh">tc update -s sandbox -e env -c functions/layers
+tc update -s sandbox -e env -c functions/vars
+tc update -s sandbox -e env -c functions/concurrency
+tc update -s sandbox -e env -c functions/runtime
+tc update -s sandbox -e env -c functions/tags
+tc update -s sandbox -e env -c functions/roles
+tc update -s sandnox -e env -c functions/function-name
+</code></pre>
+<p>Components in <code>mutation</code> entity:</p>
+<pre><code class="language-sh">tc update -s sandbox -e env -c mutations/authorizer
+tc update -s sandbox -e env -c mutations/types
+tc update -s sandbox -e env -c mutations/roles
+tc update -s sandbox -e env -c mutations/RESOLVER_NAME
+</code></pre>
+<p>Components in <code>event</code> entity:</p>
+<pre><code class="language-sh">tc update -s sandbox -e env -c events/EVENT_NAME
+tc update -s sandbox -e env -c events/roles
+</code></pre>
+<p>Components in <code>route</code> entity:</p>
+<pre><code class="language-sh">tc update -s sandbox -e env -c routes/ROUTE_NAME
+tc update -s sandbox -e env -c routes/ROUTE_NAME/authorizer
+tc update -s sandbox -e env -c routes/roles
+</code></pre>
+<h3 id="deleting"><a class="header" href="#deleting">Deleting</a></h3>
+<p>To delete a sandbox:</p>
+<pre><code class="language-sh">
+tc delete -s sandbox -e env
+</code></pre>
+<p>To delete a specific entity/component. See update commands (above) for list of components</p>
+<pre><code>tc delete -s sandbox -e env -c ENTITY/COMPONENT
 </code></pre>
 <div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
 <div class="admonition-title">
@@ -219,9 +242,10 @@ tc create [--sandbox SANDBOX] [-e ENV]
 <a class="admonition-anchor-link" href="#admonition-info"></a>
 </div>
 <div>
-<p>Note that update works on unfrozen sandboxes. Most stable sandboxes are immutable and thus update is disabled for those. To mutate, unfreeze it.</p>
+<p>It is not recommended to delete entities or components as it impacts the integrity of the sandbox.</p>
 </div>
 </div>
+
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
