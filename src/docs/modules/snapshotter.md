@@ -73,3 +73,38 @@ tc snapshot -s stable -e qa,staging
  node10     | 0.1.24   | 0.1.24
  node12     | 0.0.147  | 0.0.143
 ```
+
+## Generating Manifest
+
+tc generates true manifests that can be used to render it in any other sandbox preserving the versions of the entities (functions, routes, events etc). The structure of a manifest is a JSON map with the following fields:
+
+```json
+{
+  "NAMESPACE": {
+    "time": UTC_DATETIME,
+    "env": STRING,
+    "sandbox": STRING,
+    "version": STRING,
+    "changelog": ["list of changes in git for the given version"],
+    "topology": TEMPLATED_TOPOLOGY
+}
+```
+
+To generate manifests for all _deployed_ root topologies
+
+```sh
+tc snapshot -s stable -e qa --manifest
+
+```
+
+We can save it to a S3 bucket by specifying bucket and prefix
+
+```sh
+tc snapshot -s stable -e qa --manifest --save s3://bucket/yyyy/mm/dd/version.json
+```
+
+The manifest itself is a deployable definition.
+
+```sh
+tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json
+```
