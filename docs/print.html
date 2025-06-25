@@ -1033,6 +1033,10 @@ tc changelog --search AI-1234
 
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="snapshotter"><a class="header" href="#snapshotter">Snapshotter</a></h1>
+<ul>
+<li><a href="modules/snapshotter.html#versions">Versions</a></li>
+<li><a href="modules/snapshotter.html#manifests">Manifests</a></li>
+</ul>
 <p>The snapshotter module takes a snapshot of a given sandbox and outputs the same datastructure as the compiler output. This <code>isomorphic</code> characteristic is useful to see the diffs between sandboxes.</p>
 <p>For example the following outputs a JSON with the topology structure</p>
 <pre><code class="language-sh">
@@ -1055,7 +1059,7 @@ tc snapshot -s stable -e qa -c topology
     },
 ...
 </code></pre>
-<h3 id="versions"><a class="header" href="#versions">Versions</a></h3>
+<h2 id="versions"><a class="header" href="#versions">Versions</a></h2>
 <p>To see versions of all root topologies in a given sandbox:</p>
 <pre><code class="language-sh">
 tc snapshot -s stable -e qa -f table|json
@@ -1085,7 +1089,7 @@ tc snapshot -s stable -e qa -f table|json
  node10     | 0.1.24   | 0.1.24
  node12     | 0.0.147  | 0.0.143
 </code></pre>
-<h2 id="generating-manifest"><a class="header" href="#generating-manifest">Generating Manifest</a></h2>
+<h2 id="manifests"><a class="header" href="#manifests">Manifests</a></h2>
 <p>tc generates true manifests that can be used to render it in any other sandbox preserving the versions of the entities (functions, routes, events etc). The structure of a manifest is a JSON map with the following fields:</p>
 <pre><code class="language-json">{
   &quot;NAMESPACE&quot;: {

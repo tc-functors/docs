@@ -1,5 +1,6 @@
 # Snapshotter
 
+<!-- toc -->
 
 The snapshotter module takes a snapshot of a given sandbox and outputs the same datastructure as the compiler output. This `isomorphic` characteristic is useful to see the diffs between sandboxes.
 
@@ -29,7 +30,7 @@ tc snapshot -s stable -e qa -c topology
 ...
 ```
 
-### Versions
+## Versions
 
 
 To see versions of all root topologies in a given sandbox:
@@ -74,7 +75,7 @@ tc snapshot -s stable -e qa,staging
  node12     | 0.0.147  | 0.0.143
 ```
 
-## Generating Manifest
+## Manifests
 
 tc generates true manifests that can be used to render it in any other sandbox preserving the versions of the entities (functions, routes, events etc). The structure of a manifest is a JSON map with the following fields:
 
