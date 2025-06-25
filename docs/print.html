@@ -1111,6 +1111,9 @@ tc snapshot -s stable -e qa -f table|json
 <p>The manifest itself is a deployable definition.</p>
 <pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json
 </code></pre>
+<p>If we need to write to a bucket in a different target profile:</p>
+<pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json --target-profile cicd
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
 <p><code>topology.yml</code></p>
 <pre><code class="language-yaml">name: &lt;namespace&gt;

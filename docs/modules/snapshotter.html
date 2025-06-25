@@ -258,6 +258,9 @@ tc snapshot -s stable -e qa -f table|json
 <p>The manifest itself is a deployable definition.</p>
 <pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json
 </code></pre>
+<p>If we need to write to a bucket in a different target profile:</p>
+<pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json --target-profile cicd
+</code></pre>
 
                     </main>
 
