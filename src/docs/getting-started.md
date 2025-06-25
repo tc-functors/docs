@@ -10,10 +10,10 @@ In this tutorial, we will attempt to learn about the core concepts in tc.
 
 ## 1. Bootstrap permissions
 
-Let's create some base IAM roles and policies for your sandbox. `tc` maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called `dev`. This dev profile/account can have several dev sandboxes. Let's name our sandbox `john`.
+Let's create some base IAM roles and policies for your sandbox. `tc` maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called `dev`. This dev profile/account can have several dev sandboxes with common base roles. To create these base roles:
 
 ```
-tc create -s john -e dev -c base-roles
+tc bootstrap -e dev
 ```
 
 ## 2. Our first function

@@ -195,8 +195,8 @@
 <p>Now that we have installed <code>tc</code> and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.</p>
 <p>In this tutorial, we will attempt to learn about the core concepts in tc.</p>
 <h2 id="1-bootstrap-permissions"><a class="header" href="#1-bootstrap-permissions">1. Bootstrap permissions</a></h2>
-<p>Let's create some base IAM roles and policies for your sandbox. <code>tc</code> maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called <code>dev</code>. This dev profile/account can have several dev sandboxes. Let's name our sandbox <code>john</code>.</p>
-<pre><code>tc create -s john -e dev -c base-roles
+<p>Let's create some base IAM roles and policies for your sandbox. <code>tc</code> maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called <code>dev</code>. This dev profile/account can have several dev sandboxes with common base roles. To create these base roles:</p>
+<pre><code>tc bootstrap -e dev
 </code></pre>
 <h2 id="2-our-first-function"><a class="header" href="#2-our-first-function">2. Our first function</a></h2>
 <p>A simple function looks like this. Let's call this function <code>enhancer</code>. Add a file named <code>handler.py</code> in a directory etl/enhancer.</p>

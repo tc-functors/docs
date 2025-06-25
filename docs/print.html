@@ -317,8 +317,8 @@ sudo mv target/release/tc /usr/local/bin/tc
 <p>Now that we have installed <code>tc</code> and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.</p>
 <p>In this tutorial, we will attempt to learn about the core concepts in tc.</p>
 <h2 id="1-bootstrap-permissions"><a class="header" href="#1-bootstrap-permissions">1. Bootstrap permissions</a></h2>
-<p>Let's create some base IAM roles and policies for your sandbox. <code>tc</code> maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called <code>dev</code>. This dev profile/account can have several dev sandboxes. Let's name our sandbox <code>john</code>.</p>
-<pre><code>tc create -s john -e dev -c base-roles
+<p>Let's create some base IAM roles and policies for your sandbox. <code>tc</code> maps environments to AWS profiles. There can be several sandboxes per environment/account. For the sake of this example, let's say we have a profile called <code>dev</code>. This dev profile/account can have several dev sandboxes with common base roles. To create these base roles:</p>
+<pre><code>tc bootstrap -e dev
 </code></pre>
 <h2 id="2-our-first-function"><a class="header" href="#2-our-first-function">2. Our first function</a></h2>
 <p>A simple function looks like this. Let's call this function <code>enhancer</code>. Add a file named <code>handler.py</code> in a directory etl/enhancer.</p>
@@ -1034,8 +1034,8 @@ tc changelog --search AI-1234
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="snapshotter"><a class="header" href="#snapshotter">Snapshotter</a></h1>
 <ul>
-<li><a href="modules/snapshotter.html#versions">Versions</a></li>
 <li><a href="modules/snapshotter.html#manifests">Manifests</a></li>
+<li><a href="modules/snapshotter.html#versions">Versions</a></li>
 </ul>
 <p>The snapshotter module takes a snapshot of a given sandbox and outputs the same datastructure as the compiler output. This <code>isomorphic</code> characteristic is useful to see the diffs between sandboxes.</p>
 <p>For example the following outputs a JSON with the topology structure</p>
@@ -1058,6 +1058,31 @@ tc snapshot -s stable -e qa -c topology
       &quot;updated&quot;: &quot;06:05:2025-15:48:32&quot;
     },
 ...
+</code></pre>
+<h2 id="manifests"><a class="header" href="#manifests">Manifests</a></h2>
+<p>tc generates true manifests that can be used to render it in any other sandbox preserving the versions of the entities (functions, routes, events etc). The structure of a manifest is a JSON map with the following fields:</p>
+<pre><code class="language-json">{
+  &quot;NAMESPACE&quot;: {
+    &quot;time&quot;: UTC_DATETIME,
+    &quot;env&quot;: STRING,
+    &quot;sandbox&quot;: STRING,
+    &quot;version&quot;: STRING,
+    &quot;changelog&quot;: [&quot;list of changes in git for the given version&quot;],
+    &quot;topology&quot;: TEMPLATED_TOPOLOGY
+}
+</code></pre>
+<p>To generate manifests for all <em>deployed</em> root topologies</p>
+<pre><code class="language-sh">tc snapshot -s stable -e qa --manifest
+
+</code></pre>
+<p>We can save it to a S3 bucket by specifying bucket and prefix</p>
+<pre><code class="language-sh">tc snapshot -s stable -e qa --manifest --save s3://bucket/yyyy/mm/dd/version.json
+</code></pre>
+<p>The manifest itself is a deployable definition.</p>
+<pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json
+</code></pre>
+<p>If we need to write to a bucket in a different target profile:</p>
+<pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json --target-profile cicdm
 </code></pre>
 <h2 id="versions"><a class="header" href="#versions">Versions</a></h2>
 <p>To see versions of all root topologies in a given sandbox:</p>
@@ -1088,31 +1113,6 @@ tc snapshot -s stable -e qa -f table|json
  node9      | 0.2.102  | 0.2.102
  node10     | 0.1.24   | 0.1.24
  node12     | 0.0.147  | 0.0.143
-</code></pre>
-<h2 id="manifests"><a class="header" href="#manifests">Manifests</a></h2>
-<p>tc generates true manifests that can be used to render it in any other sandbox preserving the versions of the entities (functions, routes, events etc). The structure of a manifest is a JSON map with the following fields:</p>
-<pre><code class="language-json">{
-  &quot;NAMESPACE&quot;: {
-    &quot;time&quot;: UTC_DATETIME,
-    &quot;env&quot;: STRING,
-    &quot;sandbox&quot;: STRING,
-    &quot;version&quot;: STRING,
-    &quot;changelog&quot;: [&quot;list of changes in git for the given version&quot;],
-    &quot;topology&quot;: TEMPLATED_TOPOLOGY
-}
-</code></pre>
-<p>To generate manifests for all <em>deployed</em> root topologies</p>
-<pre><code class="language-sh">tc snapshot -s stable -e qa --manifest
-
-</code></pre>
-<p>We can save it to a S3 bucket by specifying bucket and prefix</p>
-<pre><code class="language-sh">tc snapshot -s stable -e qa --manifest --save s3://bucket/yyyy/mm/dd/version.json
-</code></pre>
-<p>The manifest itself is a deployable definition.</p>
-<pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json
-</code></pre>
-<p>If we need to write to a bucket in a different target profile:</p>
-<pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json --target-profile cicd
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
 <p><code>topology.yml</code></p>
