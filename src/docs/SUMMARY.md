@@ -15,10 +15,10 @@
 - [Inspector](./modules/inspector.md)
 - [Releaser](./modules/releaser.md)
 - [Snapshotter](./modules/snapshotter.md)
+- [Pruner](./modules/pruner.md)
 
 # Specification
 - [Topology](./specification/topology.md)
-- [Function](./specification/function.md)
 - [Infrastructure](./specification/infrastructure.md)
 - [Config](./specification/config.md)
 

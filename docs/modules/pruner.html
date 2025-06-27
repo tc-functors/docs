@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Function - Cloud Functors using tc</title>
+        <title>Pruner - Cloud Functors using tc</title>
 
 
         <!-- Custom HTML head -->
@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="../modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="../modules/builder.html">Builder</a></li><li class="chapter-item "><a href="../modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="../modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="../modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="../modules/inspector.html">Inspector</a></li><li class="chapter-item "><a href="../modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="../modules/snapshotter.html">Snapshotter</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item expanded "><a href="../specification/function.html" class="active">Function</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="../modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="../modules/builder.html">Builder</a></li><li class="chapter-item "><a href="../modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="../modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="../modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="../modules/inspector.html">Inspector</a></li><li class="chapter-item "><a href="../modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="../modules/snapshotter.html">Snapshotter</a></li><li class="chapter-item expanded "><a href="../modules/pruner.html" class="active">Pruner</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -179,133 +179,24 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="function-specification"><a class="header" href="#function-specification">Function Specification</a></h2>
-<p>function.json file in the function directory is optional. <code>tc</code> infers the language and build instructions from the function code. However, for custom options, add a function.json that looks like the following</p>
-<pre><code class="language-json">
-{
-  &quot;name&quot;: String,
-  &quot;runtime&quot;: RuntimeSpec,
-  &quot;build&quot;: BuildSpec,
-  &quot;infra&quot;: InfraSpec,
-  &quot;test&quot;: TestSpec
-}
-
-</code></pre>
-<h3 id="runtimespec"><a class="header" href="#runtimespec">RuntimeSpec</a></h3>
-<div class="table-wrapper"><table><thead><tr><th>Key</th><th>Default</th><th>Optional?</th><th>Comments</th></tr></thead><tbody>
-<tr><td>lang</td><td>Inferred</td><td>yes</td><td></td></tr>
-<tr><td>handler</td><td>handler.handler</td><td></td><td></td></tr>
-<tr><td>package_type</td><td>zip</td><td></td><td>possible values: zip, image</td></tr>
-<tr><td>uri</td><td>file:./lambda.zip</td><td></td><td></td></tr>
-<tr><td>mount_fs</td><td>false</td><td>yes</td><td></td></tr>
-<tr><td>snapstart</td><td>false</td><td>yes</td><td></td></tr>
-<tr><td>memory</td><td>128</td><td>yes</td><td></td></tr>
-<tr><td>timeout</td><td>30</td><td>yes</td><td></td></tr>
-<tr><td>provisioned_concurrency</td><td>0</td><td>yes</td><td></td></tr>
-<tr><td>reserved_concurrency</td><td>0</td><td>yes</td><td></td></tr>
-<tr><td>layers</td><td>[]</td><td>yes</td><td></td></tr>
-<tr><td>extensions</td><td>[]</td><td>yes</td><td></td></tr>
-<tr><td>environment</td><td>{}</td><td>yes</td><td>Environment variables</td></tr>
-</tbody></table>
-</div>
-<h3 id="buildspec"><a class="header" href="#buildspec">BuildSpec</a></h3>
-<h3 id="json-spec"><a class="header" href="#json-spec">JSON Spec</a></h3>
-<pre><code class="language-json">{
-  &quot;name&quot;: &quot;string&quot;,
-  // Optional
-  &quot;dir&quot;: &quot;string&quot;,
-  // Optional
-  &quot;description&quot;: &quot;string&quot;,
-  // Optional
-  &quot;namespace&quot;: &quot;string&quot;,
-  // Optional
-  &quot;fqn&quot;: &quot;string&quot;,
-  // Optional
-  &quot;layer_name&quot;: &quot;string&quot;,
-  // Optional
-  &quot;version&quot;: &quot;string&quot;,
-  // Optional
-  &quot;revision&quot;: &quot;string&quot;,
-  // Optional
-  &quot;runtime&quot;: {
-    &quot;lang&quot;: &quot;Python39&quot; | &quot;Python310&quot; | &quot;Python311&quot; | &quot;Python312&quot; | &quot;Python313&quot; | &quot;Ruby32&quot; | &quot;Java21&quot; | &quot;Rust&quot; | &quot;Node22&quot; | &quot;Node20&quot;,
-    &quot;handler&quot;: &quot;string&quot;,
-    &quot;package_type&quot;: &quot;string&quot;,
-    // Optional
-    &quot;uri&quot;: &quot;string&quot;,
-    // Optional
-    &quot;mount_fs&quot;: true,
-    // Optional
-    &quot;snapstart&quot;: true,
-    &quot;layers&quot;: [
-      &quot;string&quot;,
-      /* ... */
-    ],
-    &quot;extensions&quot;: [
-      &quot;string&quot;,
-      /* ... */
-    ]
-  },
-  // Optional
-  &quot;build&quot;: {
-    &quot;kind&quot;: &quot;Code&quot; | &quot;Inline&quot; | &quot;Layer&quot; | &quot;Slab&quot; | &quot;Library&quot; | &quot;Extension&quot; | &quot;Runtime&quot; | &quot;Image&quot;,
-    &quot;pre&quot;: [
-      &quot;dnf install git -yy&quot;,
-      /* ... */
-    ],
-    &quot;post&quot;: [
-      &quot;string&quot;,
-      /* ... */
-    ],
-    // Command to use when build kind is Code
-    &quot;command&quot;: &quot;zip -9 lambda.zip *.py&quot;,
-    &quot;images&quot;: {
-      &quot;string&quot;: {
-        // Optional
-        &quot;dir&quot;: &quot;string&quot;,
-        // Optional
-        &quot;parent&quot;: &quot;string&quot;,
-        // Optional
-        &quot;version&quot;: &quot;string&quot;,
-        &quot;commands&quot;: [
-          &quot;string&quot;,
-          /* ... */
-        ]
-      },
-      /* ... */
-    },
-    &quot;layers&quot;: {
-      &quot;string&quot;: {
-        &quot;commands&quot;: [
-          &quot;string&quot;,
-          /* ... */
-        ]
-      },
-      /* ... */
-    }
-  },
-  // Optional
-  &quot;infra&quot;: {
-    &quot;dir&quot;: &quot;string&quot;,
-    // Optional
-    &quot;vars_file&quot;: &quot;string&quot;,
-    &quot;role&quot;: {
-      &quot;name&quot;: &quot;string&quot;,
-      &quot;path&quot;: &quot;string&quot;
-    }
-  }
-}
+                        <h1 id="pruner"><a class="header" href="#pruner">Pruner</a></h1>
+<p>While <code>tc delete -s sandbox -e env</code> command deletes the given topology, there are times where we need to just nuke all resources associated with the sandbox.</p>
+<p>To delete all the resources, do:</p>
+<pre><code class="language-sh">tc prune -e qa -s john
+Found functions:131, states:31, mutations:2, routes:5, events:10
+Do you want to delete these resources in given sandbox ? (y/n) y
+...
 </code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../specification/topology.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../modules/snapshotter.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../specification/infrastructure.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../specification/topology.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -315,11 +206,11 @@
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../specification/topology.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../modules/snapshotter.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../specification/infrastructure.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../specification/topology.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
