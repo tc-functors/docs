@@ -24,6 +24,11 @@ tc compile [--recursive]
 We can also set TC_DIR environment variable to not compile in the current directory
 ```
 
+## Entity-specific compilation
+
+We can specifi
+
+
 
 To generate tree of all functions
 

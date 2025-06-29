@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item expanded "><a href="../modules/compiler.html" class="active">Compiler</a></li><li class="chapter-item "><a href="../modules/builder.html">Builder</a></li><li class="chapter-item "><a href="../modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="../modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="../modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="../modules/inspector.html">Inspector</a></li><li class="chapter-item "><a href="../modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="../modules/snapshotter.html">Snapshotter</a></li><li class="chapter-item "><a href="../modules/pruner.html">Pruner</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="../entities/functions.html">Functions</a></li><li class="chapter-item "><a href="../entities/events.html">Events</a></li><li class="chapter-item "><a href="../entities/routes.html">Routes</a></li><li class="chapter-item "><a href="../entities/queues.html">Queues</a></li><li class="chapter-item "><a href="../entities/channels.html">Channels</a></li><li class="chapter-item "><a href="../entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="../entities/states.html">States</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item expanded "><a href="../modules/compiler.html" class="active">Compiler</a></li><li class="chapter-item "><a href="../modules/builder.html">Builder</a></li><li class="chapter-item "><a href="../modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="../modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="../modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="../modules/inspector.html">Inspector</a></li><li class="chapter-item "><a href="../modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="../modules/snapshotter.html">Snapshotter</a></li><li class="chapter-item "><a href="../modules/pruner.html">Pruner</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -207,6 +207,8 @@
 <p>We can also set TC_DIR environment variable to not compile in the current directory</p>
 </div>
 </div>
+<h2 id="entity-specific-compilation"><a class="header" href="#entity-specific-compilation">Entity-specific compilation</a></h2>
+<p>We can specifi</p>
 <p>To generate tree of all functions</p>
 <pre><code>cd examples/apps/retail
 tc compile -c functions -f tree
@@ -233,7 +235,7 @@ retail
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../getting-started.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../entities/states.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
@@ -247,7 +249,7 @@ retail
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../getting-started.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../entities/states.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
@@ -258,6 +260,22 @@ retail
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

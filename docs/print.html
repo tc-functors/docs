@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/snapshotter.html">Snapshotter</a></li><li class="chapter-item "><a href="modules/pruner.html">Pruner</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="entities/functions.html">Functions</a></li><li class="chapter-item "><a href="entities/events.html">Events</a></li><li class="chapter-item "><a href="entities/routes.html">Routes</a></li><li class="chapter-item "><a href="entities/queues.html">Queues</a></li><li class="chapter-item "><a href="entities/channels.html">Channels</a></li><li class="chapter-item "><a href="entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="entities/states.html">States</a></li><li class="chapter-item affix "><li class="part-title">Modules</li><li class="chapter-item "><a href="modules/compiler.html">Compiler</a></li><li class="chapter-item "><a href="modules/builder.html">Builder</a></li><li class="chapter-item "><a href="modules/deployer.html">Deployer</a></li><li class="chapter-item "><a href="modules/invoker.html">Invoker</a></li><li class="chapter-item "><a href="modules/emulator.html">Emulator</a></li><li class="chapter-item "><a href="modules/inspector.html">Inspector</a></li><li class="chapter-item "><a href="modules/releaser.html">Releaser</a></li><li class="chapter-item "><a href="modules/snapshotter.html">Snapshotter</a></li><li class="chapter-item "><a href="modules/pruner.html">Pruner</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -594,7 +594,27 @@ config: &quot;../tc.yaml&quot;
 routes: ..
 </code></pre>
 <p>See <a href="/docs/specification/config.html">Config</a></p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="compiler"><a class="header" href="#compiler">Compiler</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<ul>
+<li><a href="entities/functions.html#defining-functions">Defining functions</a></li>
+<li><a href="entities/functions.html#infrastructure">Infrastructure</a></li>
+<li><a href="entities/functions.html#ignoring">Ignoring</a></li>
+</ul>
+<h2 id="defining-functions"><a class="header" href="#defining-functions">Defining functions</a></h2>
+<p>tc provides two ways of defining</p>
+<ol start="2">
+<li>Discovered functions</li>
+<li>Interned functions</li>
+</ol>
+<p>Interned functions are those that are explicitly defined in topology.yml</p>
+<pre><code class="language-yaml">
+</code></pre>
+<h2 id="infrastructure"><a class="header" href="#infrastructure">Infrastructure</a></h2>
+<h2 id="ignoring"><a class="header" href="#ignoring">Ignoring</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="queues"><a class="header" href="#queues">Queues</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="channels"><a class="header" href="#channels">Channels</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="mutations"><a class="header" href="#mutations">Mutations</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><div style="break-before: page; page-break-before: always;"></div><h1 id="compiler"><a class="header" href="#compiler">Compiler</a></h1>
 <p><code>tc compile</code> does the following:</p>
 <ol>
 <li>Discovers functions recursively in the current directory.</li>
@@ -622,6 +642,8 @@ routes: ..
 <p>We can also set TC_DIR environment variable to not compile in the current directory</p>
 </div>
 </div>
+<h2 id="entity-specific-compilation"><a class="header" href="#entity-specific-compilation">Entity-specific compilation</a></h2>
+<p>We can specifi</p>
 <p>To generate tree of all functions</p>
 <pre><code>cd examples/apps/retail
 tc compile -c functions -f tree
@@ -1121,8 +1143,8 @@ tc snapshot -s stable -e qa -f table|json
 Found functions:131, states:31, mutations:2, routes:5, events:10
 Do you want to delete these resources in given sandbox ? (y/n) y
 
-Deleting Deleting arn:aws:states:us-west-2:xxx:stateMachine:foo_john
-Deleting Deleting arn:aws:states:us-west-2:xxx:stateMachine:bar_john
+Deleting arn:aws:states:us-west-2:xxx:stateMachine:foo_john
+Deleting arn:aws:states:us-west-2:xxx:stateMachine:bar_john
 ...
 </code></pre>
 <p>To do a dry-run of the delete or see the list of resources:</p>
@@ -1684,6 +1706,22 @@ aws:
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
 
 
 

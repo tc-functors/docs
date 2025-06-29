@@ -6,6 +6,15 @@
 # Tutorial
 - [Getting Started](./getting-started.md)
 
+# Entities
+- [Functions](./entities/functions.md)
+- [Events](./entities/events.md)
+- [Routes](./entities/routes.md)
+- [Queues](./entities/queues.md)
+- [Channels](./entities/channels.md)
+- [Mutations](./entities/mutations.md)
+- [States](./entities/states.md)
+
 # Modules
 - [Compiler](./modules/compiler.md)
 - [Builder](./modules/builder.md)
