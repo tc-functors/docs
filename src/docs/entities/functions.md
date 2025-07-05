@@ -225,9 +225,9 @@ We can run `tc build --shell` in the function directory and access the bash shel
 
 ```admonish info
 It is recommended that the ECR repo has a <namespace>/<label> format. The label can be the image labels specified in function.json:build (base, code etc)
-````
+```
 
-#### External parent image
+#### 3.3.3 External parent image
 
 At times, we may need to use a parent image that is shared and defined in another function or build. The following function definition is an example that shows how to specify a parent URI in code image-spec.
 

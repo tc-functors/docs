@@ -8,9 +8,7 @@
 - [Installation](./installation.md)
 
 # Tutorial
-- [ETL - I](./tutorial/etl-basic.md)
-- [ETL - II](./tutorial/etl-mutations.md)
-- [ETL - III](./tutorial/etl-release.md)
+- [ETL](./tutorial/etl-basic.md)
 
 # Entities
 - [Functions](./entities/functions.md)
