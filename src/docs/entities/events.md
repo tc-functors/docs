@@ -48,7 +48,6 @@ The following are available triggers for AWS provider
 | S3       | DELETE_OBJECT                  |             |
 | DYNAMODB | PUT_ITEM                       |             |
 
-
 ## 3. Filters
 
 ```yaml

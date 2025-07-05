@@ -4,7 +4,7 @@
 
 ## 1. Definitions
 
-There are 2 kinds of function definitions:
+There are 3 kinds of function definitions:
 
 1. Topology functions
 2. Interned functions
@@ -50,7 +50,23 @@ functions:
 
 A function that does belong to a topology or has no topology defined is a _standalone_ function.
 
+```yaml
+name: foo
+runtime:
+  lang: python3.11
+  handler: handler.handler
+```
+
 ## 2. Components
+
+Runtime attributes:
+
+| Lang    | Runtime                |
+|---------|------------------------|
+| python  | 3.10, 3.11, 3.12, 3.13 |
+| ruby    | 3.2, 3.3               |
+| node    | 22                     |
+
 
 ### 2.1 Permissions
 
@@ -68,10 +84,9 @@ tc update -s sandbox -e env -c functions/roles
 tc update -s sandnox -e env -c functions/function-name
 ```
 
-
-
-By default, tc tries to look for environment variables specified
-
+By default, tc tries to look for environment variables specified in the following directories:
+1.
+2.
 
 
 ## 3. Builds
@@ -257,3 +272,5 @@ build:
 ```
 
 ## 5. Patterns
+
+## 6. Extensions
