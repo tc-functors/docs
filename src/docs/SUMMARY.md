@@ -4,20 +4,23 @@
 
 - [Introduction](./introduction.md)
 - [Rationale](./rationale.md)
+- [Concepts](./concepts.md)
 - [Installation](./installation.md)
 
 # Tutorial
-- [Getting Started](./getting-started.md)
+- [ETL - I](./tutorial/etl-basic.md)
+- [ETL - II](./tutorial/etl-mutations.md)
+- [ETL - III](./tutorial/etl-release.md)
 
 # Entities
 - [Functions](./entities/functions.md)
 - [Events](./entities/events.md)
 - [Routes](./entities/routes.md)
 - [Queues](./entities/queues.md)
-- [Channels](./entities/channels.md)
 - [Mutations](./entities/mutations.md)
-- [States](./entities/states.md)
+- [Channels](./entities/channels.md)
 - [Pages](./entities/pages.md)
+- [States](./entities/states.md)
 
 # Workflows
 - [Design](./workflows/designing.md)

@@ -2,6 +2,8 @@
 
 <!-- toc -->
 
+## 1. Client-side Apps
+
 `page` entity helps abstract web pages (SPA, SSR, PWA etc).
 
 ```
@@ -17,14 +19,14 @@ pages:
       - npm run build
 ```
 
-## Example: JobTracker
+
+## 2. SSR and Edge functions
 
 
-## Dynamic Configuration
+## 3. Dynamic Configuration
 
 
-## Components
-
+## 4. Components
 
 
 To update specific components

@@ -2,19 +2,19 @@
 
 <!-- toc -->
 
-## Defining functions
+## 1. Definitions
 
 There are 2 kinds of function definitions:
 
-1. Local functions
+1. Topology functions
 2. Interned functions
+3. Standalone functions
 
-### Local functions
+### 1.1 Topology functions
 
 tc discovers functions in the current directory. A function is any directory that contains a
 1. handler.{py,rb,clj,js} file  and/or
-2. function.{json, yml} file
-
+2. function.yml file
 
 At it's simplest, a function directory (say foo) looks as follows:
 
@@ -25,17 +25,14 @@ foo/
 
 tc _infers_ the kind of function, runtime and build instructions. However, we can be more specific as follows in a `function.json`
 
-```json
-{
-  "name": "foo",
-  "runtime": {
-    "lang": "python3.11",
-    "handler": "handler.handler"
-  }
-}
+```yaml
+name: foo
+runtime:
+  lang: python3.11
+  handler: handler.handler
 ```
 
-### Interned functions
+### 1.2 Interned functions
 
 Interned functions are those that are explicitly defined in topology.yml
 
@@ -49,62 +46,66 @@ functions:
 
 ```
 
-## Customizing functions
+### 1.3 Standalone functions
 
-### Permissions
+A function that does belong to a topology or has no topology defined is a _standalone_ function.
 
-### Runtime
+## 2. Components
 
-## Building functions
+### 2.1 Permissions
+
+### 2.2 Environment variables
+
+### 2.3 Update sandbox
+
+```sh
+tc update -s sandbox -e env -c functions/layers
+tc update -s sandbox -e env -c functions/vars
+tc update -s sandbox -e env -c functions/concurrency
+tc update -s sandbox -e env -c functions/runtime
+tc update -s sandbox -e env -c functions/tags
+tc update -s sandbox -e env -c functions/roles
+tc update -s sandnox -e env -c functions/function-name
+```
+
+
+
+By default, tc tries to look for environment variables specified
+
+
+
+## 3. Builds
 
 `tc` has a sophisticated function `builder` that can build different kinds of artifacts with various language runtimes (Clojure, Janet, Rust, Ruby, Python, Node)
 
 In the simplest case, when there are no dependencies in a function, we can specify how the code is packed (zipped) as follows in `function.json`:
 
-```json
-{
-  "name": "simple-function",
-  "runtime": {
-    "lang": "python3.10",
-    "package_type": "zip",
-    "handler": "handler.handler",
-  },
-  "build": {
-    "command": "zip -9 lambda.zip *.py",
-    "kind": "Code"
-  }
-}
-
+```yaml
+name: simple-function
+runtime:
+  lang: python3.10
+  package_type: zip
+  handler: handler.handler
 ```
 [Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-basic/function.json)
 
 and then `tc create -s <sandbox> -e <env>` builds this function using the given `command` and creates it in the given sandbox and env.
 
-### Inline
+### 3.1 Inline
 
 The above is a pretty trivial example and it gets complicated as we start adding more dependencies. If the dependencies are reasonably small (< 50MB), we can inline those in the code's artifact (lambda.zip).
 
+```yaml
+name: python-inline-example
+runtime:
+  lang: python3.12
+  package_type: zip
+  handler: handler.handler
+build:
+  kind: Inline
+  command: zip -9 -q lambda.zip *.py
 ```
-{
-  "name": "python-inline-example",
-  "runtime": {
-    "lang": "python3.12",
-    "package_type": "zip",
-    "handler": "handler.handler",
-    "layers": []
-  },
-  "build": {
-    "kind": "Inline",
-    "command": "zip -9 -q lambda.zip *.py"
-  },
-  "test": {
-    "fixture": "python run-fixture.py",
-    "command": "poetry test"
-  }
-
-}
-```
-[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-inline/function.json)
+[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-inline/function.yml)
 
 `tc create -s <sandbox> -e <env>` will implicitly build the artifact with _inlined_ deps and create the function in the given sandbox and env. The dependencies are typically in `lib/` including shared objects (.so files).
 
@@ -113,29 +114,23 @@ The above is a pretty trivial example and it gets complicated as we start adding
 tc builds the _inlined_ zip using docker and the builder image that is compatible with the lambda runtime image.
 ````
 
-### Layer
+### 3.2 Layer
 
 If `inline` build is heavy, we can try to layer the dependencies:
 
-```
-{
-  "name": "ppd",
-  "description": "my python layer",
-  "runtime": {
-    "lang": "python3.10",
-    "package_type": "zip",
-    "handler": "handler.handler",
-    "layers": ["ppd-layer"]
-  },
-  "build": {
-    "pre": [
-      "yum install -y git",
-      "yum install -y gcc gcc-c++"
-    ],
-    "kind": "Layer",
-
-  }
-}
+```yaml
+name: ppd
+runtime:
+  lang: python3.10
+  package_type: zip
+  handler: handler.handler
+  layers:
+   - ppd-layer
+build:
+  pre:
+   - yum install -y git
+   - yum install -y gcc gcc-c++
+  kind: Layer
 
 ```
 
@@ -148,50 +143,40 @@ tc publish --name ppd-layer
 
 We can then create or update the function with this layer. At times, we may want to update just the layers in an existing sandboxed function
 
-```
+```sh
 tc update -s <sandbox> -e <env> -c layers
 
 ```
-
 
 ```admonish info
 AWS has a limit on the number of layers and size of each zipped layer. tc automatically splits the layer into chunks if it exceeds the size limit (and still within the upper total limit of 256MB)
 ````
 
-### Image
+### 3.3 Image
 
 While `Layer` and `Inline` build kind should suffice to pack most dependencies, there are cases where 250MB is not good enough. Container `Image` kind is a good option. However, building the deps and updating just the code is challenging using pure docker as you need to know the sequence to build. `tc` provides a mechanism to build a `tree` of images. For example:
 
 
-```json
-{
-  "name": "python-image-tree-example",
-  "runtime": {
-    "lang": "python3.10",
-    "package_type": "image",
-    "handler": "handler.handler"
-  },
-
-  "build": {
-    "kind": "Image",
-    "images": {
-      "base": {
-		  "version": "0.1.1",
-		  "commands": [
-			  "yum install -y git wget unzip",
-			  "yum install -y gcc gcc-c++ libXext libSM libXrender"
-		  ]
-      },
-      "code": {
-		  "parent": "base",
-		  "commands": []
-      }
-    }
-  }
-}
+```yaml
+name: python-image-tree-example
+runtime:
+  lang: python3.10
+  package_type: image
+  handler: handler.handler
+build:
+  kind: Image
+  images:
+    base:
+      version: 0.1.1
+      commands:
+      - yum install -y git wget unzip
+      - yum install -y gcc gcc-c++ libXext libSM libXrender
+    code:
+      parent: base
+      commands: []
 ```
 
-[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-image/function.json#L1)
+[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-image/function.yml#L1)
 
 In the above example, we define the `base` image with dependencies and `code` image that packs just the code. Note that `code`  references `base` as the _parent_. Effectively, we can build a tree of images (say base dependencies, models, assets and code). These `images` can be built at any point in the lifecycle of the function. To build the `base` image do:
 
@@ -214,11 +199,11 @@ tc build --image code --publish
 
 Note that the child image uses the parent's version of the image as specified in the parent's block.
 
-#### Syncing base images
+#### 3.3.1 Syncing base images
 
 While we can `docker pull` the base and code images locally, it is cumbersome to do it for all functions recursively by resolving their versions. `tc build --sync` pulls the base and code images based on current function checksums. Having a copy the base or parent code images allows us to do incremental updates much faster.
 
-#### Inspecting the images
+#### 3.3.2 Inspecting the images
 
 We can run `tc build --shell` in the function directory and access the bash shell. The shell is always on the `code` image of the current function checksum. Note that the `code` image using the Lambda Runtime Image as the source image.
 
@@ -231,34 +216,44 @@ It is recommended that the ECR repo has a <namespace>/<label> format. The label 
 
 At times, we may need to use a parent image that is shared and defined in another function or build. The following function definition is an example that shows how to specify a parent URI in code image-spec.
 
-```json
-{
-  "name": "req-external-example",
-  "description": "With external parent",
-  "runtime": {
-    "lang": "python3.10",
-    "package_type": "image",
-    "handler": "handler.handler"
-  },
+```yaml
+name: req-external-example
+description: With external parent
+runtime:
+  lang: python3.10
+  package_type: image
+  handler: handler.handler
+build:
+  kind: Image
+  images:
+    code:
+      parent: '{{repo}}/base:req-0.1.1'
+      commands: []
 
-  "build": {
-    "kind": "Image",
-    "images": {
-      "code": {
-	"parent": "{{repo}}/base:req-0.1.1",
-	"commands": []
-      }
-    }
-  }
-}
+
 ```
 
 `parent` in the `code` image-spec is an URI. This is also a way to pin the parent image.
 
-## Components
+## 4. Providers
 
-## Providers
+Default function provider is `Lambda`. We can make the same function code run in ECS Fargate with no change.
 
-## Composition
+```yaml
+name: python-image-fargate
+runtime:
+  handler: "python handler.py"
+  package_type: image
+  provider: Fargate
+build:
+  kind: Image
+  images:
+    base:
+      version: 0.1.1
+      commands: []
+    code:
+      parent: base
+      commands: []
+```
 
-## Standalone functions
+## 5. Patterns

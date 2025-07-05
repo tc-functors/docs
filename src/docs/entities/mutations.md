@@ -2,7 +2,7 @@
 
 <!-- toc -->
 
-### Defining resolvers
+## 1. Definitions
 
 ```yaml
 name: mutations-basic
@@ -65,8 +65,25 @@ tc generates `graphql` for the above mutation definition.
   }
 }
 ```
+### 2. Components
 
-### Example: Job Tracker
+Components in `mutation` entity:
+
+```sh
+tc update -s sandbox -e env -c mutations/authorizer
+tc update -s sandbox -e env -c mutations/types
+tc update -s sandbox -e env -c mutations/roles
+tc update -s sandbox -e env -c mutations/RESOLVER_NAME
+```
+
+## 3. Patterns
+
+### 3.1 Progress tracking
+
+### 3.2 Server-side pushes
+
+
+## 4. Example: Job Tracker
 
 
 Let's explore an example that uses _Mutations_ to track status of arbitrary jobs

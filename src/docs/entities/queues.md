@@ -2,6 +2,8 @@
 
 <!-- toc -->
 
+## 1. Queue to function
+
 ```yaml
 
 name: TOPOLOGY-NAME
@@ -9,11 +11,21 @@ name: TOPOLOGY-NAME
 queues:
   queue1:
     function: function1
-    functions:
-      - function1
-      - function2
 ```
 
 By default, tc uses `sqs` as the queue.
 
-## Composition
+## 2. Dead-letter queue
+
+```yaml
+queues:
+  my-dlq:
+    function: dlq-handler
+
+functions:
+  my-fn:
+    queue: my-dlq
+
+```
+
+## 3. Composition

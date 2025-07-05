@@ -2,8 +2,9 @@
 
 <!-- toc -->
 
-topology.yml
+## 1. Event to function mapping
 
+topology.yml
 ```yaml
 name: TOPOLOGY
 
@@ -21,24 +22,7 @@ events:
       - room1
 ```
 
-## Filters
-
-```yaml
-events:
-  MyRawEvent:
-    filter: '{"detail_type": ["FooBar"]}'
-    function: '{{namespace}}_foo_{{sandbox}}'
-  MyFilterEvent:
-    producer: default
-    filter: '{"metadata": {"type": ["foo"]}}'
-    function: '{{namespace}}_foo_{{sandbox}}'
-  MyAbstractEvent:
-    producer: default
-    function: '{{namespace}}_foo_{{sandbox}}'
-
-```
-
-## Pre-defined Producers
+## 2 Pre-defined Producers
 
 The value of `producer` is an arbitrary string or pre-defined trigger
 
@@ -65,7 +49,33 @@ The following are available triggers for AWS provider
 | DYNAMODB | PUT_ITEM                       |             |
 
 
-## Composition
+## 3. Filters
+
+```yaml
+events:
+  MyRawEvent:
+    filter: '{"detail_type": ["FooBar"]}'
+    function: '{{namespace}}_foo_{{sandbox}}'
+  MyFilterEvent:
+    producer: default
+    filter: '{"metadata": {"type": ["foo"]}}'
+    function: '{{namespace}}_foo_{{sandbox}}'
+  MyAbstractEvent:
+    producer: default
+    function: '{{namespace}}_foo_{{sandbox}}'
+
+```
+tc compiles JSON path filters to rules
+
+
+## 4. Schemas
+
+## 5. Patterns
+
+### 5.1 Event-driven choreography
+
+
+## 6. Compostion
 
 Events can be _composed_ with other entities. For example:
 
@@ -80,7 +90,7 @@ events:
     function: function1
 
 ```
-## Visualization
+## 7. Visualization
 
 To generate a visual flow:
 
