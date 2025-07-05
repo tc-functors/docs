@@ -6,10 +6,9 @@ Let's explore another example that uses Mutations to track status of arbitrary j
 
 name: job-tracker
 events:
-  consumes:
-    CompleteTask:
-      producer: adHoc
-      mutation: completeJob
+  CompleteTask:
+    producer: adHoc
+	mutation: completeJob
 
 mutations:
   authorizer: '{{namespace}}_authorizer_{{sandbox}}'

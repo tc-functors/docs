@@ -4,15 +4,8 @@
 
 The word functor was popularized by Ocaml's parameterized modules. These modules, called functors, are first class. Cloud functors are similar in that they are treated as first class and are composable much like Ocaml's elegant modules.
 
-
-### Why tc ?
-
-tc is a tool that empowers developers, architects and release engineers to build a serverless system that is simple to define and easy to evolve.
-
-1. Developers should not be drowning in permissions and provider-specific (AWS, GCP etc) services. Instead, tc provides a framework for developers to focus on domain-specific functions and abstract entities.
-2. Architects should not be defining systems that are hard to implement or disconnected from the system definition. Instead, tc's topology is the system definition. The definition is representative of the entire system to a large extent with most of it inferred by tc.
-3. Release engineers should not be managing manifests manually. Instead, tc provides a mechanism to deploy collection of namespaced topologies as an atomic unit. Canarys, A/B testing and rollbacks are much simpler to configure using tc
-
+> [!NOTE]
+> tc is still quite nascent and is being actively developed. This documentation is being actively updated.
 
 ## Key features of functors using tc
 

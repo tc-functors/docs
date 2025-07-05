@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Topology - Cloud Functors using tc</title>
+        <title>Release - Cloud Functors using tc</title>
 
 
         <!-- Custom HTML head -->
@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../rationale.html">Rationale</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="../entities/functions.html">Functions</a></li><li class="chapter-item "><a href="../entities/events.html">Events</a></li><li class="chapter-item "><a href="../entities/routes.html">Routes</a></li><li class="chapter-item "><a href="../entities/queues.html">Queues</a></li><li class="chapter-item "><a href="../entities/channels.html">Channels</a></li><li class="chapter-item "><a href="../entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="../entities/states.html">States</a></li><li class="chapter-item "><a href="../entities/pages.html">Pages</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="../workflows/designing.html">Design</a></li><li class="chapter-item "><a href="../workflows/development.html">Develop</a></li><li class="chapter-item "><a href="../workflows/release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item expanded "><a href="../specification/topology.html" class="active">Topology</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../rationale.html">Rationale</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="../entities/functions.html">Functions</a></li><li class="chapter-item "><a href="../entities/events.html">Events</a></li><li class="chapter-item "><a href="../entities/routes.html">Routes</a></li><li class="chapter-item "><a href="../entities/queues.html">Queues</a></li><li class="chapter-item "><a href="../entities/channels.html">Channels</a></li><li class="chapter-item "><a href="../entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="../entities/states.html">States</a></li><li class="chapter-item "><a href="../entities/pages.html">Pages</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="../workflows/designing.html">Design</a></li><li class="chapter-item "><a href="../workflows/development.html">Develop</a></li><li class="chapter-item expanded "><a href="../workflows/release.html" class="active">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -246,105 +246,134 @@
 }
 
 </style>
-<h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
-<p><code>topology.yml</code></p>
-<pre><code class="language-yaml">name: &lt;namespace&gt;
-infra: &lt;infra-path&gt;
+<h1 id="release-workflow"><a class="header" href="#release-workflow">Release Workflow</a></h1>
+<ul>
+<li><a href="#versioning">Versioning</a></li>
+<li><a href="#changelog">Changelog</a>
+<ul>
+<li><a href="#snapshotting">Snapshotting</a></li>
+</ul>
+</li>
+<li><a href="#snapshotter">Snapshotter</a>
+<ul>
+<li><a href="#manifests">Manifests</a></li>
+<li><a href="#versions">Versions</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="versioning"><a class="header" href="#versioning">Versioning</a></h2>
+<p>tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level</p>
+<pre><code>tc tag --service &lt;namespace&gt; --next minor|major
+</code></pre>
+<p>This creates a tag with the etl prefix.</p>
+<h2 id="changelog"><a class="header" href="#changelog">Changelog</a></h2>
+<p>To see the changelog of a specific topology</p>
+<pre><code>cd topology-dir
+tc changelog
 
-nodes:
-  ignore: [&lt;path&gt;]
-  dirs: [&lt;path&gt;]
+AI-123 Another command
+AI-456 Thing got added
 
-functions:
-  FunctionName:
-    uri: &lt;String&gt;
-    function: &lt;String&gt;
-    event: &lt;String&gt;
-    queue: &lt;String&gt;
-    runtime: RuntimeSpec
-    build: BuildSpec
+# or
 
-events:
-  EventName:
-    producer: &lt;String&gt;
-	doc_only: &lt;false&gt;
-	nth: &lt;sequence int&gt;
-	filter: &lt;String&gt;
-	rule_name: &lt;String&gt;
-    functions: [&lt;String&gt;]
-    function: &lt;String&gt;
-    mutation: &lt;String&gt;
-    channel: &lt;String&gt;
-    queue: &lt;String&gt;
-    state: &lt;String&gt;
+tc changelog --between 0.8.1..0.8.6
+</code></pre>
+<p>To search for a specific text in all changelogs</p>
+<pre><code>cd root-topology-dir
+tc changelog --search AI-1234
 
-routes:
-  Path:
-    gateway: &lt;String&gt;
-    authorizer: &lt;String&gt;
-    method: &lt;POST|GET|DELETE&gt;
-	path: &lt;String&gt;
-    sync: &lt;true&gt;
-    request_template: &lt;String&gt;
-    response_template: &lt;String&gt;
-    stage: &lt;String&gt;
-    stage_variables: &lt;String&gt;
-    function: &lt;String&gt;
-    state: &lt;String&gt;
-    queue: &lt;String&gt;
-
-channels:
-  ChannelName:
-    function: &lt;String&gt;
-    event: &lt;String&gt;
-
-mutations:
-  MutationName:
-    function: &lt;String&gt;
-
-queues:
-  QueueName:
-    function: &lt;String&gt;
-
-states: ./states.json | &lt;definition&gt;  [optional]
+=&gt; topology-name, version
 
 </code></pre>
-<p><code>infra</code> is either an absolute or relative path to the infrastructure configs (vars, roles etc). This field is optional and tc tries best to discover the infrastructure path in the current git repo.</p>
-<p><code>events</code>, <code>routes</code>, <code>functions</code>, <code>mutations</code>, <code>channels</code> and <code>flow</code> are optional.</p>
-<p><code>flow</code> can contain a path to a step-function definition or an inline definition. tc automatically namespaces any inlined or external flow definition.</p>
-<h2 id="entity-matrix"><a class="header" href="#entity-matrix">Entity Matrix</a></h2>
-<p>Not all entities are composable with each other. The following shows the compatibility Matrix and their implementation status</p>
-<div class="table-wrapper"><table><thead><tr><th></th><th>Function</th><th>Event</th><th>Queue</th><th>Route</th><th>Channel</th><th>Mutation</th></tr></thead><tbody>
-<tr><td>Function</td><td>No*</td><td>No</td><td>No*</td><td>No</td><td>No</td><td>No</td></tr>
-<tr><td>Event</td><td>Yes</td><td>No</td><td>No</td><td>No</td><td>Yes</td><td>No</td></tr>
-<tr><td>Route</td><td>Yes</td><td>No*</td><td>No*</td><td>-</td><td>No</td><td>No</td></tr>
-<tr><td>Queue</td><td>Yes</td><td>No</td><td>-</td><td>No</td><td>No</td><td>No</td></tr>
-<tr><td>Channel</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>-</td><td>No</td></tr>
-<tr><td>Mutation</td><td>Yes</td><td>No*</td><td>No</td><td>No</td><td>No</td><td>-</td></tr>
-</tbody></table>
-</div><div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
-<div class="admonition-title">
-<div id="admonition-info-title">
-<p>Info</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-info"></a>
-</div>
-<div>
-<ul>
-<li>indicates that it is currently being implemented</li>
-</ul>
-</div>
-</div>
+<h3 id="snapshotting"><a class="header" href="#snapshotting">Snapshotting</a></h3>
+<h1 id="snapshotter"><a class="header" href="#snapshotter">Snapshotter</a></h1>
+<p>The snapshotter module takes a snapshot of a given sandbox and outputs the same datastructure as the compiler output. This <code>isomorphic</code> characteristic is useful to see the diffs between sandboxes.</p>
+<p>For example the following outputs a JSON with the topology structure</p>
+<pre><code class="language-sh">
+cd topology-dir
+tc snapshot -s stable -e qa -c topology
+</code></pre>
+<pre><code class="language-json">
+{
+  &quot;events&quot;: {},
+  &quot;functions&quot;: {
+    &quot;n_f_stable&quot;: {
+      &quot;code_size&quot;: &quot;100 KB&quot;,
+      &quot;layers&quot;: {},
+      &quot;mem&quot;: 1024,
+      &quot;name&quot;: &quot;n_f_stable&quot;,
+      &quot;revision&quot;: &quot;e568c2865203&quot;,
+      &quot;tc_version&quot;: &quot;0.8.71&quot;,
+      &quot;timeout&quot;: 180,
+      &quot;updated&quot;: &quot;06:05:2025-15:48:32&quot;
+    },
+...
+</code></pre>
+<h2 id="manifests"><a class="header" href="#manifests">Manifests</a></h2>
+<p>tc generates true manifests that can be used to render it in any other sandbox preserving the versions of the entities (functions, routes, events etc). The structure of a manifest is a JSON map with the following fields:</p>
+<pre><code class="language-json">{
+  &quot;NAMESPACE&quot;: {
+    &quot;time&quot;: UTC_DATETIME,
+    &quot;env&quot;: STRING,
+    &quot;sandbox&quot;: STRING,
+    &quot;version&quot;: STRING,
+    &quot;changelog&quot;: [&quot;list of changes in git for the given version&quot;],
+    &quot;topology&quot;: TEMPLATED_TOPOLOGY
+}
+</code></pre>
+<p>To generate manifests for all <em>deployed</em> root topologies</p>
+<pre><code class="language-sh">tc snapshot -s stable -e qa --manifest
+
+</code></pre>
+<p>We can save it to a S3 bucket by specifying bucket and prefix</p>
+<pre><code class="language-sh">tc snapshot -s stable -e qa --manifest --save s3://bucket/yyyy/mm/dd/version.json
+</code></pre>
+<p>The manifest itself is a deployable definition.</p>
+<pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json
+</code></pre>
+<p>If we need to write to a bucket in a different target profile:</p>
+<pre><code class="language-sh">tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json --target-profile cicdm
+</code></pre>
+<h2 id="versions"><a class="header" href="#versions">Versions</a></h2>
+<p>To see versions of all root topologies in a given sandbox:</p>
+<pre><code class="language-sh">
+tc snapshot -s stable -e qa -f table|json
+</code></pre>
+<pre><code>tc snapshot -s stable -e qa  -f table
+</code></pre>
+<pre><code class="language-pre"> namespace  | sandbox | version  | frozen | tc_version | updated_at
+------------+---------+----------+--------+------------+---------------------
+ node1      | stable  | 0.0.6    |        | 0.0.3      | 04:09:2025-18:20:42
+ node2      | stable  | 0.0.14   |        | 0.0.3      | 04:09:2025-18:19:15
+ node3      | stable  | 0.0.15   |        | 0.0.3      | 04:09:2025-18:19:28
+ node11     | stable  | 0.0.15   |        | 0.0.3      | 04:09:2025-18:19:28
+ node12     | stable  | 0.0.2    |        | 0.6.262    | 12:13:2024-06:46:57
+</code></pre>
+<p>To see versions across profiles for a sandbox, provide a csv of profiles/envs:</p>
+<pre><code class="language-sh">tc snapshot -s stable -e qa,staging
+</code></pre>
+<pre><code> Topology   | qa       | staging
+------------+----------+----------
+ node2      | 0.0.27   | 0.0.24
+ node3      | 0.0.6    | 0.0.6
+ node4      | 0.0.15   | 0.0.15
+ node5      | 0.0.26   | 0.0.26
+ node7      | 0.12.125 | 0.12.125
+ node8      | 0.2.29   | 0.2.29
+ node9      | 0.2.102  | 0.2.102
+ node10     | 0.1.24   | 0.1.24
+ node12     | 0.0.147  | 0.0.143
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../workflows/release.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../workflows/development.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../specification/infrastructure.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../specification/topology.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -354,11 +383,11 @@ states: ./states.json | &lt;definition&gt;  [optional]
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../workflows/release.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../workflows/development.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../specification/infrastructure.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../specification/topology.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

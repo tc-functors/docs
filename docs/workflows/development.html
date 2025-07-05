@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Topology - Cloud Functors using tc</title>
+        <title>Develop - Cloud Functors using tc</title>
 
 
         <!-- Custom HTML head -->
@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../rationale.html">Rationale</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="../entities/functions.html">Functions</a></li><li class="chapter-item "><a href="../entities/events.html">Events</a></li><li class="chapter-item "><a href="../entities/routes.html">Routes</a></li><li class="chapter-item "><a href="../entities/queues.html">Queues</a></li><li class="chapter-item "><a href="../entities/channels.html">Channels</a></li><li class="chapter-item "><a href="../entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="../entities/states.html">States</a></li><li class="chapter-item "><a href="../entities/pages.html">Pages</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="../workflows/designing.html">Design</a></li><li class="chapter-item "><a href="../workflows/development.html">Develop</a></li><li class="chapter-item "><a href="../workflows/release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item expanded "><a href="../specification/topology.html" class="active">Topology</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item "><a href="../introduction.html">Introduction</a></li><li class="chapter-item "><a href="../rationale.html">Rationale</a></li><li class="chapter-item "><a href="../installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="../getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="../entities/functions.html">Functions</a></li><li class="chapter-item "><a href="../entities/events.html">Events</a></li><li class="chapter-item "><a href="../entities/routes.html">Routes</a></li><li class="chapter-item "><a href="../entities/queues.html">Queues</a></li><li class="chapter-item "><a href="../entities/channels.html">Channels</a></li><li class="chapter-item "><a href="../entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="../entities/states.html">States</a></li><li class="chapter-item "><a href="../entities/pages.html">Pages</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="../workflows/designing.html">Design</a></li><li class="chapter-item expanded "><a href="../workflows/development.html" class="active">Develop</a></li><li class="chapter-item "><a href="../workflows/release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="../specification/topology.html">Topology</a></li><li class="chapter-item "><a href="../specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="../specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -246,83 +246,89 @@
 }
 
 </style>
-<h1 id="topology-specification"><a class="header" href="#topology-specification">Topology Specification</a></h1>
-<p><code>topology.yml</code></p>
-<pre><code class="language-yaml">name: &lt;namespace&gt;
-infra: &lt;infra-path&gt;
-
-nodes:
-  ignore: [&lt;path&gt;]
-  dirs: [&lt;path&gt;]
-
-functions:
-  FunctionName:
-    uri: &lt;String&gt;
-    function: &lt;String&gt;
-    event: &lt;String&gt;
-    queue: &lt;String&gt;
-    runtime: RuntimeSpec
-    build: BuildSpec
-
-events:
-  EventName:
-    producer: &lt;String&gt;
-	doc_only: &lt;false&gt;
-	nth: &lt;sequence int&gt;
-	filter: &lt;String&gt;
-	rule_name: &lt;String&gt;
-    functions: [&lt;String&gt;]
-    function: &lt;String&gt;
-    mutation: &lt;String&gt;
-    channel: &lt;String&gt;
-    queue: &lt;String&gt;
-    state: &lt;String&gt;
-
-routes:
-  Path:
-    gateway: &lt;String&gt;
-    authorizer: &lt;String&gt;
-    method: &lt;POST|GET|DELETE&gt;
-	path: &lt;String&gt;
-    sync: &lt;true&gt;
-    request_template: &lt;String&gt;
-    response_template: &lt;String&gt;
-    stage: &lt;String&gt;
-    stage_variables: &lt;String&gt;
-    function: &lt;String&gt;
-    state: &lt;String&gt;
-    queue: &lt;String&gt;
-
-channels:
-  ChannelName:
-    function: &lt;String&gt;
-    event: &lt;String&gt;
-
-mutations:
-  MutationName:
-    function: &lt;String&gt;
-
-queues:
-  QueueName:
-    function: &lt;String&gt;
-
-states: ./states.json | &lt;definition&gt;  [optional]
+<h1 id="development-workflow"><a class="header" href="#development-workflow">Development Workflow</a></h1>
+<ul>
+<li><a href="#sandboxing">Sandboxing</a>
+<ul>
+<li><a href="#creating-a-sandbox">Creating a Sandbox</a></li>
+<li><a href="#incremental-updates">Incremental updates</a>
+<ul>
+<li><a href="#updating-entities">Updating Entities</a></li>
+<li><a href="#updating-specific-component-in-an-entity">Updating specific component in an entity</a></li>
+</ul>
+</li>
+<li><a href="#deleting">Deleting</a></li>
+</ul>
+</li>
+<li><a href="#invoking">Invoking</a>
+<ul>
+<li><a href="#specifying-payload">Specifying Payload</a></li>
+<li><a href="#invoking-events-and-lambdas">Invoking Events and Lambdas</a></li>
+</ul>
+</li>
+<li><a href="#emulator">Emulator</a>
+<ul>
+<li><a href="#lambdas">Lambdas</a></li>
+<li><a href="#stepfunctions">Stepfunctions</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="sandboxing"><a class="header" href="#sandboxing">Sandboxing</a></h2>
+<h3 id="creating-a-sandbox"><a class="header" href="#creating-a-sandbox">Creating a Sandbox</a></h3>
+<p>The following command create a sandbox in the given AWS profile (-e|--profile)</p>
+<pre><code class="language-sh">cd &lt;topology-dir&gt;
+tc create [--sandbox SANDBOX] [-e ENV]
+</code></pre>
+<h3 id="incremental-updates"><a class="header" href="#incremental-updates">Incremental updates</a></h3>
+<p>While developing, we often need to incrementally deploy certain components without recreating the entire topology. <code>tc</code> provides an update command that updates given entity and components.
+An entity is a core composable servereless resource. . A component is an attribute or instance of the entity.</p>
+<p>We can update an entity and/or component as follows:</p>
+<pre><code>tc update -s sandbox -e env -c Entity/Component
 
 </code></pre>
-<p><code>infra</code> is either an absolute or relative path to the infrastructure configs (vars, roles etc). This field is optional and tc tries best to discover the infrastructure path in the current git repo.</p>
-<p><code>events</code>, <code>routes</code>, <code>functions</code>, <code>mutations</code>, <code>channels</code> and <code>flow</code> are optional.</p>
-<p><code>flow</code> can contain a path to a step-function definition or an inline definition. tc automatically namespaces any inlined or external flow definition.</p>
-<h2 id="entity-matrix"><a class="header" href="#entity-matrix">Entity Matrix</a></h2>
-<p>Not all entities are composable with each other. The following shows the compatibility Matrix and their implementation status</p>
-<div class="table-wrapper"><table><thead><tr><th></th><th>Function</th><th>Event</th><th>Queue</th><th>Route</th><th>Channel</th><th>Mutation</th></tr></thead><tbody>
-<tr><td>Function</td><td>No*</td><td>No</td><td>No*</td><td>No</td><td>No</td><td>No</td></tr>
-<tr><td>Event</td><td>Yes</td><td>No</td><td>No</td><td>No</td><td>Yes</td><td>No</td></tr>
-<tr><td>Route</td><td>Yes</td><td>No*</td><td>No*</td><td>-</td><td>No</td><td>No</td></tr>
-<tr><td>Queue</td><td>Yes</td><td>No</td><td>-</td><td>No</td><td>No</td><td>No</td></tr>
-<tr><td>Channel</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>-</td><td>No</td></tr>
-<tr><td>Mutation</td><td>Yes</td><td>No*</td><td>No</td><td>No</td><td>No</td><td>-</td></tr>
-</tbody></table>
-</div><div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
+<h4 id="updating-entities"><a class="header" href="#updating-entities">Updating Entities</a></h4>
+<pre><code class="language-sh">tc update -s sandbox -e env -c routes
+tc update -s sandbox -e env -c events
+tc update -s sandbox -e env -c functions
+tc update -s sandbox -e env -c mutations
+tc update -s sandbox -e env -c channels
+tc update -s sandbox -e env -c schedules
+tc update -s sandbox -e env -c queues
+</code></pre>
+<h4 id="updating-specific-component-in-an-entity"><a class="header" href="#updating-specific-component-in-an-entity">Updating specific component in an entity</a></h4>
+<p>Components in <code>function</code> entity:</p>
+<pre><code class="language-sh">tc update -s sandbox -e env -c functions/layers
+tc update -s sandbox -e env -c functions/vars
+tc update -s sandbox -e env -c functions/concurrency
+tc update -s sandbox -e env -c functions/runtime
+tc update -s sandbox -e env -c functions/tags
+tc update -s sandbox -e env -c functions/roles
+tc update -s sandnox -e env -c functions/function-name
+</code></pre>
+<p>Components in <code>mutation</code> entity:</p>
+<pre><code class="language-sh">tc update -s sandbox -e env -c mutations/authorizer
+tc update -s sandbox -e env -c mutations/types
+tc update -s sandbox -e env -c mutations/roles
+tc update -s sandbox -e env -c mutations/RESOLVER_NAME
+</code></pre>
+<p>Components in <code>event</code> entity:</p>
+<pre><code class="language-sh">tc update -s sandbox -e env -c events/EVENT_NAME
+tc update -s sandbox -e env -c events/roles
+</code></pre>
+<p>Components in <code>route</code> entity:</p>
+<pre><code class="language-sh">tc update -s sandbox -e env -c routes/ROUTE_NAME
+tc update -s sandbox -e env -c routes/ROUTE_NAME/authorizer
+tc update -s sandbox -e env -c routes/roles
+</code></pre>
+<h3 id="deleting"><a class="header" href="#deleting">Deleting</a></h3>
+<p>To delete a sandbox:</p>
+<pre><code class="language-sh">
+tc delete -s sandbox -e env
+</code></pre>
+<p>To delete a specific entity/component. See update commands (above) for list of components</p>
+<pre><code>tc delete -s sandbox -e env -c ENTITY/COMPONENT
+</code></pre>
+<div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
 <div class="admonition-title">
 <div id="admonition-info-title">
 <p>Info</p>
@@ -330,21 +336,56 @@ states: ./states.json | &lt;definition&gt;  [optional]
 <a class="admonition-anchor-link" href="#admonition-info"></a>
 </div>
 <div>
-<ul>
-<li>indicates that it is currently being implemented</li>
-</ul>
+<p>It is not recommended to delete entities or components as it impacts the integrity of the sandbox.</p>
+<h2 id="invoking"><a class="header" href="#invoking">Invoking</a></h2>
+<h4 id="specifying-payload"><a class="header" href="#specifying-payload">Specifying Payload</a></h4>
+<p>To simply invoke a functor</p>
 </div>
 </div>
+tc invoke --sandbox main --env dev
+```
+By default, tc picks up a `payload.json` file in the current directory. You could optionally specify a payload file
+<pre><code>tc invoke --sandbox main --env dev --payload payload.json
+</code></pre>
+<p>or via stdin</p>
+<pre><code>cat payload.json | tc invoke --sandbox main --env dev
+</code></pre>
+<p>or as a param</p>
+<pre><code>tc invoke --sandbox main --env dev --payload '{&quot;data&quot;: &quot;foo&quot;}'
+</code></pre>
+<h3 id="invoking-events-and-lambdas"><a class="header" href="#invoking-events-and-lambdas">Invoking Events and Lambdas</a></h3>
+<p>By default, <code>tc</code> invokes a stepfn. We can also invoke a lambda or trigger an Eventbridge event</p>
+<pre><code>tc invoke --kind lambda -e dev --payload '{&quot;data&quot;...}'
+tc invoke --kind event -e dev --payload '{&quot;data&quot;...}'
+</code></pre>
+<h2 id="emulator"><a class="header" href="#emulator">Emulator</a></h2>
+<h3 id="lambdas"><a class="header" href="#lambdas">Lambdas</a></h3>
+<p>To emulate the Lambda Runtime environment. The following command spins up a docker container with the defined layers in function.json, sets up the paths, environment variables, AWS access, local code and runtime parameters (mem, handlers etc)</p>
+<pre><code class="language-sh">cd &lt;function-dir&gt;
+tc emulate
+</code></pre>
+<p>To run in foreground</p>
+<pre><code>tc emulate
+</code></pre>
+<p>You can now invoke a payload locally with this emulator</p>
+<pre><code>tc invoke --local [--payload &lt;payload.json | json-str&gt;]
+</code></pre>
+<h3 id="stepfunctions"><a class="header" href="#stepfunctions">Stepfunctions</a></h3>
+<p><code>tc</code> also provides a stepfunction emulator. In your top-level topology directory, do:</p>
+<pre><code>tc emulate
+</code></pre>
+<p>This spins up a container and runs the emulator on http://localhost:8083</p>
+<p>Details to follow on creating and executing [wip]</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../workflows/release.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../workflows/designing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="../specification/infrastructure.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="../workflows/release.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -354,11 +395,11 @@ states: ./states.json | &lt;definition&gt;  [optional]
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../workflows/release.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../workflows/designing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="../specification/infrastructure.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="../workflows/release.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

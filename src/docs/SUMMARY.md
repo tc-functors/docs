@@ -1,6 +1,9 @@
 # Summary
 
+# Preamble
+
 - [Introduction](./introduction.md)
+- [Rationale](./rationale.md)
 - [Installation](./installation.md)
 
 # Tutorial
@@ -14,17 +17,12 @@
 - [Channels](./entities/channels.md)
 - [Mutations](./entities/mutations.md)
 - [States](./entities/states.md)
+- [Pages](./entities/pages.md)
 
-# Modules
-- [Compiler](./modules/compiler.md)
-- [Builder](./modules/builder.md)
-- [Deployer](./modules/deployer.md)
-- [Invoker](./modules/invoker.md)
-- [Emulator](./modules/emulator.md)
-- [Inspector](./modules/inspector.md)
-- [Releaser](./modules/releaser.md)
-- [Snapshotter](./modules/snapshotter.md)
-- [Pruner](./modules/pruner.md)
+# Workflows
+- [Design](./workflows/designing.md)
+- [Develop](./workflows/development.md)
+- [Release](./workflows/release.md)
 
 # Specification
 - [Topology](./specification/topology.md)
