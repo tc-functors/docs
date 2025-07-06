@@ -1,3 +1,79 @@
+# Topology Specification
+
+`topology.yml`
+
+
+```yaml
+name: <namespace>
+infra: <infra-path>
+
+nodes:
+  ignore: [<path>]
+  dirs: [<path>]
+
+functions:
+  FunctionName:
+    uri: <String>
+    function: <String>
+    event: <String>
+    queue: <String>
+    runtime: RuntimeSpec
+    build: BuildSpec
+
+events:
+  EventName:
+    producer: <String>
+	doc_only: <false>
+	nth: <sequence int>
+	filter: <String>
+	rule_name: <String>
+    functions: [<String>]
+    function: <String>
+    mutation: <String>
+    channel: <String>
+    queue: <String>
+    state: <String>
+
+routes:
+  Path:
+    gateway: <String>
+    authorizer: <String>
+    method: <POST|GET|DELETE>
+	path: <String>
+    sync: <true>
+    request_template: <String>
+    response_template: <String>
+    stage: <String>
+    stage_variables: <String>
+    function: <String>
+    state: <String>
+    queue: <String>
+
+channels:
+  ChannelName:
+    function: <String>
+    event: <String>
+
+mutations:
+  MutationName:
+    function: <String>
+
+queues:
+  QueueName:
+    function: <String>
+
+states: ./states.json | <definition>  [optional]
+
+```
+
+`infra` is either an absolute or relative path to the infrastructure configs (vars, roles etc). This field is optional and tc tries best to discover the infrastructure path in the current git repo.
+
+`events`, `routes`, `functions`, `mutations`, `channels` and `flow` are optional.
+
+`flow` can contain a path to a step-function definition or an inline definition. tc automatically namespaces any inlined or external flow definition.
+
+
+
 ## Function Specification
 
 function.json file in the function directory is optional. `tc` infers the language and build instructions from the function code. However, for custom options, add a function.json that looks like the following
@@ -128,3 +204,54 @@ function.json file in the function directory is optional. `tc` infers the langua
   }
 }
 ```
+
+# Infrastructure Spec
+
+## Runtime Variables
+
+Default Path: infrastructure/tc/<topology>/vars/<function>.json
+Override: infra.vars_file in function.json
+
+
+```json
+{
+  // Optional
+  "memory_size": 123,
+  // Optional
+  "timeout": 123,
+  // Optional
+  "image_uri": "string",
+  // Optional
+  "provisioned_concurrency": 123,
+  // Optional
+  "reserved_concurrency": 123,
+  // Optional
+  "environment": {
+    "string": "string",
+    /* ... */
+  },
+  // Optional
+  "network": {
+    "subnets": [
+      "string",
+      /* ... */
+    ],
+    "security_groups": [
+      "string",
+      /* ... */
+    ]
+  },
+  // Optional
+  "filesystem": {
+    "arn": "string",
+    "mount_point": "string"
+  },
+  // Optional
+  "tags": {
+    "string": "string",
+    /* ... */
+  }
+}
+```
+
+## Roles

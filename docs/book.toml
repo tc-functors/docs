@@ -3,7 +3,7 @@ authors = ["icy", "rob"]
 language = "en"
 multilingual = false
 src = "."
-title = "Cloud Functors using tc"
+title = "Cloud Functors"
 
 [output.html]
 additional-css = ["assets/custom.css", "assets/mdbook-admonish.css", "./mdbook-admonish.css"]
@@ -27,6 +27,7 @@ command = "mdbook-mermaid"
 [preprocessor.toc]
 command = "mdbook-toc"
 renderer = ["html"]
+max-level = 4
 
 [output.html.search]
 enable = true
@@ -39,5 +40,8 @@ boost-paragraph = 1
 expand = true
 heading-split-level = 3
 copy-js = true
+
+[output.html.print]
+enable = false
 
 [preprocessor.alerts]

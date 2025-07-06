@@ -6,13 +6,3 @@ The word functor was popularized by Ocaml's parameterized modules. These modules
 
 > [!NOTE]
 > tc is still quite nascent and is being actively developed. This documentation is work in progress.
-
-## Rationale
-
-1. Simple made easy
-
-
-2. Focus on core domain logic
-
-
-3. Isolated environments

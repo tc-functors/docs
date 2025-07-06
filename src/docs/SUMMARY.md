@@ -1,31 +1,32 @@
 # Summary
 
-# Preamble
+# Introduction
+  - [About](./introduction/about.md)
+  - [Rationale]()
+  - [Concepts]()
+  - [Features](./introduction/features.md)
 
-- [Introduction](./introduction.md)
-- [Concepts](./concepts.md)
-- [Installation](./installation.md)
-- [Quick Start](./quick-start.md)
-
-# Entities
-- [Functions](./entities/functions.md)
-- [Events](./entities/events.md)
-- [Routes](./entities/routes.md)
-- [Queues](./entities/queues.md)
-- [Mutations](./entities/mutations.md)
-- [Channels](./entities/channels.md)
-- [Pages](./entities/pages.md)
-- [States](./entities/states.md)
-
-# Workflows
-- [Design](./workflows/design.md)
-- [Develop](./workflows/develop.md)
-- [Release](./workflows/release.md)
-
-# Specification
-- [Topology](./specification/topology.md)
-- [Infrastructure](./specification/infrastructure.md)
-- [Config](./specification/config.md)
+# Getting Started
+  - [Installation](./installation.md)
+  - [Quick Start](./quick-start.md)
+  - [Examples]()
 
 # Reference
+- [Specification](./reference/specification.md)
+- [Config](./reference/config.md)
+- [Entities](./reference/entities.md)
+  - [Functions](./reference/entities/functions.md)
+  - [Events](./reference/entities/events.md)
+  - [Routes](./reference/entities/routes.md)
+  - [Queues](./reference/entities/queues.md)
+  - [Mutations](./reference/entities/mutations.md)
+  - [Channels](./reference/entities/channels.md)
+  - [Pages](./reference/entities/pages.md)
+  - [States](./reference/entities/states.md)
 - [CLI](./reference/cli.md)
+
+# Workflows
+- [Design]()
+- [Develop](./workflows/develop.md)
+- [Release](./workflows/release.md)
+- [Canarys]()
