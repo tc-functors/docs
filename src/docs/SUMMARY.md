@@ -18,8 +18,8 @@
 - [States](./entities/states.md)
 
 # Workflows
-- [Design](./workflows/designing.md)
-- [Develop](./workflows/development.md)
+- [Design](./workflows/design.md)
+- [Develop](./workflows/develop.md)
 - [Release](./workflows/release.md)
 
 # Specification

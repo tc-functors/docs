@@ -92,7 +92,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="concepts.html">Concepts</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item "><a href="quick-start.html">Quick Start</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="entities/functions.html">Functions</a></li><li class="chapter-item "><a href="entities/events.html">Events</a></li><li class="chapter-item "><a href="entities/routes.html">Routes</a></li><li class="chapter-item "><a href="entities/queues.html">Queues</a></li><li class="chapter-item "><a href="entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="entities/channels.html">Channels</a></li><li class="chapter-item "><a href="entities/pages.html">Pages</a></li><li class="chapter-item "><a href="entities/states.html">States</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="workflows/designing.html">Design</a></li><li class="chapter-item "><a href="workflows/development.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item "><a href="concepts.html">Concepts</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item "><a href="quick-start.html">Quick Start</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="entities/functions.html">Functions</a></li><li class="chapter-item "><a href="entities/events.html">Events</a></li><li class="chapter-item "><a href="entities/routes.html">Routes</a></li><li class="chapter-item "><a href="entities/queues.html">Queues</a></li><li class="chapter-item "><a href="entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="entities/channels.html">Channels</a></li><li class="chapter-item "><a href="entities/pages.html">Pages</a></li><li class="chapter-item "><a href="entities/states.html">States</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="workflows/design.html">Design</a></li><li class="chapter-item "><a href="workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -257,7 +257,19 @@
 </p>
 <p>tc is still quite nascent and is being actively developed. This documentation is work in progress.</p>
 </div>
-<h2 id="key-features-of-functors-using-tc"><a class="header" href="#key-features-of-functors-using-tc">Key features of functors using tc</a></h2>
+<h2 id="rationale"><a class="header" href="#rationale">Rationale</a></h2>
+<ol>
+<li>
+<p>Simple made easy</p>
+</li>
+<li>
+<p>Focus on core domain logic</p>
+</li>
+<li>
+<p>Isolated environments</p>
+</li>
+</ol>
+<h2 id="features"><a class="header" href="#features">Features</a></h2>
 <h3 id="1-composable-entities"><a class="header" href="#1-composable-entities">1. Composable Entities</a></h3>
 <p>At it's core, <code>tc</code> provides 7 entities (functions, events, mutations, queues, routes, states and channels) that are agnostic to any cloud provider. These entities are core primitives to define the topology of any serverless system. For example, consider the following topology definition:</p>
 <pre><code class="language-yaml">
@@ -1205,6 +1217,7 @@ build:
 runtime:
   lang: python3.11
   package_type: image
+  mount_fs: true
   handler: handler.handler
 </code></pre>
 <h2 id="4-providers"><a class="header" href="#4-providers">4. Providers</a></h2>
@@ -2208,7 +2221,11 @@ functions:
 }
 
 </style>
-<h1 id="designing"><a class="header" href="#designing">Designing</a></h1>
+<h1 id="design-workflow"><a class="header" href="#design-workflow">Design workflow</a></h1>
+<p>As an architect or developer, you may want to initially use the inspector to visualize and define your topology.</p>
+<h3 id="inspector"><a class="header" href="#inspector">Inspector</a></h3>
+<p><code>tc inspect</code></p>
+<h3 id="composer"><a class="header" href="#composer">Composer</a></h3>
 <div style="break-before: page; page-break-before: always;"></div><style>
 .mdbook-alerts {
   padding: 8px 16px;
@@ -2278,28 +2295,28 @@ functions:
 </style>
 <h1 id="development-workflow"><a class="header" href="#development-workflow">Development Workflow</a></h1>
 <ul>
-<li><a href="workflows/development.html#sandboxing">Sandboxing</a>
+<li><a href="workflows/develop.html#sandboxing">Sandboxing</a>
 <ul>
-<li><a href="workflows/development.html#creating-a-sandbox">Creating a Sandbox</a></li>
-<li><a href="workflows/development.html#incremental-updates">Incremental updates</a>
+<li><a href="workflows/develop.html#creating-a-sandbox">Creating a Sandbox</a></li>
+<li><a href="workflows/develop.html#incremental-updates">Incremental updates</a>
 <ul>
-<li><a href="workflows/development.html#updating-entities">Updating Entities</a></li>
-<li><a href="workflows/development.html#updating-specific-component-in-an-entity">Updating specific component in an entity</a></li>
+<li><a href="workflows/develop.html#updating-entities">Updating Entities</a></li>
+<li><a href="workflows/develop.html#updating-specific-component-in-an-entity">Updating specific component in an entity</a></li>
 </ul>
 </li>
-<li><a href="workflows/development.html#deleting">Deleting</a></li>
+<li><a href="workflows/develop.html#deleting">Deleting</a></li>
 </ul>
 </li>
-<li><a href="workflows/development.html#invoking">Invoking</a>
+<li><a href="workflows/develop.html#invoking">Invoking</a>
 <ul>
-<li><a href="workflows/development.html#specifying-payload">Specifying Payload</a></li>
-<li><a href="workflows/development.html#invoking-events-and-lambdas">Invoking Events and Lambdas</a></li>
+<li><a href="workflows/develop.html#specifying-payload">Specifying Payload</a></li>
+<li><a href="workflows/develop.html#invoking-events-and-lambdas">Invoking Events and Lambdas</a></li>
 </ul>
 </li>
-<li><a href="workflows/development.html#emulator">Emulator</a>
+<li><a href="workflows/develop.html#emulator">Emulator</a>
 <ul>
-<li><a href="workflows/development.html#lambdas">Lambdas</a></li>
-<li><a href="workflows/development.html#stepfunctions">Stepfunctions</a></li>
+<li><a href="workflows/develop.html#lambdas">Lambdas</a></li>
+<li><a href="workflows/develop.html#stepfunctions">Stepfunctions</a></li>
 </ul>
 </li>
 </ul>
@@ -2363,7 +2380,7 @@ tc delete -s sandbox -e env
 <div id="admonition-info-title">
 <p>Info</p>
 </div>
-<a class="admonition-anchor-link" href="workflows/development.html#admonition-info"></a>
+<a class="admonition-anchor-link" href="workflows/develop.html#admonition-info"></a>
 </div>
 <div>
 <p>It is not recommended to delete entities or components as it impacts the integrity of the sandbox.</p>

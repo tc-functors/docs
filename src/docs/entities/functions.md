@@ -289,6 +289,7 @@ name: fn-with-fs
 runtime:
   lang: python3.11
   package_type: image
+  mount_fs: true
   handler: handler.handler
 ```
 

@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item expanded "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item "><a href="concepts.html">Concepts</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item "><a href="quick-start.html">Quick Start</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="entities/functions.html">Functions</a></li><li class="chapter-item "><a href="entities/events.html">Events</a></li><li class="chapter-item "><a href="entities/routes.html">Routes</a></li><li class="chapter-item "><a href="entities/queues.html">Queues</a></li><li class="chapter-item "><a href="entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="entities/channels.html">Channels</a></li><li class="chapter-item "><a href="entities/pages.html">Pages</a></li><li class="chapter-item "><a href="entities/states.html">States</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="workflows/designing.html">Design</a></li><li class="chapter-item "><a href="workflows/development.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item expanded "><a href="introduction.html" class="active">Introduction</a></li><li class="chapter-item "><a href="concepts.html">Concepts</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item "><a href="quick-start.html">Quick Start</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="entities/functions.html">Functions</a></li><li class="chapter-item "><a href="entities/events.html">Events</a></li><li class="chapter-item "><a href="entities/routes.html">Routes</a></li><li class="chapter-item "><a href="entities/queues.html">Queues</a></li><li class="chapter-item "><a href="entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="entities/channels.html">Channels</a></li><li class="chapter-item "><a href="entities/pages.html">Pages</a></li><li class="chapter-item "><a href="entities/states.html">States</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="workflows/design.html">Design</a></li><li class="chapter-item "><a href="workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -256,7 +256,19 @@
 </p>
 <p>tc is still quite nascent and is being actively developed. This documentation is work in progress.</p>
 </div>
-<h2 id="key-features-of-functors-using-tc"><a class="header" href="#key-features-of-functors-using-tc">Key features of functors using tc</a></h2>
+<h2 id="rationale"><a class="header" href="#rationale">Rationale</a></h2>
+<ol>
+<li>
+<p>Simple made easy</p>
+</li>
+<li>
+<p>Focus on core domain logic</p>
+</li>
+<li>
+<p>Isolated environments</p>
+</li>
+</ol>
+<h2 id="features"><a class="header" href="#features">Features</a></h2>
 <h3 id="1-composable-entities"><a class="header" href="#1-composable-entities">1. Composable Entities</a></h3>
 <p>At it's core, <code>tc</code> provides 7 entities (functions, events, mutations, queues, routes, states and channels) that are agnostic to any cloud provider. These entities are core primitives to define the topology of any serverless system. For example, consider the following topology definition:</p>
 <pre><code class="language-yaml">
