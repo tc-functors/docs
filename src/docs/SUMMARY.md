@@ -3,12 +3,9 @@
 # Preamble
 
 - [Introduction](./introduction.md)
-- [Rationale](./rationale.md)
 - [Concepts](./concepts.md)
 - [Installation](./installation.md)
-
-# Tutorial
-- [ETL](./tutorial/etl-basic.md)
+- [Quick Start](./quick-start.md)
 
 # Entities
 - [Functions](./entities/functions.md)

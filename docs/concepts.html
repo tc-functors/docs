@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Rationale - Cloud Functors using tc</title>
+        <title>Concepts - Cloud Functors using tc</title>
 
 
         <!-- Custom HTML head -->
@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="rationale.html" class="active">Rationale</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item affix "><li class="part-title">Tutorial</li><li class="chapter-item "><a href="getting-started.html">Getting Started</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="entities/functions.html">Functions</a></li><li class="chapter-item "><a href="entities/events.html">Events</a></li><li class="chapter-item "><a href="entities/routes.html">Routes</a></li><li class="chapter-item "><a href="entities/queues.html">Queues</a></li><li class="chapter-item "><a href="entities/channels.html">Channels</a></li><li class="chapter-item "><a href="entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="entities/states.html">States</a></li><li class="chapter-item "><a href="entities/pages.html">Pages</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="workflows/designing.html">Design</a></li><li class="chapter-item "><a href="workflows/development.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Preamble</li><li class="chapter-item "><a href="introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="concepts.html" class="active">Concepts</a></li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item "><a href="quick-start.html">Quick Start</a></li><li class="chapter-item affix "><li class="part-title">Entities</li><li class="chapter-item "><a href="entities/functions.html">Functions</a></li><li class="chapter-item "><a href="entities/events.html">Events</a></li><li class="chapter-item "><a href="entities/routes.html">Routes</a></li><li class="chapter-item "><a href="entities/queues.html">Queues</a></li><li class="chapter-item "><a href="entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="entities/channels.html">Channels</a></li><li class="chapter-item "><a href="entities/pages.html">Pages</a></li><li class="chapter-item "><a href="entities/states.html">States</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><a href="workflows/designing.html">Design</a></li><li class="chapter-item "><a href="workflows/development.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item affix "><li class="part-title">Specification</li><li class="chapter-item "><a href="specification/topology.html">Topology</a></li><li class="chapter-item "><a href="specification/infrastructure.html">Infrastructure</a></li><li class="chapter-item "><a href="specification/config.html">Config</a></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -246,11 +246,12 @@
 }
 
 </style>
-<h1 id="rationale"><a class="header" href="#rationale">Rationale</a></h1>
-<h3 id="why-tc-"><a class="header" href="#why-tc-">Why tc ?</a></h3>
-<p>tc is a tool that empowers developers, architects and release engineers to build a serverless system that is simple to define and easy to evolve.</p>
-<h3 id="1-simple-made-easy"><a class="header" href="#1-simple-made-easy">1. Simple made easy</a></h3>
-<h3 id="2-composability"><a class="header" href="#2-composability">2. Composability</a></h3>
+<h1 id="concepts"><a class="header" href="#concepts">Concepts</a></h1>
+<h3 id="cloud-functor"><a class="header" href="#cloud-functor">Cloud Functor</a></h3>
+<h3 id="namespace"><a class="header" href="#namespace">Namespace</a></h3>
+<h3 id="sandbox"><a class="header" href="#sandbox">Sandbox</a></h3>
+<h3 id="isomorphism"><a class="header" href="#isomorphism">Isomorphism</a></h3>
+<h3 id="composition"><a class="header" href="#composition">Composition</a></h3>
 
                     </main>
 
@@ -281,22 +282,6 @@
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

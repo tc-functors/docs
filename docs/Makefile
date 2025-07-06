@@ -11,6 +11,7 @@ deps:
 	cargo install mdbook-admonish
 	cargo install mdbook-mermaid
 	cargo install mdbook-toc
+	cargo install mdbook-alerts
 	mdbook-admonish install
 
 clean:

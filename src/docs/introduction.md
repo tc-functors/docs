@@ -117,6 +117,3 @@ tc compile | sed -i 's/{{API_GATEWAY}}/my-gateway/g' |tc create
 ```
 
 The resolver can also be written in any language that is easy to use and query the provider, efficiently. The output of the compiler, the resolver and the sandbox's metadata as seen above are _isomorphic_. They are structurally the same and can be diffed like git-diff. Diffable infrastructure without having external state is a simple yet powerful feature.
-
-
-This is all too abstract you say ? It is! Let's [Get Started](/tc/getting-started)

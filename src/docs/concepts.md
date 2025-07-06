@@ -4,8 +4,10 @@
 ### Cloud Functor
 
 
-### Namespacing
+### Namespace
 
-### Sandboxing
+### Sandbox
 
 ### Isomorphism
+
+### Composition

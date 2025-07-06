@@ -70,9 +70,45 @@ Runtime attributes:
 
 ### 2.1 Permissions
 
+By default, tc infers permissions and sets the right boundaries in the sandbox. However, you may need to override the permissions by specifying a custom _roles_ file in `$INFRA_ROOT` (say $GIT_ROOT/infrastructure/tc/TOPOLOGY-NAME/roles/FUNCTION-NAME.json. The contents of the roles file is typically the IAM policy.
+
 ### 2.2 Environment variables
 
-### 2.3 Update sandbox
+Specify env variables in $GIT_ROOT/infrastructure/tc/TOPOLOGY-NAME/vars/FUNCTION-NAME.json
+
+```json
+{
+  "default": {
+    "timeout": 120,
+    "memory_size": 128,
+    "environment": {
+      "API_KEY": "ssm:/path/to/api-key",
+      "DB_HOST": "dev.db.net"
+    }
+  },
+  "prod": {
+    "timeout": 60,
+    "memory_size": 1024,
+    "environment": {
+      "API_KEY": "ssm:/path/to/api-key",
+      "DB_HOST": "prod.db.net"
+    }
+  },
+  "SANDBOX-NAME": {
+    "timeout": 60,
+    "environment": {
+      "API_KEY": "ssm:/path/to/api-key"
+    }
+  }
+}
+
+```
+The `vars` or runtime file is map of default and sandbox-specific overrides. Environment variables in the runtime file can be either an URI or plain text. Supported URIs are `ssm:/` , `s3:/` and `file:/`. If an URI is specified, tc resolves the values and injects them as actual values when creating the lambda. Decryption using `extensions` is also available. See Extensions.
+
+
+### 2.3 Update components
+
+tc provides mechanisms to update specific component of entities or topology in a given sandbox. This is incredibly useful when developing your core topology.
 
 ```sh
 tc update -s sandbox -e env -c functions/layers
@@ -84,12 +120,7 @@ tc update -s sandbox -e env -c functions/roles
 tc update -s sandnox -e env -c functions/function-name
 ```
 
-By default, tc tries to look for environment variables specified in the following directories:
-1.
-2.
-
-
-## 3. Builds
+## 3. Dependencies
 
 `tc` has a sophisticated function `builder` that can build different kinds of artifacts with various language runtimes (Clojure, Janet, Rust, Ruby, Python, Node)
 
@@ -233,7 +264,6 @@ At times, we may need to use a parent image that is shared and defined in anothe
 
 ```yaml
 name: req-external-example
-description: With external parent
 runtime:
   lang: python3.10
   package_type: image
@@ -249,6 +279,20 @@ build:
 ```
 
 `parent` in the `code` image-spec is an URI. This is also a way to pin the parent image.
+
+### 3.4 Filesystems
+
+We can mount a filesystem by specifying a runtime attribute `mount_fs`:
+
+```yaml
+name: fn-with-fs
+runtime:
+  lang: python3.11
+  package_type: image
+  handler: handler.handler
+```
+
+
 
 ## 4. Providers
 
@@ -273,4 +317,4 @@ build:
 
 ## 5. Patterns
 
-## 6. Extensions
+### 5.1 DAG of functions
