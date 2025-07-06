@@ -22,9 +22,9 @@ events:
       - room1
 ```
 
-## 2 Pre-defined Producers
+## 2. Triggers
 
-The value of `producer` is an arbitrary string or pre-defined trigger
+tc provides pre-defined triggers
 
 ```yaml
 events:
@@ -36,17 +36,19 @@ events:
 
 The following are available triggers for AWS provider
 
-| Resource | Trigger                        | Description |
-|----------|--------------------------------|-------------|
-| Cognito  | PRE_SIGNUP                     |             |
-| Cognito  | POST_CONFIRMATION              |             |
-| Cognito  | PRE_AUTHENTICATION             |             |
-| Cognito  | POST_AUTHENTICATION            |             |
-| Cognito  | CREATE_AUTH_CHALLENGE          |             |
-| Cognito  | VERIFY_AUTH_CHALLENGE_RESPONSE |             |
-| S3       | PUT_OBJECT                     |             |
-| S3       | DELETE_OBJECT                  |             |
-| DYNAMODB | PUT_ITEM                       |             |
+| Resource | Trigger                        | Description      |
+|----------|--------------------------------|------------------|
+| Cognito  | PRE_SIGNUP                     |                  |
+| Cognito  | POST_CONFIRMATION              |                  |
+| Cognito  | PRE_AUTHENTICATION             |                  |
+| Cognito  | POST_AUTHENTICATION            |                  |
+| Cognito  | CREATE_AUTH_CHALLENGE          |                  |
+| Cognito  | VERIFY_AUTH_CHALLENGE_RESPONSE |                  |
+| S3       | PUT_OBJECT                     |                  |
+| S3       | DELETE_OBJECT                  |                  |
+| DYNAMODB | PUT_ITEM                       |                  |
+
+
 
 ## 3. Filters
 
@@ -68,6 +70,13 @@ tc compiles JSON path filters to rules
 
 
 ## 4. Schemas
+
+## 5. Schedules
+
+| Schedule | CRON                           |                  |
+| Schedule | HOURLY                         |                  |
+| Schedule | DAILY                          | Run midnight UTC |
+| Schedule | EVERY_FIVE_MINS                |                  |
 
 ## 5. Patterns
 

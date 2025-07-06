@@ -58,6 +58,20 @@ channels:
 
 ### 2.3 Queued requests
 
+```yaml
+
+routes:
+  /foo:
+    authorizer: my-authorizer
+    method: POST
+    queue: foo-queue
+
+queues:
+  foo-queue:
+    mode: FIFO
+    function: function1
+
+```
 
 ### 2.4 DAG of handlers
 
