@@ -5,7 +5,7 @@
 The word functor was popularized by Ocaml's parameterized modules. These modules, called functors, are first class. Cloud functors are similar in that they are treated as first class and are composable much like Ocaml's elegant modules.
 
 > [!NOTE]
-> tc is still quite nascent and is being actively developed. This documentation is being actively updated.
+> tc is still quite nascent and is being actively developed. This documentation is work in progress.
 
 ## Key features of functors using tc
 
