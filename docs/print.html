@@ -473,7 +473,7 @@ tc create -s &lt;sandbox&gt; -e &lt;env&gt; --recursive
 <h1 id="installation"><a class="header" href="#installation">Installation</a></h1>
 <p>Download the executable for your OS</p>
 <div class="table-wrapper"><table><thead><tr><th>GNU/Linux x86</th><th>MacOSX M1/M2</th></tr></thead><tbody>
-<tr><td><a href="https://github.com/tc-functors/tc/releases/download/0.8.82/tc-x86_64-linux">0.8.82</a></td><td><a href="https://github.com/tc-functors/tc/releases/download/0.8.82/tc-aarch64-macos">0.8.82</a></td></tr>
+<tr><td><a href="https://github.com/tc-functors/tc/releases/download/0.8.90/tc-x86_64-linux">0.8.90</a></td><td><a href="https://github.com/tc-functors/tc/releases/download/0.8.90/tc-aarch64-macos">0.8.90</a></td></tr>
 </tbody></table>
 </div><div id="admonition-for-mac-users" class="admonition admonish-warning" role="note" aria-labelledby="admonition-for-mac-users-title">
 <div class="admonition-title">
@@ -499,6 +499,13 @@ tc create -s &lt;sandbox&gt; -e &lt;env&gt; --recursive
 <p>chmod +x /usr/local/bin/tc</p>
 </div>
 </div>
+<h2 id="upgrading"><a class="header" href="#upgrading">Upgrading</a></h2>
+<p>To upgrade tc, we can just do:</p>
+<pre><code>tc upgrade
+</code></pre>
+<p>or downgrade/upgrade to specific version</p>
+<pre><code>tc upgrade --version 0.8.90
+</code></pre>
 <h3 id="building-your-own"><a class="header" href="#building-your-own">Building your own</a></h3>
 <p><code>tc</code> is written in <a href="https://www.youtube.com/watch?v=ul9vyWuT8SU">Rust</a>.</p>
 <p>If you prefer to build <code>tc</code> yourself, install rustc/cargo.</p>
