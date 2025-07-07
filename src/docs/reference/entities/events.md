@@ -71,9 +71,20 @@ tc compiles JSON path filters to rules
 
 ## 4. Schemas
 
-WIP
+Coming soon!
 
 ## 5. Schedules
+
+We can set schedules in infrastucture dir of the topology as follows:
+
+
+Alternatively, can specify it as event triggers in topology.yml
+
+```
+
+
+```
+Available schedule identifiers:
 
 ```
 | Schedule | CRON                           |                  |
@@ -81,6 +92,7 @@ WIP
 | Schedule | DAILY                          | Run midnight UTC |
 | Schedule | EVERY_FIVE_MINS                |                  |
 ```
+
 
 ## 5. Compostion
 

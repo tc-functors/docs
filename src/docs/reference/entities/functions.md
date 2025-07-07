@@ -325,6 +325,43 @@ build:
       commands: []
 ```
 
-## 5. Patterns
+## 5. Testing
 
-### 5.1 DAG of functions
+### 5.1 Invoke
+
+By default, tc picks up a `payload.json` file in the current directory. You could optionally specify a payload file
+
+```
+tc invoke --sandbox main --env dev --payload payload.json
+```
+
+or via stdin
+```
+cat payload.json | tc invoke --sandbox main --env dev
+```
+
+or as a param
+```
+tc invoke --sandbox main --env dev --payload '{"data": "foo"}'
+```
+
+### 5.2 Emulate
+
+To emulate the Lambda Runtime environment. The following command spins up a docker container with the defined layers in function.json, sets up the paths, environment variables, AWS access, local code and runtime parameters (mem, handlers etc)
+
+```sh
+cd <function-dir>
+tc emulate
+```
+
+To run in foreground
+
+```
+tc emulate
+```
+
+You can now invoke a payload locally with this emulator
+
+```
+tc invoke --local [--payload <payload.json | json-str>]
+```

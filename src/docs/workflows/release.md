@@ -2,7 +2,7 @@
 
 <!-- toc -->
 
-## Versioning
+## 1. Versioning
 
 tc provides a sophisticated releaser module that can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level
 
@@ -13,7 +13,7 @@ tc tag --service <namespace> --next minor|major
 This creates a tag with the etl prefix.
 
 
-## Changelog
+## 2. Changelog
 
 To see the changelog of a specific topology
 
@@ -40,9 +40,9 @@ tc changelog --search AI-1234
 ```
 
 
-### Snapshotting
+## 3. Snapshots
 
-# Snapshotter
+### 3.1 Snapshot versions
 
 The snapshotter module takes a snapshot of a given sandbox and outputs the same datastructure as the compiler output. This `isomorphic` characteristic is useful to see the diffs between sandboxes.
 
@@ -72,7 +72,7 @@ tc snapshot -s stable -e qa -c topology
 ...
 ```
 
-## Manifests
+### 3.2 Snapshot entire manifest
 
 tc generates true manifests that can be used to render it in any other sandbox preserving the versions of the entities (functions, routes, events etc). The structure of a manifest is a JSON map with the following fields:
 

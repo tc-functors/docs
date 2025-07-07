@@ -27,5 +27,3 @@ functions:
     queue: my-dlq
 
 ```
-
-## 3. Composition

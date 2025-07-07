@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Introduction</li><li class="chapter-item "><a href="../../introduction/about.html">About</a></li><li class="chapter-item "><div>Rationale</div></li><li class="chapter-item "><div>Concepts</div></li><li class="chapter-item "><a href="../../introduction/features.html">Features</a></li><li class="chapter-item affix "><li class="part-title">Getting Started</li><li class="chapter-item "><a href="../../installation.html">Installation</a></li><li class="chapter-item "><a href="../../quick-start.html">Quick Start</a></li><li class="chapter-item "><div>Examples</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../examples/job-tracker.html">Job tracker</a></li><li class="chapter-item "><a href="../../examples/chat.html">Chat</a></li></ol></li><li class="chapter-item "><li class="part-title">Reference</li><li class="chapter-item "><a href="../../reference/specification.html">Specification</a></li><li class="chapter-item "><a href="../../reference/config.html">Config</a></li><li class="chapter-item expanded "><a href="../../reference/entities.html">Entities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/entities/functions.html" class="active">Functions</a></li><li class="chapter-item "><a href="../../reference/entities/events.html">Events</a></li><li class="chapter-item "><a href="../../reference/entities/routes.html">Routes</a></li><li class="chapter-item "><a href="../../reference/entities/queues.html">Queues</a></li><li class="chapter-item "><a href="../../reference/entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="../../reference/entities/channels.html">Channels</a></li><li class="chapter-item "><a href="../../reference/entities/pages.html">Pages</a></li><li class="chapter-item "><a href="../../reference/entities/states.html">States</a></li></ol></li><li class="chapter-item "><a href="../../reference/cli.html">CLI</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><div>Design</div></li><li class="chapter-item "><a href="../../workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="../../workflows/release.html">Release</a></li><li class="chapter-item "><div>Canarys</div></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Introduction</li><li class="chapter-item "><a href="../../introduction/about.html">About</a></li><li class="chapter-item "><div>Rationale</div></li><li class="chapter-item "><div>Concepts</div></li><li class="chapter-item "><a href="../../introduction/features.html">Features</a></li><li class="chapter-item affix "><li class="part-title">Getting Started</li><li class="chapter-item "><a href="../../installation.html">Installation</a></li><li class="chapter-item "><a href="../../quick-start.html">Quick Start</a></li><li class="chapter-item "><div>Examples</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Job tracker</div></li><li class="chapter-item "><div>Chat</div></li></ol></li><li class="chapter-item "><li class="part-title">Reference</li><li class="chapter-item "><a href="../../reference/specification.html">Specification</a></li><li class="chapter-item "><a href="../../reference/config.html">Config</a></li><li class="chapter-item expanded "><a href="../../reference/entities.html">Entities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../../reference/entities/functions.html" class="active">Functions</a></li><li class="chapter-item "><a href="../../reference/entities/events.html">Events</a></li><li class="chapter-item "><a href="../../reference/entities/routes.html">Routes</a></li><li class="chapter-item "><a href="../../reference/entities/queues.html">Queues</a></li><li class="chapter-item "><a href="../../reference/entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="../../reference/entities/channels.html">Channels</a></li><li class="chapter-item "><a href="../../reference/entities/pages.html">Pages</a></li><li class="chapter-item "><a href="../../reference/entities/states.html">States</a></li><li class="chapter-item "><div>Tables</div></li></ol></li><li class="chapter-item "><a href="../../reference/cli.html">CLI</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><div>Design</div></li><li class="chapter-item "><a href="../../workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="../../workflows/release.html">Release</a></li><li class="chapter-item "><div>Canarys</div></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -273,9 +273,10 @@
 </ul>
 </li>
 <li><a href="#4-providers">4. Providers</a></li>
-<li><a href="#5-patterns">5. Patterns</a>
+<li><a href="#5-testing">5. Testing</a>
 <ul>
-<li><a href="#51-dag-of-functions">5.1 DAG of functions</a></li>
+<li><a href="#51-invoke">5.1 Invoke</a></li>
+<li><a href="#52-emulate">5.2 Emulate</a></li>
 </ul>
 </li>
 </ul>
@@ -535,8 +536,28 @@ build:
       parent: base
       commands: []
 </code></pre>
-<h2 id="5-patterns"><a class="header" href="#5-patterns">5. Patterns</a></h2>
-<h3 id="51-dag-of-functions"><a class="header" href="#51-dag-of-functions">5.1 DAG of functions</a></h3>
+<h2 id="5-testing"><a class="header" href="#5-testing">5. Testing</a></h2>
+<h3 id="51-invoke"><a class="header" href="#51-invoke">5.1 Invoke</a></h3>
+<p>By default, tc picks up a <code>payload.json</code> file in the current directory. You could optionally specify a payload file</p>
+<pre><code>tc invoke --sandbox main --env dev --payload payload.json
+</code></pre>
+<p>or via stdin</p>
+<pre><code>cat payload.json | tc invoke --sandbox main --env dev
+</code></pre>
+<p>or as a param</p>
+<pre><code>tc invoke --sandbox main --env dev --payload '{&quot;data&quot;: &quot;foo&quot;}'
+</code></pre>
+<h3 id="52-emulate"><a class="header" href="#52-emulate">5.2 Emulate</a></h3>
+<p>To emulate the Lambda Runtime environment. The following command spins up a docker container with the defined layers in function.json, sets up the paths, environment variables, AWS access, local code and runtime parameters (mem, handlers etc)</p>
+<pre><code class="language-sh">cd &lt;function-dir&gt;
+tc emulate
+</code></pre>
+<p>To run in foreground</p>
+<pre><code>tc emulate
+</code></pre>
+<p>You can now invoke a payload locally with this emulator</p>
+<pre><code>tc invoke --local [--payload &lt;payload.json | json-str&gt;]
+</code></pre>
 
                     </main>
 

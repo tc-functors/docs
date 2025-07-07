@@ -2,7 +2,8 @@
 
 <!-- toc -->
 
-Caveat: this is a rough draft and we are still working on the documentation.
+> [!NOTE]
+> This is a rough draft and we are still working on the documentation.
 
 Now that we have installed `tc` and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.
 
@@ -156,7 +157,7 @@ functions:
   transformer:
     function: loader
   loader:
-    event: Notify
+	end: true
 ```
 
 Run `tc update -s john -e dev -c routes` to update the routes.

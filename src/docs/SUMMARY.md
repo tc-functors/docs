@@ -25,6 +25,7 @@
   - [Channels](./reference/entities/channels.md)
   - [Pages](./reference/entities/pages.md)
   - [States](./reference/entities/states.md)
+  - [Tables]()
 - [CLI](./reference/cli.md)
 
 # Workflows

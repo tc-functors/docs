@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Introduction</li><li class="chapter-item "><a href="introduction/about.html">About</a></li><li class="chapter-item "><div>Rationale</div></li><li class="chapter-item "><div>Concepts</div></li><li class="chapter-item "><a href="introduction/features.html">Features</a></li><li class="chapter-item affix "><li class="part-title">Getting Started</li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="quick-start.html" class="active">Quick Start</a></li><li class="chapter-item "><div>Examples</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="examples/job-tracker.html">Job tracker</a></li><li class="chapter-item "><a href="examples/chat.html">Chat</a></li></ol></li><li class="chapter-item "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/specification.html">Specification</a></li><li class="chapter-item "><a href="reference/config.html">Config</a></li><li class="chapter-item "><a href="reference/entities.html">Entities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="reference/entities/functions.html">Functions</a></li><li class="chapter-item "><a href="reference/entities/events.html">Events</a></li><li class="chapter-item "><a href="reference/entities/routes.html">Routes</a></li><li class="chapter-item "><a href="reference/entities/queues.html">Queues</a></li><li class="chapter-item "><a href="reference/entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="reference/entities/channels.html">Channels</a></li><li class="chapter-item "><a href="reference/entities/pages.html">Pages</a></li><li class="chapter-item "><a href="reference/entities/states.html">States</a></li></ol></li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><div>Design</div></li><li class="chapter-item "><a href="workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item "><div>Canarys</div></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Introduction</li><li class="chapter-item "><a href="introduction/about.html">About</a></li><li class="chapter-item "><div>Rationale</div></li><li class="chapter-item "><div>Concepts</div></li><li class="chapter-item "><a href="introduction/features.html">Features</a></li><li class="chapter-item affix "><li class="part-title">Getting Started</li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="quick-start.html" class="active">Quick Start</a></li><li class="chapter-item "><div>Examples</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><div>Job tracker</div></li><li class="chapter-item "><div>Chat</div></li></ol></li><li class="chapter-item "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/specification.html">Specification</a></li><li class="chapter-item "><a href="reference/config.html">Config</a></li><li class="chapter-item "><a href="reference/entities.html">Entities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="reference/entities/functions.html">Functions</a></li><li class="chapter-item "><a href="reference/entities/events.html">Events</a></li><li class="chapter-item "><a href="reference/entities/routes.html">Routes</a></li><li class="chapter-item "><a href="reference/entities/queues.html">Queues</a></li><li class="chapter-item "><a href="reference/entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="reference/entities/channels.html">Channels</a></li><li class="chapter-item "><a href="reference/entities/pages.html">Pages</a></li><li class="chapter-item "><a href="reference/entities/states.html">States</a></li><li class="chapter-item "><div>Tables</div></li></ol></li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><div>Design</div></li><li class="chapter-item "><a href="workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item "><div>Canarys</div></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -250,7 +250,13 @@
 <li><a href="#4-define-the-function-dag-flow">4. Define the function DAG (flow)</a></li>
 <li><a href="#5-add-a-rest-api-to-invoke-etl">5. Add a REST API to invoke ETL</a></li>
 </ul>
-<p>Caveat: this is a rough draft and we are still working on the documentation.</p>
+<div class="mdbook-alerts mdbook-alerts-note">
+<p class="mdbook-alerts-title">
+  <span class="mdbook-alerts-icon"></span>
+  note
+</p>
+<p>This is a rough draft and we are still working on the documentation.</p>
+</div>
 <p>Now that we have installed <code>tc</code> and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.</p>
 <p>In this tutorial, we will attempt to learn about the core concepts in tc.</p>
 <h2 id="1-bootstrap-permissions"><a class="header" href="#1-bootstrap-permissions">1. Bootstrap permissions</a></h2>
@@ -370,7 +376,7 @@ functions:
   transformer:
     function: loader
   loader:
-    event: Notify
+	end: true
 </code></pre>
 <p>Run <code>tc update -s john -e dev -c routes</code> to update the routes.</p>
 
@@ -382,7 +388,7 @@ functions:
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="examples/job-tracker.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="reference/specification.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -396,7 +402,7 @@ functions:
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="examples/job-tracker.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="reference/specification.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
