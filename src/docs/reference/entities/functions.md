@@ -59,13 +59,22 @@ runtime:
 
 ## 2. Components
 
-Runtime attributes:
+| Key                     | Default           | Optional? | Comments                    |
+|-------------------------|-------------------|-----------|-----------------------------|
+| lang                    | Inferred          | yes       |                             |
+| handler                 | handler.handler   |           |                             |
+| package_type            | zip               |           | possible values: zip, image |
+| uri                     | file:./lambda.zip |           |                             |
+| mount_fs                | false             | yes       |                             |
+| snapstart               | false             | yes       |                             |
+| memory                  | 128               | yes       |                             |
+| timeout                 | 30                | yes       |                             |
+| provisioned_concurrency | 0                 | yes       |                             |
+| reserved_concurrency    | 0                 | yes       |                             |
+| layers                  | []                | yes       |                             |
+| extensions              | []                | yes       |                             |
+| environment             | {}                | yes       | Environment variables       |
 
-| Lang    | Runtime                |
-|---------|------------------------|
-| python  | 3.10, 3.11, 3.12, 3.13 |
-| ruby    | 3.2, 3.3               |
-| node    | 22                     |
 
 
 ### 2.1 Permissions

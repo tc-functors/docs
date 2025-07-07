@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Introduction</li><li class="chapter-item "><a href="introduction/about.html">About</a></li><li class="chapter-item "><div>Rationale</div></li><li class="chapter-item "><div>Concepts</div></li><li class="chapter-item "><a href="introduction/features.html">Features</a></li><li class="chapter-item affix "><li class="part-title">Getting Started</li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="quick-start.html" class="active">Quick Start</a></li><li class="chapter-item "><div>Examples</div></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/specification.html">Specification</a></li><li class="chapter-item "><a href="reference/config.html">Config</a></li><li class="chapter-item "><a href="reference/entities.html">Entities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="reference/entities/functions.html">Functions</a></li><li class="chapter-item "><a href="reference/entities/events.html">Events</a></li><li class="chapter-item "><a href="reference/entities/routes.html">Routes</a></li><li class="chapter-item "><a href="reference/entities/queues.html">Queues</a></li><li class="chapter-item "><a href="reference/entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="reference/entities/channels.html">Channels</a></li><li class="chapter-item "><a href="reference/entities/pages.html">Pages</a></li><li class="chapter-item "><a href="reference/entities/states.html">States</a></li></ol></li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><div>Design</div></li><li class="chapter-item "><a href="workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item "><div>Canarys</div></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Introduction</li><li class="chapter-item "><a href="introduction/about.html">About</a></li><li class="chapter-item "><div>Rationale</div></li><li class="chapter-item "><div>Concepts</div></li><li class="chapter-item "><a href="introduction/features.html">Features</a></li><li class="chapter-item affix "><li class="part-title">Getting Started</li><li class="chapter-item "><a href="installation.html">Installation</a></li><li class="chapter-item expanded "><a href="quick-start.html" class="active">Quick Start</a></li><li class="chapter-item "><div>Examples</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="examples/job-tracker.html">Job tracker</a></li><li class="chapter-item "><a href="examples/chat.html">Chat</a></li></ol></li><li class="chapter-item "><li class="part-title">Reference</li><li class="chapter-item "><a href="reference/specification.html">Specification</a></li><li class="chapter-item "><a href="reference/config.html">Config</a></li><li class="chapter-item "><a href="reference/entities.html">Entities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="reference/entities/functions.html">Functions</a></li><li class="chapter-item "><a href="reference/entities/events.html">Events</a></li><li class="chapter-item "><a href="reference/entities/routes.html">Routes</a></li><li class="chapter-item "><a href="reference/entities/queues.html">Queues</a></li><li class="chapter-item "><a href="reference/entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="reference/entities/channels.html">Channels</a></li><li class="chapter-item "><a href="reference/entities/pages.html">Pages</a></li><li class="chapter-item "><a href="reference/entities/states.html">States</a></li></ol></li><li class="chapter-item "><a href="reference/cli.html">CLI</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><div>Design</div></li><li class="chapter-item "><a href="workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="workflows/release.html">Release</a></li><li class="chapter-item "><div>Canarys</div></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -249,10 +249,6 @@
 <li><a href="#3-namespace-your-functions">3. Namespace your functions</a></li>
 <li><a href="#4-define-the-function-dag-flow">4. Define the function DAG (flow)</a></li>
 <li><a href="#5-add-a-rest-api-to-invoke-etl">5. Add a REST API to invoke ETL</a></li>
-<li><a href="#6-notify-on-completion">6. Notify on completion</a></li>
-<li><a href="#7-implement-the-functions">7. Implement the functions</a></li>
-<li><a href="#8-making-it-recursive">8. Making it recursive</a></li>
-<li><a href="#9-configuring-infrastructure">9. Configuring infrastructure</a></li>
 </ul>
 <p>Caveat: this is a rough draft and we are still working on the documentation.</p>
 <p>Now that we have installed <code>tc</code> and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.</p>
@@ -377,164 +373,6 @@ functions:
     event: Notify
 </code></pre>
 <p>Run <code>tc update -s john -e dev -c routes</code> to update the routes.</p>
-<h2 id="6-notify-on-completion"><a class="header" href="#6-notify-on-completion">6. Notify on completion</a></h2>
-<pre><code>name: etl
-
-routes:
-  /api/etl:
-    method: POST
-    function: enhancer
-
-functions:
-  enhancer:
-    root: true
-    function: transformer
-  transformer:
-    function: loader
-  loader:
-    event: Notify
-
-events:
-  Notify:
-    channel: Subscription
-
-channels:
-  Subscription:
-    function: default
-</code></pre>
-<p>Let's make <code>loader</code> output an event that pushes the status message to a websocket channel. <code>tc update -s john -e dev</code> to create/update the events and channels.</p>
-<pre><code class="language-sh">curl https://seuz7un8rc.execute-api.us-west-2.amazonaws.com/test/start-etl -X POST -d '{&quot;hello&quot;: &quot;world&quot;}'
-=&gt; {&quot;enhancer&quot;: &quot;abc&quot;}
-</code></pre>
-<h2 id="7-implement-the-functions"><a class="header" href="#7-implement-the-functions">7. Implement the functions</a></h2>
-<p>So far, we created a topology with basic functions, events, routes and a flow to connect them all. The functions themselves don't do much. Functions have depedencies, different runtimes or languages, platform-specific shared libraries and so forth. For example, we have want the enhancer to have some dependencies specified in say pyproject.toml or requirements.txt. Let's add a file named <code>function.json</code> in enhancer directory</p>
-<p>enhancer/function.json</p>
-<pre><code class="language-json">
-{
-  &quot;name&quot;: &quot;enhancer&quot;,
-  &quot;description&quot;: &quot;Ultimate enhancer&quot;,
-  &quot;runtime&quot;: {
-    &quot;lang&quot;: &quot;python3.12&quot;,
-    &quot;package_type&quot;: &quot;zip&quot;,
-    &quot;handler&quot;: &quot;handler.handler&quot;,
-  },
-  &quot;build&quot;: {
-    &quot;kind&quot;: &quot;Inline&quot;,
-    &quot;command&quot;: &quot;zip -9 -q lambda.zip *.py&quot;
-  },
-}
-</code></pre>
-<p>and let's say we had the following deps in <code>pyproject.toml</code></p>
-<p>enhancer/pyproject.toml</p>
-<pre><code>[tool.poetry]
-name = &quot;enhancer&quot;
-version = &quot;0.1.0&quot;
-description = &quot;&quot;
-authors = [&quot;fu &lt;foo@fubar.com&gt;&quot;]
-
-[tool.poetry.dependencies]
-simplejson = &quot;^3.19.2&quot;
-botocore = &quot;^1.31.73&quot;
-boto3 = &quot;^1.28.73&quot;
-pyyaml = &quot;6.0.2&quot;
-</code></pre>
-<p>Now update the function we created by running this from the <code>etl</code> directory</p>
-<pre><code class="language-sh">tc update -s john -e dev -c enhancer
-</code></pre>
-<p>The above command will build the dependencies in a docker container locally and update the function code with the depedencies.</p>
-<div id="admonition-info-2" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-2-title">
-<div class="admonition-title">
-<div id="admonition-info-2-title">
-<p>Info</p>
-</div>
-<a class="admonition-anchor-link" href="#admonition-info-2"></a>
-</div>
-<div>
-<p>-c argument takes an entity category (events, functions, mutations, routes etc) or the name of the entity itself. In this case the function name.</p>
-</div>
-</div>
-<p>There are several ways to package the depedencies depending on the runtime, size of the dependencies and so forth. Layering is another kind. Let's try and build the transformer using layers. Add the following in transformer/function.json</p>
-<p>transformer/function.json</p>
-<pre><code class="language-json">
-{
-  &quot;name&quot;: &quot;transformer&quot;,
-  &quot;description&quot;: &quot;Ultimate Transformer&quot;,
-  &quot;runtime&quot;: {
-    &quot;lang&quot;: &quot;python3.12&quot;,
-    &quot;package_type&quot;: &quot;zip&quot;,
-    &quot;handler&quot;: &quot;handler.handler&quot;,
-	&quot;layers&quot;: [&quot;transformer-deps&quot;]
-  }
-}
-</code></pre>
-<p>The layers can be built independent of creating/deploying the code, as they don't change that often.</p>
-<pre><code class="language-sh">
-tc build --kind layer --name transformer-deps --publish -e dev
-tc update -s john -e dev -c layers
-</code></pre>
-<p>With the above command, we built the dependencies in a docker container and updated the function(s) to use the latest version of the layer. See <a href="/docs/modules/builder.html">Build</a> for details about building functions.</p>
-<h2 id="8-making-it-recursive"><a class="header" href="#8-making-it-recursive">8. Making it recursive</a></h2>
-<p>We can make loader itself another sub-topology with it's own DAG of entities and still treat etl as the root topology (or functor). Let's add a topology file in loader.</p>
-<p>etl/loader/topology.yml</p>
-<pre><code>name: loader
-
-</code></pre>
-<p>Now we can recursrively create the topologies from the root topology directory</p>
-<pre><code>tc create -s john -e dev --recursive
-</code></pre>
-<h2 id="9-configuring-infrastructure"><a class="header" href="#9-configuring-infrastructure">9. Configuring infrastructure</a></h2>
-<p>At times, we require more infrastructure-specific configuration, specific permissions, environment variables, runtime configuration.</p>
-<p>We can specify an infra path in the topology</p>
-<pre><code class="language-yaml">name: etl
-infra: &quot;../infra/etl&quot;
-routes: ..
-</code></pre>
-<p>In the specified infra directory, we can add environment/runtime variables for let's say enhancer.</p>
-<p>../infra/etl/vars/enhancer.json</p>
-<pre><code class="language-json">{
-  &quot;memory_size&quot;: 1024,
-  &quot;timeout&quot;: 800,
-  &quot;environment&quot;: {
-    &quot;GOOGLE_API_KEY&quot;: &quot;ssm:/goo/api-key&quot;,
-    &quot;KEY&quot;: &quot;VALUE&quot;
-  },
-  &quot;tags&quot;: {
-    &quot;developer&quot;: &quot;john&quot;
-  }
-}
-
-</code></pre>
-<p>If we need specific IAM permissions, do</p>
-<p>../infra/etl/roles/enhancer.json</p>
-<pre><code class="language-json">{
-    &quot;Statement&quot;: [
-        {
-            &quot;Action&quot;: [
-                &quot;s3:PutObject&quot;,
-                &quot;s3:ListBucketVersions&quot;,
-                &quot;s3:ListBucket&quot;
-            ],
-            &quot;Effect&quot;: &quot;Allow&quot;,
-            &quot;Resource&quot;: [
-                &quot;arn:aws:s3:::bucket/*&quot;,
-                &quot;arn:aws:s3:::bucket&quot;
-                     ],
-            &quot;Sid&quot;: &quot;AllowAccessToS3Bucket1&quot;
-        }
-
-    ],
-    &quot;Version&quot;: &quot;2012-10-17&quot;
-}
-
-</code></pre>
-<p>We may also need additional configuration that are specific to the provider (AWS etc).
-Add a key called config with the value as path to the file.</p>
-<pre><code class="language-yaml">name: etl
-infra: &quot;../infra/etl&quot;
-config: &quot;../tc.yaml&quot;
-routes: ..
-</code></pre>
-<p>See <a href="/docs/specification/config.html">Config</a></p>
 
                     </main>
 
@@ -544,7 +382,7 @@ routes: ..
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="reference/specification.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="examples/job-tracker.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -558,7 +396,7 @@ routes: ..
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="reference/specification.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="examples/job-tracker.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

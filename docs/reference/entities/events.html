@@ -90,7 +90,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Introduction</li><li class="chapter-item "><a href="../../introduction/about.html">About</a></li><li class="chapter-item "><div>Rationale</div></li><li class="chapter-item "><div>Concepts</div></li><li class="chapter-item "><a href="../../introduction/features.html">Features</a></li><li class="chapter-item affix "><li class="part-title">Getting Started</li><li class="chapter-item "><a href="../../installation.html">Installation</a></li><li class="chapter-item "><a href="../../quick-start.html">Quick Start</a></li><li class="chapter-item "><div>Examples</div></li><li class="chapter-item affix "><li class="part-title">Reference</li><li class="chapter-item "><a href="../../reference/specification.html">Specification</a></li><li class="chapter-item "><a href="../../reference/config.html">Config</a></li><li class="chapter-item expanded "><a href="../../reference/entities.html">Entities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../reference/entities/functions.html">Functions</a></li><li class="chapter-item expanded "><a href="../../reference/entities/events.html" class="active">Events</a></li><li class="chapter-item "><a href="../../reference/entities/routes.html">Routes</a></li><li class="chapter-item "><a href="../../reference/entities/queues.html">Queues</a></li><li class="chapter-item "><a href="../../reference/entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="../../reference/entities/channels.html">Channels</a></li><li class="chapter-item "><a href="../../reference/entities/pages.html">Pages</a></li><li class="chapter-item "><a href="../../reference/entities/states.html">States</a></li></ol></li><li class="chapter-item "><a href="../../reference/cli.html">CLI</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><div>Design</div></li><li class="chapter-item "><a href="../../workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="../../workflows/release.html">Release</a></li><li class="chapter-item "><div>Canarys</div></li></ol>
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Introduction</li><li class="chapter-item "><a href="../../introduction/about.html">About</a></li><li class="chapter-item "><div>Rationale</div></li><li class="chapter-item "><div>Concepts</div></li><li class="chapter-item "><a href="../../introduction/features.html">Features</a></li><li class="chapter-item affix "><li class="part-title">Getting Started</li><li class="chapter-item "><a href="../../installation.html">Installation</a></li><li class="chapter-item "><a href="../../quick-start.html">Quick Start</a></li><li class="chapter-item "><div>Examples</div><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../examples/job-tracker.html">Job tracker</a></li><li class="chapter-item "><a href="../../examples/chat.html">Chat</a></li></ol></li><li class="chapter-item "><li class="part-title">Reference</li><li class="chapter-item "><a href="../../reference/specification.html">Specification</a></li><li class="chapter-item "><a href="../../reference/config.html">Config</a></li><li class="chapter-item expanded "><a href="../../reference/entities.html">Entities</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../../reference/entities/functions.html">Functions</a></li><li class="chapter-item expanded "><a href="../../reference/entities/events.html" class="active">Events</a></li><li class="chapter-item "><a href="../../reference/entities/routes.html">Routes</a></li><li class="chapter-item "><a href="../../reference/entities/queues.html">Queues</a></li><li class="chapter-item "><a href="../../reference/entities/mutations.html">Mutations</a></li><li class="chapter-item "><a href="../../reference/entities/channels.html">Channels</a></li><li class="chapter-item "><a href="../../reference/entities/pages.html">Pages</a></li><li class="chapter-item "><a href="../../reference/entities/states.html">States</a></li></ol></li><li class="chapter-item "><a href="../../reference/cli.html">CLI</a></li><li class="chapter-item affix "><li class="part-title">Workflows</li><li class="chapter-item "><div>Design</div></li><li class="chapter-item "><a href="../../workflows/develop.html">Develop</a></li><li class="chapter-item "><a href="../../workflows/release.html">Release</a></li><li class="chapter-item "><div>Canarys</div></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle">
                 <div class="sidebar-resize-indicator"></div>
@@ -249,13 +249,8 @@
 <li><a href="#3-filters">3. Filters</a></li>
 <li><a href="#4-schemas">4. Schemas</a></li>
 <li><a href="#5-schedules">5. Schedules</a></li>
-<li><a href="#5-patterns">5. Patterns</a>
-<ul>
-<li><a href="#51-event-driven-choreography">5.1 Event-driven choreography</a></li>
-</ul>
-</li>
-<li><a href="#6-compostion">6. Compostion</a></li>
-<li><a href="#7-visualization">7. Visualization</a></li>
+<li><a href="#5-compostion">5. Compostion</a></li>
+<li><a href="#6-visualization">6. Visualization</a></li>
 </ul>
 <h2 id="1-event-to-function-mapping"><a class="header" href="#1-event-to-function-mapping">1. Event to function mapping</a></h2>
 <p>topology.yml</p>
@@ -311,14 +306,14 @@ events:
 </code></pre>
 <p>tc compiles JSON path filters to rules</p>
 <h2 id="4-schemas"><a class="header" href="#4-schemas">4. Schemas</a></h2>
+<p>WIP</p>
 <h2 id="5-schedules"><a class="header" href="#5-schedules">5. Schedules</a></h2>
-<p>| Schedule | CRON                           |                  |
+<pre><code>| Schedule | CRON                           |                  |
 | Schedule | HOURLY                         |                  |
 | Schedule | DAILY                          | Run midnight UTC |
-| Schedule | EVERY_FIVE_MINS                |                  |</p>
-<h2 id="5-patterns"><a class="header" href="#5-patterns">5. Patterns</a></h2>
-<h3 id="51-event-driven-choreography"><a class="header" href="#51-event-driven-choreography">5.1 Event-driven choreography</a></h3>
-<h2 id="6-compostion"><a class="header" href="#6-compostion">6. Compostion</a></h2>
+| Schedule | EVERY_FIVE_MINS                |                  |
+</code></pre>
+<h2 id="5-compostion"><a class="header" href="#5-compostion">5. Compostion</a></h2>
 <p>Events can be <em>composed</em> with other entities. For example:</p>
 <pre><code class="language-yaml">
 routes:
@@ -330,7 +325,7 @@ events:
     function: function1
 
 </code></pre>
-<h2 id="7-visualization"><a class="header" href="#7-visualization">7. Visualization</a></h2>
+<h2 id="6-visualization"><a class="header" href="#6-visualization">6. Visualization</a></h2>
 <p>To generate a visual flow:</p>
 <pre><code class="language-sh">tc compile -c events -f digraph | dot
 </code></pre>

@@ -10,6 +10,8 @@
   - [Installation](./installation.md)
   - [Quick Start](./quick-start.md)
   - [Examples]()
+    - [Job tracker](./examples/job-tracker.md)
+    - [Chat](./examples/chat.md)
 
 # Reference
 - [Specification](./reference/specification.md)

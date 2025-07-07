@@ -71,19 +71,18 @@ tc compiles JSON path filters to rules
 
 ## 4. Schemas
 
+WIP
+
 ## 5. Schedules
 
+```
 | Schedule | CRON                           |                  |
 | Schedule | HOURLY                         |                  |
 | Schedule | DAILY                          | Run midnight UTC |
 | Schedule | EVERY_FIVE_MINS                |                  |
+```
 
-## 5. Patterns
-
-### 5.1 Event-driven choreography
-
-
-## 6. Compostion
+## 5. Compostion
 
 Events can be _composed_ with other entities. For example:
 
@@ -98,7 +97,7 @@ events:
     function: function1
 
 ```
-## 7. Visualization
+## 6. Visualization
 
 To generate a visual flow:
 

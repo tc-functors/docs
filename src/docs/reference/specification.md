@@ -74,12 +74,9 @@ queues:
 pages:
   my-app:
     kind: SPA | PWA | Static
-    dist: './dist'
-    dir: 'app'
-    build:
-      - npm install --quiet
-      - npm run build
-
+    dist: <Path>
+    dir: <String>
+    build: <String>
 
 states: ./states.json | <definition>  [optional]
 

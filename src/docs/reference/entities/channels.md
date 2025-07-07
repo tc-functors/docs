@@ -10,9 +10,14 @@ channels:
     function: process
 ```
 
-### Example: Chat
-
+`function` in this context is either an  an inline javascript handler. For example:
 
 ```yaml
-
+channels:
+  my-room:
+    function: path/to/handler.js
 ```
+
+## Authorizer
+
+wip
