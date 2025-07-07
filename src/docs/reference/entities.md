@@ -1,19 +1,20 @@
 # Entities
 
-## Matrix
 
-Not all entities are composable with each other. The following shows the compatibility Matrix and their implementation status
+## Composition Matrix
+
+Functor entities are, by definition, composable with each other similar to functions in a functional programming language. The following shows the composability Matrix.
 
 
-|          | Function | Event | Queue | Route | Channel | Mutation |
-|----------|----------|-------|-------|-------|---------|----------|
-| Function | No*      | No    | No*   | No    | No      | No       |
-| Event    | Yes      | No    | No    | No    | Yes     | No       |
-| Route    | Yes      | No*   | No*   | -     | No      | No       |
-| Queue    | Yes      | No    | -     | No    | No      | No       |
-| Channel  | Yes      | Yes   | No    | No    | -       | No       |
-| Mutation | Yes      | No*   | No    | No    | No      | -        |
+|          | Function | Event | Queue | Route | Channel | Mutation | Page |
+|----------|----------|-------|-------|-------|---------|----------|------|
+| Function |          |       |       |       |         |          |      |
+| Event    | Yes      |       |       |       | Yes     | Yes      |      |
+| Route    | Yes      |       |       |       |         |          |      |
+| Queue    | Yes      |       |       |       |         |          |      |
+| Channel  | Yes      |       |       |       |         |          |      |
+| Mutation | Yes      | Yes   |       |       |         |          |      |
 
 ```admonish info
-* indicates that it is currently being implemented
+Not all entities are composable with each other.
 ```

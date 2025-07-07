@@ -243,15 +243,15 @@
 
 </style>
 <h1 id="entities"><a class="header" href="#entities">Entities</a></h1>
-<h2 id="matrix"><a class="header" href="#matrix">Matrix</a></h2>
-<p>Not all entities are composable with each other. The following shows the compatibility Matrix and their implementation status</p>
-<div class="table-wrapper"><table><thead><tr><th></th><th>Function</th><th>Event</th><th>Queue</th><th>Route</th><th>Channel</th><th>Mutation</th></tr></thead><tbody>
-<tr><td>Function</td><td>No*</td><td>No</td><td>No*</td><td>No</td><td>No</td><td>No</td></tr>
-<tr><td>Event</td><td>Yes</td><td>No</td><td>No</td><td>No</td><td>Yes</td><td>No</td></tr>
-<tr><td>Route</td><td>Yes</td><td>No*</td><td>No*</td><td>-</td><td>No</td><td>No</td></tr>
-<tr><td>Queue</td><td>Yes</td><td>No</td><td>-</td><td>No</td><td>No</td><td>No</td></tr>
-<tr><td>Channel</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>-</td><td>No</td></tr>
-<tr><td>Mutation</td><td>Yes</td><td>No*</td><td>No</td><td>No</td><td>No</td><td>-</td></tr>
+<h2 id="composition-matrix"><a class="header" href="#composition-matrix">Composition Matrix</a></h2>
+<p>Functor entities are, by definition, composable with each other similar to functions in a functional programming language. The following shows the composability Matrix.</p>
+<div class="table-wrapper"><table><thead><tr><th></th><th>Function</th><th>Event</th><th>Queue</th><th>Route</th><th>Channel</th><th>Mutation</th><th>Page</th></tr></thead><tbody>
+<tr><td>Function</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Event</td><td>Yes</td><td></td><td></td><td></td><td>Yes</td><td>Yes</td><td></td></tr>
+<tr><td>Route</td><td>Yes</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Queue</td><td>Yes</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Channel</td><td>Yes</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>Mutation</td><td>Yes</td><td>Yes</td><td></td><td></td><td></td><td></td><td></td></tr>
 </tbody></table>
 </div><div id="admonition-info" class="admonition admonish-info" role="note" aria-labelledby="admonition-info-title">
 <div class="admonition-title">
@@ -261,9 +261,7 @@
 <a class="admonition-anchor-link" href="#admonition-info"></a>
 </div>
 <div>
-<ul>
-<li>indicates that it is currently being implemented</li>
-</ul>
+<p>Not all entities are composable with each other.</p>
 </div>
 </div>
 
