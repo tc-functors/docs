@@ -2,8 +2,8 @@
 
 # Introduction
   - [About](./introduction/about.md)
-  - [Rationale]()
-  - [Concepts]()
+  - [Rationale](./introduction/rationale.md)
+  - [Concepts](./introduction/concepts.md)
   - [Features](./introduction/features.md)
 
 # Getting Started

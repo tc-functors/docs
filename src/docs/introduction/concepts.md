@@ -1,15 +1,20 @@
 # Concepts
 
-`tc` defines, creates and manages serveless entities such as functions, mutations, events, routes, states, queues and channels. tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a `Cloud Functor`.
+## Cloud Functor
 
-
-### Cloud Functor
-
+A cloud functor is an abstract topology of functions, mutations, events, routes, states, queues, pages and channels.
 
 ### Namespace
 
+A namespace is the name of the topology.
+All entities within the topology are prefixed with the namespace.
+
 ### Sandbox
 
+A sandbox is an instance of the topology with sufficient permission boundaries. Entities in the sandboxed topology are free to communicate with each other.
+
 ### Isomorphism
+
+
 
 ### Composition

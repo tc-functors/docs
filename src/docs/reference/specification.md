@@ -4,8 +4,8 @@
 
 
 ```yaml
-name: <namespace>
-infra: <infra-path>
+name: String
+infra: <String>
 
 nodes:
   ignore: [<path>]
@@ -17,16 +17,21 @@ functions:
     function: <String>
     event: <String>
     queue: <String>
-    runtime: RuntimeSpec
-    build: BuildSpec
+    runtime:
+      lang: "Python39" | "Python310" | "Python311" | "Python312" | "Python313" | "Ruby32" | "Java21" | "Rust" | "Node22" | "Node20"
+      handler: handler.handler
+      package_type: zip | image
+    build:
+      kind: Inline | Image
+      command: zip -9 lambda.zip *.py
 
 events:
   EventName:
     producer: <String>
-	doc_only: <false>
-	nth: <sequence int>
-	filter: <String>
-	rule_name: <String>
+    doc_only: <false>
+    nth: <sequence int>
+    filter: <String>
+    rule_name: <String>
     functions: [<String>]
     function: <String>
     mutation: <String>
@@ -35,19 +40,23 @@ events:
     state: <String>
 
 routes:
-  Path:
+  RoutePath:
     gateway: <String>
     authorizer: <String>
     method: <POST|GET|DELETE>
-	path: <String>
-    sync: <true>
-    request_template: <String>
-    response_template: <String>
-    stage: <String>
-    stage_variables: <String>
+    path: <String>
+    sync: false
     function: <String>
     state: <String>
     queue: <String>
+    request_template: <String>
+    response_template: <String>
+    stage: <String>
+    stage_variables: <Map>
+    CORS:
+      methods: [GET, POST]
+      origins: ["*"]
+      headers: [String]
 
 channels:
   ChannelName:
@@ -61,6 +70,16 @@ mutations:
 queues:
   QueueName:
     function: <String>
+
+pages:
+  my-app:
+    kind: SPA | PWA | Static
+    dist: './dist'
+    dir: 'app'
+    build:
+      - npm install --quiet
+      - npm run build
+
 
 states: ./states.json | <definition>  [optional]
 
@@ -117,92 +136,26 @@ function.json file in the function directory is optional. `tc` infers the langua
 
 ### JSON Spec
 
-```json
-{
-  "name": "string",
-  // Optional
-  "dir": "string",
-  // Optional
-  "description": "string",
-  // Optional
-  "namespace": "string",
-  // Optional
-  "fqn": "string",
-  // Optional
-  "layer_name": "string",
-  // Optional
-  "version": "string",
-  // Optional
-  "revision": "string",
-  // Optional
-  "runtime": {
-    "lang": "Python39" | "Python310" | "Python311" | "Python312" | "Python313" | "Ruby32" | "Java21" | "Rust" | "Node22" | "Node20",
-    "handler": "string",
-    "package_type": "string",
-    // Optional
-    "uri": "string",
-    // Optional
-    "mount_fs": true,
-    // Optional
-    "snapstart": true,
-    "layers": [
-      "string",
-      /* ... */
-    ],
-    "extensions": [
-      "string",
-      /* ... */
-    ]
-  },
-  // Optional
-  "build": {
-    "kind": "Code" | "Inline" | "Layer" | "Slab" | "Library" | "Extension" | "Runtime" | "Image",
-    "pre": [
-      "dnf install git -yy",
-      /* ... */
-    ],
-    "post": [
-      "string",
-      /* ... */
-    ],
-    // Command to use when build kind is Code
-    "command": "zip -9 lambda.zip *.py",
-    "images": {
-      "string": {
-        // Optional
-        "dir": "string",
-        // Optional
-        "parent": "string",
-        // Optional
-        "version": "string",
-        "commands": [
-          "string",
-          /* ... */
-        ]
-      },
-      /* ... */
-    },
-    "layers": {
-      "string": {
-        "commands": [
-          "string",
-          /* ... */
-        ]
-      },
-      /* ... */
-    }
-  },
-  // Optional
-  "infra": {
-    "dir": "string",
-    // Optional
-    "vars_file": "string",
-    "role": {
-      "name": "string",
-      "path": "string"
-    }
-  }
-}
+```yaml
+name: String
+namespace: <String>
+fqn: <String>
+version: <String>
+runtime:
+  lang: "python3.10" | "python3.11" | "python3.12" | "python3.13" | "ruby3.2" | "java21" | "rust" | "node22" | "node20"
+  handler: handler.handler
+  package_type: "zip | image"
+  uri: <String>
+  mount_fs: false
+  snapstart: false
+  layers: []
+  extensions: []
+build:
+  kind: "Code" | "Inline" | "Layer" | "Slab" | "Library" | "Extension" | "Runtime" | "Image"
+  pre: []
+  post: []
+  command: "zip -9 lambda.zip *.py"
+
 ```
 
 # Infrastructure Spec
