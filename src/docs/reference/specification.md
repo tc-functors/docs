@@ -78,7 +78,7 @@ pages:
     dir: <String>
     build: <String>
 
-states: ./states.json | <definition>  [optional]
+states: ./states.json | <Amazon States Language>
 
 ```
 
@@ -95,43 +95,14 @@ states: ./states.json | <definition>  [optional]
 function.json file in the function directory is optional. `tc` infers the language and build instructions from the function code. However, for custom options, add a function.json that looks like the following
 
 
-```json
-
-{
-  "name": String,
-  "runtime": RuntimeSpec,
-  "build": BuildSpec,
-  "infra": InfraSpec,
-  "test": TestSpec
-}
-
+```yaml
+name: String
+runtime: RuntimeSpec
+build: BuildSpec
+test: TestSpec
 ```
 
-
-### RuntimeSpec
-
-| Key                     | Default           | Optional? | Comments                    |
-|-------------------------|-------------------|-----------|-----------------------------|
-| lang                    | Inferred          | yes       |                             |
-| handler                 | handler.handler   |           |                             |
-| package_type            | zip               |           | possible values: zip, image |
-| uri                     | file:./lambda.zip |           |                             |
-| mount_fs                | false             | yes       |                             |
-| snapstart               | false             | yes       |                             |
-| memory                  | 128               | yes       |                             |
-| timeout                 | 30                | yes       |                             |
-| provisioned_concurrency | 0                 | yes       |                             |
-| reserved_concurrency    | 0                 | yes       |                             |
-| layers                  | []                | yes       |                             |
-| extensions              | []                | yes       |                             |
-| environment             | {}                | yes       | Environment variables       |
-
-
-
-### BuildSpec
-
-
-### JSON Spec
+Expanded:
 
 ```yaml
 name: String
@@ -152,10 +123,46 @@ build:
   pre: []
   post: []
   command: "zip -9 lambda.zip *.py"
+  images: <ImageTree>
+  layers: <Map>
 
 ```
 
-# Infrastructure Spec
+### RuntimeSpec
+
+| Key                     | Default           | Optional? | Comments                    |
+|-------------------------|-------------------|-----------|-----------------------------|
+| lang                    | Inferred          | yes       |                             |
+| handler                 | handler.handler   |           |                             |
+| package_type            | zip               |           | possible values: zip, image |
+| uri                     | file:./lambda.zip |           |                             |
+| mount_fs                | false             | yes       |                             |
+| snapstart               | false             | yes       |                             |
+| memory                  | 128               | yes       |                             |
+| timeout                 | 30                | yes       |                             |
+| provisioned_concurrency | 0                 | yes       |                             |
+| reserved_concurrency    | 0                 | yes       |                             |
+| layers                  | []                | yes       |                             |
+| extensions              | []                | yes       |                             |
+| environment             | {}                | yes       | Environment variables       |
+
+
+### BuildSpec
+
+`ImageTree` is a tree of images
+
+```
+  images:
+    base:
+      commands: [String]
+    code:
+      commands: [String]
+```
+
+Tree depth is limited to 4.
+
+
+# Infrastructure
 
 ## Runtime Variables
 

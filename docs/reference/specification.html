@@ -318,7 +318,7 @@ pages:
     dir: &lt;String&gt;
     build: &lt;String&gt;
 
-states: ./states.json | &lt;definition&gt;  [optional]
+states: ./states.json | &lt;Amazon States Language&gt;
 
 </code></pre>
 <p><code>infra</code> is either an absolute or relative path to the infrastructure configs (vars, roles etc). This field is optional and tc tries best to discover the infrastructure path in the current git repo.</p>
@@ -326,14 +326,32 @@ states: ./states.json | &lt;definition&gt;  [optional]
 <p><code>flow</code> can contain a path to a step-function definition or an inline definition. tc automatically namespaces any inlined or external flow definition.</p>
 <h2 id="function-specification"><a class="header" href="#function-specification">Function Specification</a></h2>
 <p>function.json file in the function directory is optional. <code>tc</code> infers the language and build instructions from the function code. However, for custom options, add a function.json that looks like the following</p>
-<pre><code class="language-json">
-{
-  &quot;name&quot;: String,
-  &quot;runtime&quot;: RuntimeSpec,
-  &quot;build&quot;: BuildSpec,
-  &quot;infra&quot;: InfraSpec,
-  &quot;test&quot;: TestSpec
-}
+<pre><code class="language-yaml">name: String
+runtime: RuntimeSpec
+build: BuildSpec
+test: TestSpec
+</code></pre>
+<p>Expanded:</p>
+<pre><code class="language-yaml">name: String
+namespace: &lt;String&gt;
+fqn: &lt;String&gt;
+version: &lt;String&gt;
+runtime:
+  lang: &quot;python3.10&quot; | &quot;python3.11&quot; | &quot;python3.12&quot; | &quot;python3.13&quot; | &quot;ruby3.2&quot; | &quot;java21&quot; | &quot;rust&quot; | &quot;node22&quot; | &quot;node20&quot;
+  handler: handler.handler
+  package_type: &quot;zip | image&quot;
+  uri: &lt;String&gt;
+  mount_fs: false
+  snapstart: false
+  layers: []
+  extensions: []
+build:
+  kind: &quot;Code&quot; | &quot;Inline&quot; | &quot;Layer&quot; | &quot;Slab&quot; | &quot;Library&quot; | &quot;Extension&quot; | &quot;Runtime&quot; | &quot;Image&quot;
+  pre: []
+  post: []
+  command: &quot;zip -9 lambda.zip *.py&quot;
+  images: &lt;ImageTree&gt;
+  layers: &lt;Map&gt;
 
 </code></pre>
 <h3 id="runtimespec"><a class="header" href="#runtimespec">RuntimeSpec</a></h3>
@@ -354,28 +372,15 @@ states: ./states.json | &lt;definition&gt;  [optional]
 </tbody></table>
 </div>
 <h3 id="buildspec"><a class="header" href="#buildspec">BuildSpec</a></h3>
-<h3 id="json-spec"><a class="header" href="#json-spec">JSON Spec</a></h3>
-<pre><code class="language-yaml">name: String
-namespace: &lt;String&gt;
-fqn: &lt;String&gt;
-version: &lt;String&gt;
-runtime:
-  lang: &quot;python3.10&quot; | &quot;python3.11&quot; | &quot;python3.12&quot; | &quot;python3.13&quot; | &quot;ruby3.2&quot; | &quot;java21&quot; | &quot;rust&quot; | &quot;node22&quot; | &quot;node20&quot;
-  handler: handler.handler
-  package_type: &quot;zip | image&quot;
-  uri: &lt;String&gt;
-  mount_fs: false
-  snapstart: false
-  layers: []
-  extensions: []
-build:
-  kind: &quot;Code&quot; | &quot;Inline&quot; | &quot;Layer&quot; | &quot;Slab&quot; | &quot;Library&quot; | &quot;Extension&quot; | &quot;Runtime&quot; | &quot;Image&quot;
-  pre: []
-  post: []
-  command: &quot;zip -9 lambda.zip *.py&quot;
-
+<p><code>ImageTree</code> is a tree of images</p>
+<pre><code>  images:
+    base:
+      commands: [String]
+    code:
+      commands: [String]
 </code></pre>
-<h1 id="infrastructure-spec"><a class="header" href="#infrastructure-spec">Infrastructure Spec</a></h1>
+<p>Tree depth is limited to 4.</p>
+<h1 id="infrastructure"><a class="header" href="#infrastructure">Infrastructure</a></h1>
 <h2 id="runtime-variables"><a class="header" href="#runtime-variables">Runtime Variables</a></h2>
 <p>Default Path: infrastructure/tc/<topology>/vars/<function>.json
 Override: infra.vars_file in function.json</p>
