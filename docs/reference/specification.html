@@ -246,6 +246,7 @@
 <p><code>topology.yml</code></p>
 <pre><code class="language-yaml">name: String
 infra: &lt;String&gt;
+recursive: &lt;false&gt;
 
 nodes:
   ignore: [&lt;path&gt;]
@@ -285,7 +286,7 @@ routes:
     authorizer: &lt;String&gt;
     method: &lt;POST|GET|DELETE&gt;
     path: &lt;String&gt;
-    sync: false
+    async: false
     function: &lt;String&gt;
     state: &lt;String&gt;
     queue: &lt;String&gt;
@@ -454,22 +455,6 @@ Override: infra.vars_file in function.json</p>
 
         </div>
 
-        <!-- Livereload script (if served using the cli tool) -->
-        <script>
-            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
-            const socket = new WebSocket(wsAddress);
-            socket.onmessage = function (event) {
-                if (event.data === "reload") {
-                    socket.close();
-                    location.reload();
-                }
-            };
-
-            window.onbeforeunload = function() {
-                socket.close();
-            }
-        </script>
 
 
 

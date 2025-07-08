@@ -6,6 +6,7 @@
 ```yaml
 name: String
 infra: <String>
+recursive: <false>
 
 nodes:
   ignore: [<path>]
@@ -45,7 +46,7 @@ routes:
     authorizer: <String>
     method: <POST|GET|DELETE>
     path: <String>
-    sync: false
+    async: false
     function: <String>
     state: <String>
     queue: <String>
