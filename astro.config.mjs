@@ -12,6 +12,9 @@ export default defineConfig({
   prefetch: {
     prefetchAll: true,
   },
+       build: {
+         assets: 'assets'
+	   },
   integrations: [
     starlight({
       customCss: ["/src/tailwind.css"],
@@ -41,6 +44,7 @@ export default defineConfig({
 	},
       ],
     }),
+
     tailwind({
       applyBaseStyles: false,
     }),
