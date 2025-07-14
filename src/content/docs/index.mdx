@@ -1,0 +1,66 @@
+---
+title: ""
+description: "Simplify your serverless workflows"
+tableOfContents: false
+banner:
+  content:
+    "Latest version: 0.8.92"
+---
+
+tc (topology composer) provides a higher-level abstraction for serverless development, focusing on the logical relationships between core entities rather than the underlying infrastructure details. It implements the _Cloud Functor Pattern_ which has six key features:
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+<div class="three-cols not-content">
+  <div>
+    <h3>Composable Entities</h3>
+    <p>
+    Compose the core entities (functions, events, mutations, queues, routes, states, pages and channels) as a Directed Acyclic <u>Graph</u>.
+    </p>
+  </div>
+  <div>
+    <h3>Namespacing</h3>
+    <p>
+    Scope and group your functions, events, routes and other entities similar to <u>modules</u> in a programming language.
+    </p>
+  </div>
+  <div>
+    <h3>Sandboxing</h3>
+    <p>
+    Sandbox your namespaced topologies with reasonable boundaries similar to <u>packages</u> in a programming language.
+    </p>
+  </div>
+  <div>
+    <h3>Inferred Infrastructure</h3>
+    <p>
+	Generate infrastructure boilerplate like permissions similar to <u>types</u> in a dynamic programming language.
+
+    </p>
+
+  </div>
+  <div>
+    <h3>Recursive Topology</h3>
+    <p>
+    Create functors at any level in the code repository's heirarchy like <u>fractals</u>.
+    </p>
+
+  </div>
+  <div>
+    <h3>Isomorphic Topology</h3>
+    <p>
+    Resolve or diff definitions and sandbox state as <u>datastructures</u>
+    </p>
+  </div>
+</div>
+
+:::note[What does it compare with?]
+tc is a serverless application composer that dynamically generates infrastructure boilerplate code. It provides a high-level *cloud language* to define entities and the connections between them as a graph. It is different from Terraform, SST, Amplify, Cloudformation etc as it focuses primarily on high-level application composition than provider or infrastructure-specific details.
+
+:::
+
+<br/>
+
+[![Demo image]][Demo source]
+
+[Demo image]: ../../assets/peek.gif
+[Demo source]: ../../assets/peek.gif

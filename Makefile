@@ -1,7 +1,10 @@
 all: build
 
 build:
-	cd src/docs && make
+	npm start
 
-run:
-	python -m http.server
+release:
+	npm run build
+
+deps:
+	npm install
