@@ -39,24 +39,6 @@ export default defineConfig({
 	},
 
 	{
-	  label: 'Examples',
-	  collapsed: true,
-	  items: [
-            {
-              label: "ETL",
-              link: "/examples/etl",
-            },
-            {
-              label: "Job Tracker",
-              link: "/examples/job-tracker",
-            },
-            {
-              label: "Chat",
-              link: "/examples/chat",
-            }
-	  ]
-	},
-	{
 	  label: 'Entities',
 	  collapsed: true,
 	  items: [
