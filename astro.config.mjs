@@ -9,6 +9,14 @@ import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-s
 // https://astro.build/config
 export default defineConfig({
   site: "https://tc-functors.org",
+  image: {
+    service: {
+      entrypoint: "astro/assets/services/sharp",
+      config: {
+        limitInputPixels: false,
+      },
+    },
+  },
   prefetch: {
     prefetchAll: true,
   },
@@ -32,7 +40,40 @@ export default defineConfig({
 	{
 	  label: 'Entities',
 	  collapsed: false,
-	  autogenerate: { directory: 'entities' },
+	  items: [
+            {
+              label: "Functions",
+              link: "/entities/functions",
+            },
+            {
+              label: "Events",
+              link: "/entities/events",
+            },
+            {
+              label: "Routes",
+              link: "/entities/routes",
+            },
+            {
+              label: "Mutations",
+              link: "/entities/mutations",
+            },
+            {
+              label: "Queues",
+              link: "/entities/queues",
+            },
+            {
+              label: "Pages",
+              link: "/entities/pages",
+            },
+            {
+              label: "Channels",
+              link: "/entities/channels",
+            },
+            {
+              label: "States",
+              link: "/entities/states",
+            },
+	  ]
 	},
 	{
 	  label: 'Reference',

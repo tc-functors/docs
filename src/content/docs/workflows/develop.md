@@ -78,7 +78,7 @@ tc update -s sandbox -e env -c routes/ROUTE_NAME/authorizer
 tc update -s sandbox -e env -c routes/roles
 ```
 
-### Deleting
+### Deleting Sandbox
 
 To delete a sandbox:
 
@@ -93,8 +93,9 @@ To delete a specific entity/component. See update commands (above) for list of c
 tc delete -s sandbox -e env -c ENTITY/COMPONENT
 ```
 
-```admonish info
+:::note
 It is not recommended to delete entities or components as it impacts the integrity of the sandbox.
+:::
 
 
 ## Invoking
