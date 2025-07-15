@@ -1,5 +1,5 @@
 ---
-title: Release Workflow
+title: Release
 description: Topology Composer
 ---
 

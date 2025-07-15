@@ -24,7 +24,7 @@ foo/
  - handler.{py, rb, js, clj}
 ```
 
-tc _infers_ the kind of function, runtime and build instructions. However, we can be more specific as follows in a `function.json`
+tc _infers_ the kind of function, runtime and build instructions. However, we can be more specific as follows in a `function.yml` file
 
 ```yaml
 name: foo
@@ -134,7 +134,7 @@ tc update -s sandnox -e env -c functions/function-name
 
 `tc` has a sophisticated function `builder` that can build different kinds of artifacts with various language runtimes (Clojure, Janet, Rust, Ruby, Python, Node)
 
-In the simplest case, when there are no dependencies in a function, we can specify how the code is packed (zipped) as follows in `function.json`:
+In the simplest case, when there are no dependencies in a function, we can specify how the code is packed (zipped) as follows in `function.yml`:
 
 ```yaml
 name: simple-function
@@ -143,7 +143,7 @@ runtime:
   package_type: zip
   handler: handler.handler
 ```
-[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-basic/function.json)
+[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-basic/function.yml)
 
 and then `tc create -s <sandbox> -e <env>` builds this function using the given `command` and creates it in the given sandbox and env.
 
@@ -266,7 +266,7 @@ We can run `tc build --shell` in the function directory and access the bash shel
 
 :::tip
 
-It is recommended that the ECR repo has a <namespace>/<label> format. The label can be the image labels specified in function.json:build (base, code etc)
+It is recommended that the ECR repo has a <namespace>/<label> format. The label can be the image labels specified in function.yml:build (base, code etc)
 
 :::
 
@@ -351,7 +351,7 @@ tc invoke --sandbox main --env dev --payload '{"data": "foo"}'
 
 ### Emulate
 
-To emulate the Lambda Runtime environment. The following command spins up a docker container with the defined layers in function.json, sets up the paths, environment variables, AWS access, local code and runtime parameters (mem, handlers etc)
+To emulate the Lambda Runtime environment. The following command spins up a docker container with the defined layers in function.yml, sets up the paths, environment variables, AWS access, local code and runtime parameters (mem, handlers etc)
 
 ```sh
 cd <function-dir>

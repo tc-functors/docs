@@ -1,5 +1,5 @@
 ---
-title: Design Workflow
+title: Design
 description: Topology Composer
 ---
 

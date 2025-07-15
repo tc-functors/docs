@@ -5,6 +5,7 @@ build:
 
 release:
 	npm run build
+	cp CNAME docs/
 
 deps:
 	npm install
