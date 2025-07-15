@@ -204,6 +204,22 @@ tc update -s <sandbox> -e <env> -c layers
 
 ```
 
+### Library
+
+A library is a special kind of layer where there are no transitive dependencies packed into the layer artifact. This is useful if we have a directory of utilities.
+
+```
+lib/foo
+   - bar
+   - baz
+```
+
+```sh
+tc build --kind library --name foo --publish -e <env>
+```
+
+`foo` now can be used a regular layer in function.yml:runtime:layers
+
 :::note
 AWS has a limit on the number of layers and size of each zipped layer. tc automatically splits the layer into chunks if it exceeds the size limit (and still within the upper total limit of 256MB)
 :::

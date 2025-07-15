@@ -1,4 +1,4 @@
 ---
-title: Chat Example
-description: Topology Composer
+title: Chat
+description: Example topology using chat
 ---
