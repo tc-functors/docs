@@ -12,8 +12,7 @@ At it's core, `tc` provides 7 entities (functions, events, mutations, queues, ro
 name: example
 
 routes:
-  myposts:
-    path: /api/posts
+  /api/posts:
     method: GET
     function: bar
     event: MyEvent
@@ -28,10 +27,10 @@ channels:
     function: default
 
 functions:
-  remote:
-    foo: github.com/bar/bar
-  local:
-    bar: ./bar
+  foo:
+    uri: github.com/bar/bar
+  bar:
+    uri: ../bar
 
 ```
 

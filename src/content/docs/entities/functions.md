@@ -203,6 +203,10 @@ We can then create or update the function with this layer. At times, we may want
 tc update -s <sandbox> -e <env> -c layers
 
 ```
+:::note
+AWS has a limit on the number of layers and size of each zipped layer. tc automatically splits the layer into chunks if it exceeds the size limit (and still within the upper total limit of 256MB)
+:::
+
 
 ### Library
 
@@ -220,9 +224,6 @@ tc build --kind library --name foo --publish -e <env>
 
 `foo` now can be used a regular layer in function.yml:runtime:layers
 
-:::note
-AWS has a limit on the number of layers and size of each zipped layer. tc automatically splits the layer into chunks if it exceeds the size limit (and still within the upper total limit of 256MB)
-:::
 
 ### Image
 

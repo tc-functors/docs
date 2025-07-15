@@ -37,9 +37,28 @@ export default defineConfig({
 	  label: 'Getting Started',
 	  autogenerate: { directory: 'getting-started' },
 	},
+
+	{
+	  label: 'Examples',
+	  collapsed: true,
+	  items: [
+            {
+              label: "ETL",
+              link: "/examples/etl",
+            },
+            {
+              label: "Job Tracker",
+              link: "/examples/job-tracker",
+            },
+            {
+              label: "Chat",
+              link: "/examples/chat",
+            }
+	  ]
+	},
 	{
 	  label: 'Entities',
-	  collapsed: false,
+	  collapsed: true,
 	  items: [
             {
               label: "Functions",
@@ -77,10 +96,12 @@ export default defineConfig({
 	},
 	{
 	  label: 'Reference',
+	  collapsed: true,
 	  autogenerate: { directory: 'reference' },
 	},
 	{
 	  label: 'Workflows',
+	  collapsed: true,
 	  autogenerate: { directory: 'workflows' },
 	},
       ],
