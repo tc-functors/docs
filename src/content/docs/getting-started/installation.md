@@ -1,6 +1,6 @@
 ---
 title: Installation
-description: Topology Composer
+description: Installation Guide
 ---
 
 Download the executable for your OS

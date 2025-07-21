@@ -1,6 +1,6 @@
 ---
 title: About
-description: A guide in my new Starlight docs site.
+description: tc is a graph-based, stateless, serverless application & infrastructure composer
 ---
 
 `tc` is a graph-based, stateless, serverless application & infrastructure composer.

@@ -1,6 +1,6 @@
 ---
 title: States
-description: Topology Composer
+description: States Entity Reference
 ---
 
 State transitions can be defined using the Amazon States Language and executed as Step functions. ASL is noisy as it gets and has quite a bit of boilerplate. tc tries to define flows between functions without needing ASL.

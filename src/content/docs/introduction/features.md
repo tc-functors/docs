@@ -1,6 +1,6 @@
 ---
 title: Features
-description: A guide in my new Starlight docs site.
+description: Key Features
 ---
 
 ## 1. Composable Entities

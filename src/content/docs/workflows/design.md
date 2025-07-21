@@ -1,6 +1,6 @@
 ---
-title: Design
-description: Topology Composer
+title: Workflow::Design
+description: Topology Composing and Designing
 ---
 
 As an architect or developer, you may want to initially use the inspector to visualize and define your topology.

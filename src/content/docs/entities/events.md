@@ -1,6 +1,6 @@
 ---
 title: Events
-description: Topology Composer
+description: Events Entity Reference
 ---
 
 ## Spec

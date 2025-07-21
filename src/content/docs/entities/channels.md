@@ -1,6 +1,6 @@
 ---
 title: Channels
-description: Channels
+description: Channel Entity Reference
 ---
 
 A channel is an abstraction for bidierctional websocket streams.

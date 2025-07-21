@@ -1,6 +1,6 @@
 ---
 title: Queues
-description: Topology Composer
+description: Queues Entity Reference
 ---
 
 ## Spec

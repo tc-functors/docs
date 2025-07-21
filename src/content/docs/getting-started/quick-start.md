@@ -1,6 +1,6 @@
 ---
 title: Quick Start
-description: Topology Composer
+description: Quick Start Guide
 ---
 
 :::note

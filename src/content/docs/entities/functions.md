@@ -1,6 +1,6 @@
 ---
 title: Functions
-description: Topology Composer
+description: Functions Entity Reference
 ---
 
 ## Definitions
