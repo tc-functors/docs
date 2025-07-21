@@ -1,5 +1,5 @@
 ---
-title: Workflow::Design
+title: Design
 description: Topology Composing and Designing
 ---
 

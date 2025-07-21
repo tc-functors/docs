@@ -1,5 +1,5 @@
 ---
-title: Workflow::Development
+title: Development
 description: Topology Composer
 ---
 

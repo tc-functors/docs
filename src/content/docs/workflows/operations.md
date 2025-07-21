@@ -1,10 +1,10 @@
 ---
-title: Workflow::Cleanup
-description: Cleanup
+title: Operations
+description: Dev Ops
 ---
 
 
-## Pruning
+## Pruning stale resources
 
 tc does not use any external state to identify stale resources. However, it provides a command to prune all resources with a sandbox:
 
