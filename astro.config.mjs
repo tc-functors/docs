@@ -34,15 +34,11 @@ export default defineConfig({
 	  items: [
             {
               label: "About",
-              link: "/introduction/about",
+              link: "/",
             },
             {
               label: "Features",
               link: "/introduction/features",
-            },
-            {
-              label: "FAQ",
-              link: "/introduction/faq",
             }
 	]
 	},
