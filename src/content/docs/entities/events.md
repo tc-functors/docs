@@ -70,31 +70,6 @@ events:
 tc compiles JSON path filters to rules
 
 
-## Schemas
-
-Coming soon!
-
-## Schedules
-
-We can set schedules in infrastucture dir of the topology as follows:
-
-
-Alternatively, can specify it as event triggers in topology.yml
-
-```
-
-
-```
-Available schedule identifiers:
-
-```
-| Schedule | CRON                           |                  |
-| Schedule | HOURLY                         |                  |
-| Schedule | DAILY                          | Run midnight UTC |
-| Schedule | EVERY_FIVE_MINS                |                  |
-```
-
-
 ## Compostion
 
 Events can be _composed_ with other entities. For example:
