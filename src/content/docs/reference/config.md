@@ -1,6 +1,6 @@
 ---
 title: Configuration
-description: Topology Composer
+description: Topology Configuration
 ---
 
 The following is a sample config file that you can place in your infrastructure root (infrastructure/tc/) or the path in `TC_CONFIG_PATH`. The configs have sections specific to the module and are optional with sane defaults.

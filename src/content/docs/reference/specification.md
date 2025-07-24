@@ -215,5 +215,3 @@ Override: infra.vars_file in function.json
   }
 }
 ```
-
-## Roles
