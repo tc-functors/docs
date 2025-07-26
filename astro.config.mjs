@@ -25,7 +25,6 @@ export default defineConfig({
 	   },
   integrations: [
     starlight({
-      customCss: ["/src/tailwind.css"],
       title: 'tc',
       social: [{ icon: 'github', label: 'GitHub', href: 'https://github.com/tc-functors/tc' }],
       sidebar: [
@@ -98,9 +97,6 @@ export default defineConfig({
       ],
     }),
 
-    tailwind({
-      applyBaseStyles: false,
-    }),
     partytown(),
   ],
 });
