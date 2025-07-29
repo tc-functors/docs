@@ -38,15 +38,18 @@ export default defineConfig({
             {
               label: "Features",
               link: "/introduction/features",
+            },
+            {
+              label: "FAQ",
+              link: "/introduction/faq"
             }
 	]
 	},
 	{
 	  label: 'Getting Started',
 	  collapsed: true,
-	  autogenerate: { directory: 'getting-started' },
+	  autogenerate: { directory: 'getting-started' }
 	},
-
 	{
 	  label: 'Entities',
 	  collapsed: true,
