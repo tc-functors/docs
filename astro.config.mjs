@@ -48,11 +48,6 @@ export default defineConfig({
 	},
 
 	{
-	  label: 'Examples',
-	  autogenerate: { directory: 'examples' },
-	},
-
-	{
 	  label: 'Entities',
 	  collapsed: true,
 	  items: [
