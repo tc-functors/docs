@@ -12,7 +12,7 @@ The word functor was popularized by Ocaml's parameterized modules. These modules
 
 #### Why does it have to be a topology or a graph ?
 
-In the serverless context, a lambda is a not a micro service, a topology is. A topology comprises of these core entities and their components. tc composes these and builds a graph to ascertain their dependencies, order of creation by doing a topology sort etc.
+In the Cloud Functor world, a lambda is a not a micro service, a topology is. A topology comprises of core entities (functions, mutations, events, routes, states, queues, pages and channels) and their components. This topology is considered a single atomic unit of deployment. tc composes these and builds a graph to ascertain their dependencies, order of creation by doing a topology sort etc.
 
 
 #### Is tc ready to be used in production ?
