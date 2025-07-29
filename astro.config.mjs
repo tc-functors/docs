@@ -43,7 +43,13 @@ export default defineConfig({
 	},
 	{
 	  label: 'Getting Started',
+	  collapsed: true,
 	  autogenerate: { directory: 'getting-started' },
+	},
+
+	{
+	  label: 'Examples',
+	  autogenerate: { directory: 'examples' },
 	},
 
 	{
@@ -93,6 +99,11 @@ export default defineConfig({
 	  label: 'Workflows',
 	  collapsed: true,
 	  autogenerate: { directory: 'workflows' },
+	},
+	{
+	  label: 'Extras',
+	  collapsed: true,
+	  autogenerate: { directory: 'extras' },
 	},
       ],
     }),
