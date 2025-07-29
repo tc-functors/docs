@@ -18,6 +18,8 @@ tc-inspector --port 8080
 ```
 
 Alternatively, we can run SurrealDB in network mode and connect to it.
+Follow instructions to install SurrealDB -  https://surrealdb.com/install
+
 
 ```
 surreal start --user root --pass secret
