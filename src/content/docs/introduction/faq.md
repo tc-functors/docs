@@ -38,7 +38,6 @@ tc is an application composer that implements the Cloud Functor pattern. It is n
 | Sandboxing          | No        | No        | No         | Yes        | Yes           |
 | Canaries            | No        | No        | No         | No         | Yes           |
 | Dynamic Permissions | No        | No        | No         | No         | Yes           |
-| Cloud Agnostic      | No        | No        | No         | No         | Yes           |
 | Written in          | Go        | Nodejs    | Nodejs     | Typescript | Rust          |
 | IAC                 | Yes       | Yes       |            |            | No            |
 | Fullstack           | Maybe     | Yes       | Yes        | Yes        | Yes           |
