@@ -6,6 +6,8 @@ description: HTMX-based Inspector UI
 The `inspector` is an external standalone application that provides a simple
 HTMX-based web ui.
 
+Download standalone executable from here https://github.com/tc-functors/inspector/releases
+
 By default, `inspector` uses SurrealDB in-memory mode.
 
 
