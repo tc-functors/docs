@@ -37,5 +37,10 @@ cd tc/examples
 tc-inspector --port 8080 --config tc-inspector.yml
 ```
 
+[![Overview]][Overview]
+
 [Overview]: ../../../assets/inspector-overview.png
+
+[![Visual]][Visual]
+
 [Visual]: ../../../assets/inspector-visual.png
