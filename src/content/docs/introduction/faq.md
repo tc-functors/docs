@@ -10,9 +10,9 @@ A cloud functor is an acyclic DAG (topology) of composable cloud entities viz fu
 The word functor was popularized by Ocaml's parameterized modules. These modules, called functors, are first class. Cloud functors are similar in that they are treated as first class and are composable much like Ocaml's elegant modules.
 :::
 
-#### Why does it have to a topology ?
+#### Why does it have to be a topology or a graph ?
 
-In the serverless context, a lambda is a not a micro service, a topology is. A topology comprises of these core entities and their components. tc composes these and builds a graph to ascertain their dependencies, order of creation and generate flows.
+In the serverless context, a lambda is a not a micro service, a topology is. A topology comprises of these core entities and their components. tc composes these and builds a graph to ascertain their dependencies, order of creation by doing a topology sort etc.
 
 
 #### Is tc ready to be used in production ?
