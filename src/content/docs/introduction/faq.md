@@ -14,15 +14,6 @@ The word functor was popularized by Ocaml's parameterized modules. These modules
 
 In the Cloud Functor world, a lambda is a not a micro service, a topology is. A topology comprises of core entities (functions, mutations, events, routes, states, queues, pages and channels) and their components. This topology is considered a single atomic unit of deployment. tc composes these and builds a graph to ascertain their dependencies, order of creation by doing a topology sort etc.
 
-
-#### Is tc ready to be used in production ?
-
-While it is usable in dev and production environments, tc is still being actively developed. The specification is stable and versioned.
-
-:::note
-We look forward to a stable release (0.9.x) in late 2025.
-:::
-
 #### How does it compare to other Cloud deployers ?
 
 tc is an application composer that implements the Cloud Functor pattern. It is not fair to compare these tools as all of them are unique and suited for different needs. `tc` may or may not be for you.
@@ -43,9 +34,6 @@ tc is an application composer that implements the Cloud Functor pattern. It is n
 | Fullstack           | Maybe     | Yes       | Yes        | Yes        | Yes           |
 | Function builders   | No        | No        | Limited    | Limited    | Sophisticated |
 | License             | BSL       | Apache2.0 | MIT*       | MIT        | MIT           |
-
-
-
 
 #### If tc generates the infrastructure boilerplate, can I modify and update it ?
 
