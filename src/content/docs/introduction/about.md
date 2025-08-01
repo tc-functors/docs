@@ -12,3 +12,10 @@ The word functor was popularized by Ocaml's parameterized modules. These modules
 :::caution
 tc is still quite nascent and is being actively developed. This documentation is work in progress.
 :::
+
+<br/>
+
+[![Demo image]][Demo source]
+
+[Demo image]: ../../../assets/peek.gif
+[Demo source]: ../../../assets/peek.gif

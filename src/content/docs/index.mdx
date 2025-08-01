@@ -2,57 +2,18 @@
 title: ""
 description: "Simplify your serverless workflows"
 tableOfContents: false
+template: splash
+hero:
+  tagline: tc (topology composer) provides a higher-level abstraction for serverless development, focusing on the logical relationships between abstract entities (functions, events, routes, queues, channels, mutations and pages) rather than the underlying infrastructure details.
+  image:
+    file: ../../assets/core.png
+  actions:
+    - text: Docs
+      link: /introduction/about
+      icon: right-arrow
+      variant: primary
+    - text: Install CLI
+      link: /introduction/install
+      icon: download
+
 ---
-
-tc (topology composer) provides a higher-level abstraction for serverless development, focusing on the logical relationships between core entities rather than the underlying infrastructure details.
-
-`tc` defines, creates and resolves serveless entities such as functions, mutations, events, routes, states, queues, channels and pages. tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a `Cloud Functor`. A _Cloud Functor_ has six key features:
-
-
-<div>
-  <div>
-    <h3>Composable Entities</h3>
-    <p>
-    Compose the core entities (functions, events, mutations, queues, routes, states, pages and channels) as a Directed Acyclic <u>Graph</u>.
-    </p>
-  </div>
-  <div>
-    <h3>Namespacing</h3>
-    <p>
-    Scope and group your functions, events, routes and other entities similar to <u>modules</u> in a programming language.
-    </p>
-  </div>
-  <div>
-    <h3>Sandboxing</h3>
-    <p>
-    Sandbox your namespaced topologies with reasonable boundaries similar to <u>packages</u> in a programming language.
-    </p>
-  </div>
-  <div>
-    <h3>Inferred Infrastructure</h3>
-    <p>
-	Generate infrastructure boilerplate like permissions similar to <u>types</u> in a dynamic programming language.
-
-    </p>
-
-  </div>
-  <div>
-    <h3>Recursive Topology</h3>
-    <p>
-    Create functors at any level in the code repository's heirarchy like <u>fractals</u>.
-    </p>
-
-  </div>
-</div>
-
-:::note[Comparison]
-tc is a cloud-agnostic, graph-based application composer. It provides a set of high-level *constructs* to define core entities and the connections between them as a graph. These entities or primitives are defined by architects/developers and tc generates all the required infrastructure boilerplate. It is different from Terraform, SST, Amplify, Cloudformation and Serverless as it focuses primarily on high-level application composition than provider or infrastructure-specific details.
-
-:::
-
-<br/>
-
-[![Demo image]][Demo source]
-
-[Demo image]: ../../assets/peek.gif
-[Demo source]: ../../assets/peek.gif

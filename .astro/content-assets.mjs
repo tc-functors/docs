@@ -1,5 +1,7 @@
 
+import __ASTRO_IMAGE_IMPORT_Zu3BgI from "../../assets/core.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Findex.mdx";
 import __ASTRO_IMAGE_IMPORT_ZVDDO3 from "../../../assets/inspector-overview.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md";
 import __ASTRO_IMAGE_IMPORT_1yBibU from "../../../assets/inspector-visual.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md";
-export default new Map([["../../../assets/inspector-overview.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md", __ASTRO_IMAGE_IMPORT_ZVDDO3], ["../../../assets/inspector-visual.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md", __ASTRO_IMAGE_IMPORT_1yBibU]]);
+import __ASTRO_IMAGE_IMPORT_Z105WNL from "../../../assets/peek.gif?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fintroduction%2Fabout.md";
+export default new Map([["../../assets/core.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Findex.mdx", __ASTRO_IMAGE_IMPORT_Zu3BgI], ["../../../assets/inspector-overview.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md", __ASTRO_IMAGE_IMPORT_ZVDDO3], ["../../../assets/inspector-visual.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md", __ASTRO_IMAGE_IMPORT_1yBibU], ["../../../assets/peek.gif?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fintroduction%2Fabout.md", __ASTRO_IMAGE_IMPORT_Z105WNL]]);
 		
