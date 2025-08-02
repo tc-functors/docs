@@ -365,24 +365,3 @@ or as a param
 ```
 tc invoke --sandbox main --env dev --payload '{"data": "foo"}'
 ```
-
-### Emulate
-
-To emulate the Lambda Runtime environment. The following command spins up a docker container with the defined layers in function.yml, sets up the paths, environment variables, AWS access, local code and runtime parameters (mem, handlers etc)
-
-```sh
-cd <function-dir>
-tc emulate
-```
-
-To run in foreground
-
-```
-tc emulate
-```
-
-You can now invoke a payload locally with this emulator
-
-```
-tc invoke --local [--payload <payload.json | json-str>]
-```

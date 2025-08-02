@@ -4,7 +4,7 @@ description: HTMX-based Inspector UI
 ---
 
 The `inspector` is an external standalone application that provides a simple
-HTMX-based web ui.
+HTMX-based web ui to inspect core tc entities in the filesystem and/or cloud.
 
 Download standalone executable from here https://github.com/tc-functors/inspector/releases
 
