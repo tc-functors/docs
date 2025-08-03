@@ -3,7 +3,7 @@ title: Lisp
 description: Transpiler in Lisp
 ---
 
-For engineers who wish to use a proper programming language to express the entities and their composition, there is a Lisp interpreter that transpiles to unrelying topology bincode.
+For engineers who wish to use a proper programming language to express the entities and their composition, there is a Lisp interpreter that transpiles and composes the topology to a bincode format.
 
 
 ```lisp
@@ -15,18 +15,13 @@ For engineers who wish to use a proper programming language to express the entit
     :method :post
     :authorizer 'authorizer)
 
-(defun bar
-    :uri "github.com/bar/bar")
+(defun bar :uri "https://github.com/myorg/bar")
 
 (defevent Completed)
 
 (defchannel my-room)
 
-(compose
-  route/api
-  function/bar
-  event/Completed
-  channel/my-room)
+(compose route/api function/bar event/Completed channel/my-room)
 
 ```
 

@@ -27,6 +27,21 @@ tc provides a simple mechanism to define and connect these namespaced entities a
 [Entity image]: ../../../assets/entities.png
 [Entity source]: ../../../assets/entities.png
 
+Functions, Events, Routes, Queues, Channels, Mutations and Pages are core cloud entities. We can define these entities without considering the provider-specific configuration. The following table shows how these entities map to various provider services.
+
+
+|          | AWS Serverless          | GCP | Fly | Emulator           |
+|----------|-------------------------|-----|-----|--------------------|
+| Function | Lambda, ECS Fargate     |     |     | Docker/Firecracker |
+| Event    | Eventbridge             |     |     |                    |
+| Route    | API Gateway, Cloudfront |     |     |                    |
+| State    | Stepfunction            |     |     |                    |
+| Queue    | SNS                     |     |     |                    |
+| Mutation | Appsync Graphql         |     |     | Juniper            |
+| Channel  | Appsync Events          |     |     |                    |
+| Page     | Cloudfront              |     |     | nginx              |
+
+
 ## Namespacing
 
 Consider the following directory structure:
