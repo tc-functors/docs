@@ -3,7 +3,7 @@ title: Features
 description: Key Features
 ---
 
-The following diagram shows the list of features in tc as a consequence of implementing the 3 core concepts - Entity Abstraction, namespacing and Composition.
+The following diagram shows the list of features in tc as a consequence of implementing the 3 core concepts - Entity Abstraction, Namespacing and Composition.
 
 
 [![Features image]][Features source]

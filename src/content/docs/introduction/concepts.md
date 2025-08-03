@@ -3,11 +3,11 @@ title: Concepts
 description: Tc concepts
 ---
 
-tc has 3 core concepts: Entity Abstraction, Namespacing and Composition.
+Cloud Functors has 3 core concepts: Entity Abstraction, Namespacing and Composition.
 
 **Entity Abstraction**
 
-tc provides 8 cloud primitives or _entities_. These can be thought of like atoms or methods in a class. Entities can be defined in a cloud-agnostic way and tc has a specification for that.
+tc provides 8 cloud primitives or _entities_. These can be thought of like atoms. Entities can be defined in a cloud-agnostic way.
 
 
 **Namespacing**
@@ -32,13 +32,59 @@ tc provides a simple mechanism to define and connect these namespaced entities a
 Consider the following directory structure:
 
 ```
+app1/
+  - authorizer
+  - handler
+  - notifier
+  - topology.yml
 
-
+app2/
+  - authorizer
+  - handler
+  - notifier
+  - topology.yml
 ```
+
+The directory structures look identical, yet they are different - their handler logic is different. app1 and app2 are separate apps and have lifecycle on their own.
+
+The respective topology files are as follows:
+
+```yaml
+name: app1
+
+routes:
+  /api:
+    authorizer: authorizer
+    function: handler
+    event: ApiEvent
+
+events:
+  ApiEvent:
+    function: notifier
+```
+
+and
+
+```yaml
+name: app2
+
+routes:
+  /api:
+    authorizer: authorizer
+    function: handler
+    event: ApiEvent
+
+events:
+  ApiEvent:
+    function: notifier
+```
+
+Most providers, particularly AWS, do not have a concept of namespace for various entities. tc disambiguates the entity names by prefixing it with the namespace string. This then allows us to treat all entities in a namespace as one unit with shared metadata. This metadata is futher used to infer permissions, sane defaults etc.
 
 
 ## Composition
 
+Once we namespace, the entities can be composed in various ways.
 Consider the following topology definition:
 
 ```yaml
