@@ -32,3 +32,9 @@ tc create -s SANDBOX -e AWS_PROFILE
 ```sh
 tc build --remote fargate-task-arn
 ```
+
+
+:::note
+rebar is currently not opensource.
+
+:::
