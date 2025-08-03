@@ -12,21 +12,17 @@ tc-lisp provides a couple of core  macros `defentity`, `compose` to define the t
 
 (ns my-app)
 
-(defentity :route
-    :name 'api
+(defroute api
     :path "/api"
     :method :post
     :authorizer 'authorizer)
 
-(defentity :function
-    :name 'bar
+(defun bar
     :uri "github.com/bar/bar")
 
-(defentity :event
-    :name 'Completed)
+(defevent Completed)
 
-(defentity :channel
-    :name 'my-room)
+(defchannel my-room)
 
 (compose
   route/api
