@@ -7,7 +7,7 @@ For engineers who wish to use a proper programming language to express the entit
 
 
 ```lisp
-q
+
 (ns my-app)
 
 (defroute api
@@ -32,7 +32,7 @@ q
 
 
 ```sh
-tc-lisp -c topology.lisp | tc create -s dev1 -e dev --bin
+tc-lisp topology.lisp | tc create -s dev1 -e dev --bin
 ```
 
 We can also define more complex flows that use the `map` and `reduce` for example:
