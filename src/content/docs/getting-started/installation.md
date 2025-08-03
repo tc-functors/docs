@@ -7,7 +7,7 @@ Download the executable for your OS
 
 | GNU/Linux x86                                                                   | MacOSX M1/M2                                                       |
 |---------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| [0.8.90](https://github.com/tc-functors/tc/releases/download/0.8.90/tc-x86_64-linux) | [0.8.90](https://github.com/tc-functors/tc/releases/download/0.8.90/tc-aarch64-macos)
+| [0.8.99](https://github.com/tc-functors/tc/releases/download/0.8.99/tc-x86_64-linux) | [0.8.99](https://github.com/tc-functors/tc/releases/download/0.8.99/tc-aarch64-macos)
 
 
 :::caution
@@ -40,7 +40,7 @@ tc upgrade
 or downgrade/upgrade to specific version
 
 ```
-tc upgrade --version 0.8.90
+tc upgrade --version 0.8.99
 ```
 
 

@@ -1,6 +1,6 @@
 ---
-title: Development
-description: Topology Composer
+title: Workflow
+description: Common tc workflow
 ---
 
 ## Sandboxing
@@ -130,28 +130,4 @@ By default, `tc` invokes a stepfn. We can also invoke a lambda or trigger an Eve
 ```
 tc invoke --kind lambda -e dev --payload '{"data"...}'
 tc invoke --kind event -e dev --payload '{"data"...}'
-```
-
-
-## Emulator
-
-### Lambdas
-
-To emulate the Lambda Runtime environment. The following command spins up a docker container with the defined layers in function.json, sets up the paths, environment variables, AWS access, local code and runtime parameters (mem, handlers etc)
-
-```sh
-cd <function-dir>
-tc emulate
-```
-
-To run in foreground
-
-```
-tc emulate
-```
-
-You can now invoke a payload locally with this emulator
-
-```
-tc invoke --local [--payload <payload.json | json-str>]
 ```

@@ -1,8 +1,7 @@
 ---
-title: Operations
-description: Dev Ops
+title: Supervisor
+description: A supervisor to manage sandboxes
 ---
-
 
 ## Pruning stale resources
 
@@ -10,7 +9,7 @@ tc does not use any external state to identify stale resources. However, it prov
 
 
 ```sh
-tc prune --sandbox SANDBOX -e ENV [--dry-run] [--filter filter]
+tc-supervisor prune --sandbox SANDBOX -e ENV [--dry-run] [--filter filter]
 
 Found
 
@@ -26,3 +25,7 @@ This command will identify all resources associated with the sandbox (suffix) wi
 The `--dry-run` flag lists the resources that need to be pruned without pruning them.
 
 `--filter STRING` takes a regex (like Sed/AWK) and filters the resources matching the regex.
+
+### Sandbox costs
+
+wip

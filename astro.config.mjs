@@ -36,6 +36,10 @@ export default defineConfig({
               link: "/introduction/about",
             },
             {
+              label: "Concepts",
+              link: "/introduction/concepts",
+            },
+            {
               label: "Features",
               link: "/introduction/features",
             },
@@ -50,6 +54,7 @@ export default defineConfig({
 	  collapsed: true,
 	  autogenerate: { directory: 'getting-started' }
 	},
+
 	{
 	  label: 'Entities',
 	  collapsed: true,
@@ -94,12 +99,7 @@ export default defineConfig({
 	  autogenerate: { directory: 'reference' },
 	},
 	{
-	  label: 'Workflows',
-	  collapsed: true,
-	  autogenerate: { directory: 'workflows' },
-	},
-	{
-	  label: 'Extras',
+	  label: 'External Modules',
 	  collapsed: true,
 	  autogenerate: { directory: 'extras' },
 	},
