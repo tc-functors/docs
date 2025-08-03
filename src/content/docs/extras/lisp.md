@@ -5,11 +5,9 @@ description: Transpiler in Lisp
 
 For engineers who wish to use a proper programming language to express the entities and their composition, there is a Lisp interpreter that transpiles to unrelying topology bincode.
 
-tc-lisp provides a couple of core  macros `defentity`, `compose` to define the topology
-
 
 ```lisp
-
+q
 (ns my-app)
 
 (defroute api
