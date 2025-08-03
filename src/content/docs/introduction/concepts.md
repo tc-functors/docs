@@ -3,11 +3,11 @@ title: Concepts
 description: Tc concepts
 ---
 
-Cloud Functors has 3 core concepts: Entity Abstraction, Namespacing and Composition.
+A Cloud Functor has 3 core concepts: Entity Abstraction, Namespacing and Composition.
 
 **Entity Abstraction**
 
-tc provides 8 cloud primitives or _entities_. These can be thought of like atoms. Entities can be defined in a cloud-agnostic way.
+Entities can be thought of like atoms. They can be defined in a cloud-agnostic way. tc provides eight entities that are sufficient to build sophisticated serverless topologies.
 
 
 **Namespacing**
