@@ -324,7 +324,7 @@ runtime:
   handler: handler.handler
 ```
 
-### Layer Lifecycle management
+## Layer lifecycle management
 
 On AWS, the layer versions are global and are not sandbox-aware. When associating layers with a function, we can pin the layers with monotonic versions as follows:
 
