@@ -1,6 +1,6 @@
 ---
-title: Workflow
-description: Common tc workflow
+title: Development
+description: Dev workflow
 ---
 
 ## Sandboxing

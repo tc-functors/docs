@@ -99,6 +99,12 @@ export default defineConfig({
 	  autogenerate: { directory: 'reference' },
 	},
 	{
+	  label: 'Workflows',
+	  collapsed: true,
+	  autogenerate: { directory: 'workflows' },
+	},
+
+	{
 	  label: 'External Modules',
 	  collapsed: true,
 	  autogenerate: { directory: 'extras' },

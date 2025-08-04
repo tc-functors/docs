@@ -1,57 +1,13 @@
 ---
-title: Releaser
-description: Release, Snapshotting and Promotion workflows
+title: Snapshotter
+description: Snapshots and manifest-driven deploys
 ---
 
-`tc-releaser` is a sophisticated release management module for tc
-
-
 ```
-tc-releaser --help
-
-
+-$  ./tc-snapshotter
+Commands:
+  snapshot    Snapshot of current sandbox and env
 ```
-
-## Versioning
-
-tc-releaser can version at any level in the topology tree. Instead of managing the versions of each function, route, flow etc, we create a release tag at the top-level
-
-```
-tc-releaser tag --topology <namespace> --next minor|major
-```
-
-This creates a tag with the "namespace" prefix.
-
-
-## Changelog
-
-To see the changelog of a specific topology
-
-```
-cd topology-dir
-tc-releaser changelog
-
-AI-123 Another command
-AI-456 Thing got added
-
-# or
-
-tc-releaser changelog --between 0.8.1..0.8.6
-```
-
-To search for a specific text in all changelogs
-
-```
-cd root-topology-dir
-tc-releaser changelog --search AI-1234
-
-=> topology-name, version
-
-```
-
-## Snapshots
-
-### Snapshot versions
 
 The snapshotter module takes a snapshot of a given sandbox and outputs the same datastructure as the compiler output. This `isomorphic` characteristic is useful to see the diffs between sandboxes.
 
@@ -60,7 +16,7 @@ For example the following outputs a JSON with the topology structure
 ```sh
 
 cd topology-dir
-tc snapshot -s stable -e qa -c topology
+tc-snapshotter snapshot -s stable -e qa -c topology
 ```
 
 ```json
@@ -100,26 +56,26 @@ tc-releaser generates true manifests that can be used to render it in any other 
 To generate manifests for all _deployed_ root topologies
 
 ```sh
-tc-releaser snapshot -s stable -e qa --manifest
+tc-snapshotter snapshot -s stable -e qa --manifest
 
 ```
 
 We can save it to a S3 bucket by specifying bucket and prefix
 
 ```sh
-tc-release snapshot -s stable -e qa --manifest --save s3://bucket/yyyy/mm/dd/version.json
+tc-snapshotter snapshot -s stable -e qa --manifest --save s3://bucket/yyyy/mm/dd/version.json
 ```
 
 The manifest itself is a deployable definition.
 
 ```sh
-tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json
+tc-snapshotter create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json
 ```
 
 If we need to write to a bucket in a different target profile:
 
 ```sh
-tc create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json --target-profile cicdm
+tc-snapshotter create -s stable -e staging --manifest s3://bucket/yyyy/mm/dd/version.json --target-profile cicdm
 ```
 ## Versions
 
@@ -128,11 +84,11 @@ To see versions of all root topologies in a given sandbox:
 
 ```sh
 
-tc-releaser snapshot -s stable -e qa -f table|json
+tc-snapshotter snapshot -s stable -e qa -f table|json
 ```
 
 ```
-tc-releaser snapshot -s stable -e qa  -f table
+tc-snapshotter snapshot -s stable -e qa  -f table
 ```
 
 ```pre
@@ -149,7 +105,7 @@ tc-releaser snapshot -s stable -e qa  -f table
 To see versions across profiles for a sandbox, provide a csv of profiles/envs:
 
 ```sh
-tc-releaser snapshot -s stable -e qa,staging
+tc-snapshotter snapshot -s stable -e qa,staging
 ```
 
 ```
