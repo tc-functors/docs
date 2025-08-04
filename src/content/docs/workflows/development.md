@@ -8,19 +8,90 @@ description: Dev workflow
 [Dev image]: ../../../assets/dev.png
 [Dev source]: ../../../assets/dev.png
 
+### Defining Topology
 
-## Sandboxing
+- Define your events, routes, channels, queues, pages in topology.yml
+```yaml
+routes:
+  /api/foo:
+    method: POST
 
-### Creating a Sandbox
+events:
+  MyEvent:
+    producer: default
+
+pages:
+  myapp:
+    dir: webapp
+```
+
+- Specify how they are connected. For example
+
+```yaml
+routes:
+  /api/foo:
+    method: POST
+    authorizer: my-authorizer
+    function: foo
+
+events:
+  MyEvent:
+    producer: default
+    function: bar
+
+pages:
+  myapp:
+    dir: webapp
+```
+
+- Additional scaffold the functions if they don't exist
+
+```sh
+tc scaffold --entity function
+```
+
+### Composing
+
+We can now validate the entity definitions and their connections by running `tc compose`.
+`tc compose` will generate a giant JSON that represents the target infrastructure (AWS Serverless by default).
+You can see the generated permissions, target rules, mapping templates etc.
+
+We can also have a tree view
+
+```sh
+tc compose -c functions -f tree
+tc compose -s functions -f table
+tc compose -c routes -f json
+tc compose -c events -f json
+tc compose -c states -f yaml
+tc compose -c mutations -f graphql
+```
+
+
+### Building and testing
+
+Most often, tc infers the kind of function, it's runtime and how to build it. However, we can override the kind of build, for example `Image` or `Inline`. See [Building Function Dependencies](/entities/functions#dependencies)
+
+```sh
+tc build
+```
+
+To build container images:
+
+```
+tc build --image base --publish
+tc build --image code --publish
+```
+
+### Sandboxing
+
 
 The following command create a sandbox in the given AWS profile (-e|--profile)
 
 ```sh
 cd <topology-dir>
-tc create [--sandbox SANDBOX] [-e ENV]
+tc create [--sandbox SANDBOX] [-e PROFILE]
 ```
-
-### Incremental updates
 
 While developing, we often need to incrementally deploy certain components without recreating the entire topology. `tc` provides an update command that updates given entity and components.
 An entity is a core composable servereless resource. . A component is an attribute or instance of the entity.
@@ -28,85 +99,61 @@ An entity is a core composable servereless resource. . A component is an attribu
 
 We can update an entity and/or component as follows:
 
-```
-tc update -s sandbox -e env -c Entity/Component
+```sh
+tc update -s SANDBOX -e PROFILE -c Entity/Component
 
 ```
-
-#### Updating Entities
-
 
 ```sh
-tc update -s sandbox -e env -c routes
-tc update -s sandbox -e env -c events
-tc update -s sandbox -e env -c functions
-tc update -s sandbox -e env -c mutations
-tc update -s sandbox -e env -c channels
-tc update -s sandbox -e env -c schedules
-tc update -s sandbox -e env -c queues
+tc update -s SANDBOX -e PROFILE -c routes
+tc update -s SANDBOX -e PROFILE -c events
+tc update -s SANDBOX -e PROFILE -c functions
+tc update -s SANDBOX -e PROFILE -c mutations
+tc update -s SANDBOX -e PROFILE -c channels
+tc update -s SANDBOX -e PROFILE -c schedules
+tc update -s SANDBOX -e PROFILE -c queues
 ```
 
-#### Updating specific component in an entity
+To update specific component in an entity:
 
 Components in `function` entity:
 
 ```sh
-tc update -s sandbox -e env -c functions/layers
-tc update -s sandbox -e env -c functions/vars
-tc update -s sandbox -e env -c functions/concurrency
-tc update -s sandbox -e env -c functions/runtime
-tc update -s sandbox -e env -c functions/tags
-tc update -s sandbox -e env -c functions/roles
-tc update -s sandnox -e env -c functions/function-name
+tc update -s SANDBOX -e PROFILE -c functions/layers
+tc update -s SANDBOX -e PROFILE -c functions/vars
+tc update -s SANDBOX -e PROFILE -c functions/concurrency
+tc update -s SANDBOX -e PROFILE -c functions/runtime
+tc update -s SANDBOX -e PROFILE -c functions/tags
+tc update -s SANDBOX -e PROFILE -c functions/roles
+tc update -s sandnox -e PROFILE -c functions/function-name
 ```
 
 Components in `mutation` entity:
 
 ```sh
-tc update -s sandbox -e env -c mutations/authorizer
-tc update -s sandbox -e env -c mutations/types
-tc update -s sandbox -e env -c mutations/roles
-tc update -s sandbox -e env -c mutations/RESOLVER_NAME
+tc update -s SANDBOX -e PROFILE -c mutations/authorizer
+tc update -s SANDBOX -e PROFILE -c mutations/types
+tc update -s SANDBOX -e PROFILE -c mutations/roles
+tc update -s SANDBOX -e PROFILE -c mutations/RESOLVER_NAME
 ```
 
 Components in `event` entity:
 
 ```sh
-tc update -s sandbox -e env -c events/EVENT_NAME
-tc update -s sandbox -e env -c events/roles
+tc update -s SANDBOX -e PROFILE -c events/EVENT_NAME
+tc update -s SANDBOX -e PROFILE -c events/roles
 ```
 
 Components in `route` entity:
 
 ```sh
-tc update -s sandbox -e env -c routes/ROUTE_NAME
-tc update -s sandbox -e env -c routes/ROUTE_NAME/authorizer
-tc update -s sandbox -e env -c routes/roles
+tc update -s SANDBOX -e PROFILE -c routes/ROUTE_NAME
+tc update -s SANDBOX -e PROFILE -c routes/ROUTE_NAME/authorizer
+tc update -s SANDBOX -e PROFILE -c routes/roles
 ```
 
-### Deleting Sandbox
+### Invoking
 
-To delete a sandbox:
-
-```sh
-
-tc delete -s sandbox -e env
-```
-
-To delete a specific entity/component. See update commands (above) for list of components
-
-```
-tc delete -s sandbox -e env -c ENTITY/COMPONENT
-```
-
-:::note
-It is not recommended to delete entities or components as it impacts the integrity of the sandbox.
-:::
-
-
-## Invoking
-
-#### Specifying Payload
 
 To simply invoke a functor
 
@@ -129,11 +176,29 @@ or as a param
 tc invoke --sandbox main --env dev --payload '{"data": "foo"}'
 ```
 
-### Invoking Events and Lambdas
-
 By default, `tc` invokes a stepfn. We can also invoke a lambda or trigger an Eventbridge event
 
 ```
 tc invoke --kind lambda -e dev --payload '{"data"...}'
 tc invoke --kind event -e dev --payload '{"data"...}'
 ```
+
+
+### Deleting Sandbox
+
+To delete a sandbox:
+
+```sh
+
+tc delete -s sandbox -e env
+```
+
+To delete a specific entity/component. See update commands (above) for list of components
+
+```
+tc delete -s sandbox -e env -c ENTITY/COMPONENT
+```
+
+:::caution
+It is not recommended to delete entities or components as it impacts the integrity of the sandbox.
+:::

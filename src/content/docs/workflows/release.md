@@ -98,4 +98,4 @@ tc changelog --search AI-1234
 
 ## Notifications
 
-All tc sandbox commands (create, update, delete, freeze, unfreeze, tag) have notification hooks. For slack notifications, we can specify `TC_SLACK_URL` env variable with the Slack webhook. Alternatively, if you need per-topology slack hooks, you could set a map of topology name and their webhook urls in `TC_CONFIG` (see Reference -> Configuration)
+All tc sandbox commands (create, update, delete, freeze, unfreeze, tag) have notification hooks. For slack notifications, we can specify `TC_SLACK_URL` env variable with the Slack webhook. Alternatively, if you need per-topology slack hooks, you could set a map of topology name and their webhook urls in `TC_CONFIG`. See [Configuration](/reference/config/)
