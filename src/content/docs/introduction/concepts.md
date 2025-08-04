@@ -7,7 +7,7 @@ A Cloud Functor has 3 core concepts: Entity Abstraction, Namespacing and Composi
 
 **Entity Abstraction**
 
-Entities can be thought of like atoms. They can be defined in a cloud-agnostic way. tc provides eight entities that are sufficient to build sophisticated serverless topologies.
+Entities can be thought of like atoms. They are core cloud primitives which abstract away all the low-level details. Entities are defined in a cloud-agnostic way. tc provides eight entities that are sufficient to build sophisticated serverless topologies.
 
 
 **Namespacing**
