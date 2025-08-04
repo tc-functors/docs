@@ -5,11 +5,13 @@ description: Key Features
 
 The following diagram shows the list of features in tc as a consequence of implementing the 3 core concepts - Entity Abstraction, Namespacing and Composition.
 
-
-[![Features image]][Features source]
-
-[Features image]: ../../../assets/features.png
-[Features source]: ../../../assets/features.png
+|                            |                                                                                                                                          |
+|----------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| **Sandboxing**             | - Isolated dev environments <br> - Canaries <br> - Reproducible Environments                                                             |
+| **Dynamic Infrastructure** | - Generate Infra boilerplate like permissions <br> - Focus on domain-specific logic <br> - Self-contained executable manifests  |
+| **Contextual Updates**     | - Update sandbox with any node in the topology <br> - Faster dev iterations |
+| **Semantic Architecture Definition**                      | - Generate flow, C4 and sequence diagrams <br> - Topology definition is the architecture definition                                                                                                                             |
+| **Dynamic Flows**                      | - Generates ASL via inference <br> - Infer Flow Patterns through minimal hints                                                                                                                                      |
 
 ## Sandboxing
 
