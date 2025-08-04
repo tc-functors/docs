@@ -36,10 +36,11 @@ Functions, Events, Routes, Queues, Channels, Mutations and Pages are core cloud 
 | Event    | Eventbridge             |     |     |                    |
 | Route    | API Gateway, Cloudfront |     |     |                    |
 | State    | Stepfunction            |     |     |                    |
-| Queue    | SNS                     |     |     |                    |
+| Queue    | SQS                     |     |     |                    |
 | Mutation | Appsync Graphql         |     |     | Juniper            |
 | Channel  | Appsync Events          |     |     |                    |
 | Page     | Cloudfront              |     |     | nginx              |
+| Table    | Dynamodb                |     |     |                    |
 
 
 ## Namespacing
