@@ -67,6 +67,9 @@ tc compose -c states -f yaml
 tc compose -c mutations -f graphql
 ```
 
+:::note
+We can also use the external tc-inspector UI to visualize and inspect the topology.
+:::
 
 ### Building and testing
 
@@ -158,22 +161,22 @@ tc update -s SANDBOX -e PROFILE -c routes/roles
 To simply invoke a functor
 
 ```
-tc invoke --sandbox main --env dev
+tc invoke --SANDBOX main --env PROFILE
 ```
 By default, tc picks up a `payload.json` file in the current directory. You could optionally specify a payload file
 
 ```
-tc invoke --sandbox main --env dev --payload payload.json
+tc invoke --sandbox SANDBOX --env PROFILE --payload payload.json
 ```
 
 or via stdin
 ```
-cat payload.json | tc invoke --sandbox main --env dev
+cat payload.json | tc invoke --sandbox SANDBOX --env PROFILE
 ```
 
 or as a param
 ```
-tc invoke --sandbox main --env dev --payload '{"data": "foo"}'
+tc invoke --sandbox SANDBOX --env PROFILE --payload '{"data": "foo"}'
 ```
 
 By default, `tc` invokes a stepfn. We can also invoke a lambda or trigger an Eventbridge event
@@ -197,6 +200,12 @@ To delete a specific entity/component. See update commands (above) for list of c
 
 ```
 tc delete -s sandbox -e env -c ENTITY/COMPONENT
+```
+
+Optionally, you way want to prune stale resources in your sandbox. tc does not maintain an external state to keep track of stale resources (those you delete locally but not in your sandbox).
+
+```sh
+tc prune -s
 ```
 
 :::caution
