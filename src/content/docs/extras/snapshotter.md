@@ -6,7 +6,8 @@ description: Snapshots and manifest-driven deploys
 ```
 -$  ./tc-snapshotter
 Commands:
-  snapshot    Snapshot of current sandbox and env
+  snapshot Snapshot of current sandbox and env
+  search   Search snapshots for a specific changelog string
 ```
 
 The snapshotter module takes a snapshot of a given sandbox and outputs the same datastructure as the compiler output. This `isomorphic` characteristic is useful to see the diffs between sandboxes.

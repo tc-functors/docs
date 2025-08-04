@@ -3,6 +3,12 @@ title: Development
 description: Dev workflow
 ---
 
+[![Dev image]][Dev source]
+
+[Dev image]: ../../../assets/dev.png
+[Dev source]: ../../../assets/dev.png
+
+
 ## Sandboxing
 
 ### Creating a Sandbox
