@@ -1,0 +1,131 @@
+---
+title: Hello World
+description: Hello, world!
+---
+
+Looks like you have installed `tc` and understood the features in abstract. The concepts and features will become clearer to you as you start playing with tc.
+Let's jump in and try a `hello world` topology.
+
+
+### Define Topology
+
+```sh
+mkdir hello-world
+cd hello-world
+```
+
+Add the following `topology.yml` file:
+
+```yaml title="topology.yml"
+name: hello-world
+
+routes:
+  /hello:
+    method: GET
+    function: responder
+```
+
+Create a function called `responder` and add a handler to it. For this example, let's write it in python (I know!).
+
+```sh
+mkdir responder
+```
+
+Add the following handler code:
+
+```python title="responder/handler.py"
+
+def handler(event, context):
+  return {"message": "hello world"}
+```
+
+The directory should look like:
+
+```
+topology.yml
+responder/
+  - handler.py
+```
+
+### Sandbox
+
+Now, let's create our first sandbox called `yoda` and use a `dev` AWS_PROFILE (You can use any profile that is convenient to you).
+
+```sh
+tc create -s yoda -e dev
+```
+
+[![Demo image]][Demo source]
+
+[Demo image]: ../../../assets/demo-1.png
+[Demo source]: ../../../assets/demo-1.png
+
+
+```
+curl https://kg51px0mi8.execute-api.us-west-2.amazonaws.com/hello
+=> {"message": "hello world"}
+```
+
+Congratulations! You have designed, built and deployed your first functor on your own sandbox.
+
+### Optional Overrides
+
+
+Perhaps, you'd like to increase the memory or reduce the timeout. Now add an infra directory
+
+
+```yaml title="topology.yml"
+name: hello-world
+infra: ./infra
+
+routes:
+  /hello:
+    function: responder
+```
+
+We can override the defaults by specifying the roles, vars, schemas etc in the specified infra directory.
+
+```
+topology.yml
+responder
+  - handler,py
+infra/
+ - vars/
+    - responder.json
+```
+
+responder.json
+```yaml title="infra/vars/responder.json"
+{
+  "default": {
+    "environment": {
+      "LOG_LEVEL": "INFO",
+       "MY_KEY": "ssm://path/to/secret"
+    },
+    "timeout": 260,
+    "memory_size": 128
+  },
+  "yoda": {
+    "timeout": 300,
+    "memory_size": 256
+  }
+}
+```
+
+The following will update the runtime vars for the functions - in this case `responder`.
+
+```sh
+tc update -s yoda -e dev -c functions/vars
+```
+
+### Behind the scenes
+
+tc composed, resolved and created the sandbox when we did a `tc create -s yoda -e dev`. Composing involves building the graph of all the specified entities and generating all the infrastructure components, permissions etc required to connect the entities in a sandbox. Note that none of the infrastructure information was leaked into the topology definition.
+
+`tc` picked the default provider (AWS Serverless) and mapped routes to API Gateway routes, built the function for Lambda, generated the IAM policies/roles and created the entities in the right order by traversing the graph.
+
+Optionally, we also saw how we can override the generated infrastructure boilerplate as needed. `tc` will overlay the defaults and the augmented infrastructure components.
+
+### Next Steps
+
+This of course is a very simplistic view of tc. You may want to say more than hello to the world. Give this [Example](/examples/etl) a try!

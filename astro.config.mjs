@@ -52,7 +52,30 @@ export default defineConfig({
 	{
 	  label: 'Getting Started',
 	  collapsed: true,
-	  autogenerate: { directory: 'getting-started' }
+	   items: [
+            {
+              label: "Installation",
+              link: "/getting-started/installation",
+            },
+            {
+              label: "Hello World",
+              link: "/getting-started/hello-world",
+            }
+	]
+
+	},
+
+	{
+	  label: 'Examples',
+	  collapsed: true,
+	   items: [
+            {
+              label: "ETL",
+              link: "/examples/etl",
+            }
+
+	]
+
 	},
 
 	{

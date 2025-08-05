@@ -7,7 +7,7 @@ description: Quick Start Guide
 This is a rough draft and we are still working on the documentation.
 :::
 
-Now that we have installed `tc` and understood the features in abstract, let's try to walk through a basic tutorial of creating an ETL (Enhance-Transform-Load) flow using serverless entities.
+
 
 In this tutorial, we will attempt to learn about the core concepts in tc.
 
