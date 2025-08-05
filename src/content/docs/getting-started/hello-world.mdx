@@ -3,8 +3,8 @@ title: Hello World
 description: Hello, world!
 ---
 
-Looks like you have installed `tc` and understood the features in abstract. The concepts and features will become clearer to you as you start playing with tc.
-Let's jump in and try a `hello world` topology.
+Looks like you have installed `tc` and understood the [concepts](/introduction/concepts) and [features](/introduction/features) in abstract. They will become clearer to you as you start playing with tc.
+Let's jump in and try a `hello world` topology. We'd like to define a HTTP GET route backend by a serverless function that returns a message. Common usecase right ?
 
 import { Steps } from '@astrojs/starlight/components';
 import { FileTree } from '@astrojs/starlight/components';
@@ -102,8 +102,6 @@ We can override the defaults by specifying the roles, vars, schemas etc in the s
 	- responder.json
   - roles
 	- responder.json
-- responder
-  - handler.py
 </FileTree>
 
 ```yaml title="infra/vars/responder.json"
