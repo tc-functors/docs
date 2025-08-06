@@ -8,6 +8,8 @@ This is a rough draft
 :::
 
 In this example, we will attempt to build the world's best ETL system. Just kidding! It's far from it.
+The goal is to introduce you to defining and composing entities without leaking any infrastructure details into it. Additionally, this example covers an end-to-end application (fullstack as kids call it).
+
 We will try to design a simple serverless ETL system that has the following features:
 
 1. An API to trigger the pipeline asynchronously.
