@@ -72,8 +72,11 @@ export default defineConfig({
             {
               label: "ETL",
               link: "/examples/etl",
+            },
+            {
+              label: "Progress Tracker",
+              link: "/examples/progress-tracker",
             }
-
 	]
 
 	},

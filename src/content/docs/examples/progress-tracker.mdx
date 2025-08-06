@@ -1,0 +1,233 @@
+---
+title: Progress Tracker
+description: Example - Progress Tracker
+---
+
+[https://github.com/tc-functors/tc/examples/progress-tracker](https://github.com/tc-functors/tc/examples/progress-tracker)
+
+## Preamble
+
+In this example, we will try to start an arbitrary asynchronous job and capture it's completion state, without any database. We also would like to have a webpage that subscribes to these status changes preferably through websocket.
+The kneejerk reaction, as developers, is to draw an architecture diagram (or ask ChatGPT you say?) with sophisticated AWS services. With functors, we start with datastructures.
+
+Rather than think of it like connecting random services in the cloud, we think of them as composition of entities without consideration of underlying services.
+
+Let's say we define a type called `Job` which captures the status of a job or task.
+
+```
+Job:
+  id: String!
+  status: String
+  message: String
+```
+
+For the sake of this disucssion, assume that when this type's values are changed, another entity gets triggered. It is as if the composition was late bound, dynamically. We call the entity that mutates this type a _Mutation_. A _mutation_ represents a change in the values of an abstract type. This change results in triggering other entities and notifying subscribers to it. A mutation has 3 parts - the abstract type, resolver and subscriber. The resolver encapsulates the change.
+
+## Mutation
+
+A mutation's abstract _type_ has 2 key rules:
+1. It can be mutated or composed only by a route or event entity. See [Composition Matrix](/introduction/concepts#entity-composition-matrix)
+2. It can invoke or compose only with a function, table or event.
+
+With this in mind, let's draw a topology that adheres to these rules:
+
+[![Mut1 image]][Mut1 source]
+
+[Mut1 image]: ../../../assets/mutation-1.png
+[Mut1 source]: ../../../assets/mutation-1.png
+
+In this diagram, a `route` mutates the abstract type which in turn triggers a function named `starter`. The `starter` function then runs the arbitrary job and triggers a `CompleteTask` event. This event mutates the abstract type (remember the first rule - type can be mutated only by event or route). In both the mutations, the subscribers were notified. How do we write the infrastructure code for this ? duh, you don't. You define the topology in abstract terms just like the diagram.
+
+```yaml title="topology.yml"
+name: progress-tracker
+
+routes:
+  /startJob:
+    method: POST
+    mutation: startJob
+
+events:
+  CompleteTask:
+    producer: adHoc
+    mutation: completeJob
+
+mutations:
+  types:
+    JobInput:
+      id: String!
+    Job:
+      id: String!
+      status: String
+      message: String
+
+  resolvers:
+    startJob:
+      function: starter
+      input: JobInput
+      output: Job
+      subscribe: true
+
+    completeJob:
+      function: completer
+      input: Event
+      output: Job
+      subscribe: true
+```
+
+This mutation behavior is provided by Graphql (Appync on AWS).
+tc provides a graphql transpiler that generates provider-specific graphql boilerplate from the above definition.
+
+```sh
+tc compose -c mutations -f graphql
+```
+
+```graphql
+type JobInput @aws_lambda @aws_iam {
+  id: String!
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type Query { getJobInput(id: String!): JobInput
+getJob(id: String!): Job
+getEvent(id: String!): Event
+ }
+
+type Event @aws_lambda @aws_iam {
+  detail: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+
+type Mutation {
+completeJob(detail: String ): Job
+@aws_lambda @aws_iam
+
+startJob(id: String! ): Job
+@aws_lambda @aws_iam
+ }
+type Subscription { subscribeCompleteJob(id: String!): Job
+   @aws_subscribe(mutations: ["completeJob"])
+   @aws_lambda @aws_iam
+subscribeStartJob(id: String!): Job
+   @aws_subscribe(mutations: ["startJob"])
+   @aws_lambda @aws_iam
+ }
+type Job @aws_lambda @aws_iam {
+  id: String! status: String message: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+}
+```
+
+:::note
+We don't need to explicitly generate the provider-specific graphql code. tc does that internally when rendering the topology onto a sandbox.
+:::
+
+Now that we have defined a _type_ that can be mutated and have set resolvers and subscribers to it. Let's try and wire the mutations up.
+
+Oh did I say, AWS Appsync also provides a routing endpoint to invoke any arbitrary resolver. Let's remove the `routes` block and just use the default routes.
+
+
+```yaml title="topology.yml"
+name: progress-tracker
+
+events:
+  CompleteTask:
+    producer: adHoc
+    mutation: completeJob
+
+mutations:
+  types:
+    JobInput:
+      id: String!
+    Job:
+      id: String!
+      status: String
+      message: String
+
+  resolvers:
+    startJob:
+      function: starter
+      input: JobInput
+      output: Job
+      subscribe: true
+
+    completeJob:
+      function: completer
+      input: Event
+      output: Job
+      subscribe: true
+```
+
+The output of these resolvers is the type holding the changed values. Anyone subscribing to this change, gets the status for the given id.
+
+Let's create a sandbox and test it.
+
+```sh
+tc create -s yoda -e dev
+```
+
+## Subscriptions
+
+We mentioned something about subscription earlier. This typically is a websocket subscription.
+Let's assume we have a webapp that subscribes to this websocket and initiates `startJob` via graphql.
+See [example](https://github.com/tc-functors/tc/blob/main/examples/progress-tracker/app/src/)
+
+We can define the page/app to deploy in the topology.
+
+```yaml title="topology.yml"
+name: progress-tracker
+
+events:
+  CompleteTask:
+    producer: adHoc
+    mutation: completeJob
+
+mutations:
+  types:
+    JobInput:
+      id: String!
+    Job:
+      id: String!
+      status: String
+      message: String
+
+  resolvers:
+    startJob:
+      function: starter
+      input: JobInput
+      output: Job
+      subscribe: true
+
+    completeJob:
+      function: completer
+      input: Event
+      output: Job
+      subscribe: true
+
+pages:
+  app:
+    dist: app/dist
+    dir: app
+    build:
+       - npm install --quiet --no-audit
+       - npm run build
+```
+
+```sh
+tc create -s yoda -e dev
+```
+
+[![Mutcast image]][Mutcast source]
+
+[Mutcast image]: ../../../assets/mutation-cast.gif
+[Mutcast source]: ../../../assets/mutation-cast.gif
+
+
+How does this look on AWS you ask ? Here is how:
+
+[![Mut2 image]][Mut2 source]
+
+[Mut2 image]: ../../../assets/mutation-2.png
+[Mut2 source]: ../../../assets/mutation-2.png

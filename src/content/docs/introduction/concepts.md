@@ -144,11 +144,11 @@ The following shows the composability Matrix.
 |----------|----------|-------|-------|-------|---------|----------|------|
 | Function |          |       |       |       |         |          |      |
 | Event    | Yes      |       |       |       | Yes     | Yes      |      |
-| Route    | Yes      |       |       |       |         |          |      |
+| Route    | Yes      |       |       |       |         | Yes      |      |
 | Queue    | Yes      |       |       |       |         |          |      |
 | Channel  | Yes      |       |       |       |         |          |      |
 | Mutation | Yes      | Yes   |       |       |         |          |      |
-| Page     |          |       |       |       |         |          |      |
+| Page     |          |       |       | Yes   |         |          |      |
 
 
 :::note
