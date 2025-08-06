@@ -3,8 +3,8 @@ title: ETL
 description: Example - Enhance, Transform and Load
 ---
 
-:::note
-This is a rough draft
+:::caution
+This is a rough working draft
 :::
 
 The goal of this example is to introduce you to defining and composing entities without leaking any infrastructure details into it.
