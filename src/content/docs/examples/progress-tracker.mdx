@@ -15,6 +15,8 @@ The kneejerk reaction, as developers, is to draw an architecture diagram (or ask
 
 Rather than think of it like connecting random services in the cloud, we think of them as composition of entities without consideration of underlying services.
 
+From the entity [definitions](/introduction/concepts#entity-abstraction), we know that the _Mutation_ entity has a unique characteric of having abstract types and subscriptions to it's change.
+
 ## Types
 
 Let's say we define a type called `Job` which captures the status of a job or task.
@@ -26,7 +28,7 @@ Job:
   message: String
 ```
 
-For the sake of this disucssion, assume that when this type's values are changed, another entity gets triggered. It is as if the composition was late bound, dynamically. We call the entity that mutates this type a _Mutation_. A _mutation_ represents a change in the values of an abstract type. This change results in triggering other entities and notifying subscribers to it. A mutation has 3 parts - the abstract type, resolver and subscriber. The resolver encapsulates the change.
+For the sake of this disucssion, assume that when this type's values are changed, another entity gets triggered. It is as if the composition was dynamically late bound. A _mutation_ represents a change in the values of an abstract type. This change results in triggering other entities and notifying subscribers to it. A mutation has 3 parts - the abstract type, resolver and subscriber. The resolver encapsulates the change.
 
 ## Mutation
 
@@ -41,7 +43,9 @@ With this in mind, let's draw a topology that adheres to these rules:
 [Mut1 image]: ../../../assets/mutation-1.png
 [Mut1 source]: ../../../assets/mutation-1.png
 
-In this diagram, a `route` mutates the abstract type which in turn triggers a function named `starter`. The `starter` function then runs the arbitrary job and triggers a `CompleteTask` event. This event mutates the abstract type (remember the first rule - type can be mutated only by event or route). In both the mutations, the subscribers were notified. How do we write the infrastructure code for this ? duh, you don't. You define the topology in abstract terms just like the diagram.
+How did we arrive at this diagram ? We started by choosing a Mutation entity and identifying it's composition constraints - A mutation is triggered by only event or a route. The route is typically in the boundaries.
+
+In this diagram, a `route` mutates the abstract type which in turn triggers a function named `starter`. The `starter` function then runs the arbitrary job and triggers a `CompleteTask` event. This event mutates the abstract type (remember the first rule - type can be mutated only by event or route). In both the mutations, the subscribers were notified. How do we write the infrastructure code for this ? duh, we don't. We define the topology in abstract terms just like the diagram. The definition captures the change characteristics of a mutable type - these are called resolvers. Therefore, in the mutations block in the topology file, we define types and resolvers on those types separately.
 
 ```yaml title="topology.yml"
 name: progress-tracker
