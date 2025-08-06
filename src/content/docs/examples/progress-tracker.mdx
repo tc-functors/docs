@@ -125,11 +125,14 @@ type Job @aws_lambda @aws_iam {
 }
 ```
 
+This boilerplate is head-spinning to say the least. This is just for one Type and a couple of resolvers. With any reasonably sophisticated reactive system, we end up having several types and an unmanageable sphagetti of low-level code.
+
+
 :::note
 We don't need to explicitly generate the provider-specific graphql code. tc does that internally when rendering the topology onto a sandbox.
 :::
 
-Now that we have defined a _type_ that can be mutated and have set resolvers and subscribers to it. Let's try and wire the mutations up.
+Now that we have defined a _Type_ that can be mutated and have set resolvers and subscribers to it. Let's try and wire the mutations up.
 
 Oh did I say, AWS Appsync also provides a routing endpoint to invoke any arbitrary resolver ? Let's remove the `routes` block and just use the default routes.
 
