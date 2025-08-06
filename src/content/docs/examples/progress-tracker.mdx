@@ -46,6 +46,7 @@ With this in mind, let's draw a topology that adheres to these rules:
 How did we arrive at this diagram ? We started by choosing a Mutation entity and identifying it's composition constraints - A mutation is triggered by only event or a route. The route is typically in the boundaries.
 
 In this diagram, a `route` mutates the abstract type which in turn triggers a function named `starter`. The `starter` function then runs the arbitrary job and triggers a `CompleteTask` event. This event mutates the abstract type (remember the first rule - type can be mutated only by event or route). In both the mutations, the subscribers were notified.
+
 We mentioned briefly about `resolvers`. A resolver is any backing entity (function, table etc) that returns data suitable for subscribers. This, however, is optional. If no resolver function or table is specified, the type's value is returned as is with no augmentation.
 In this example however, we have the functions return data with the `Job` schema.
 
