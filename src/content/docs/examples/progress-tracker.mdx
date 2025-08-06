@@ -129,8 +129,7 @@ type Job @aws_lambda @aws_iam {
 }
 ```
 
-This boilerplate is head-spinning to say the least. This is just for one Type and a couple of resolvers. With any reasonably sophisticated reactive system, we end up having several types and an unmanageable sphagetti of low-level code.
-
+This boilerplate is head-spinning to say the least. This is just for one Type and a couple of resolvers. With any reasonably sophisticated reactive system, we end up having several types and an unmanageable sphagetti of low-level code. Thankfully we don't need to write it. tc generates it for us just by defining the type and it's resolver(s).
 
 :::note
 We don't need to explicitly generate the provider-specific graphql code. tc does that internally when rendering the topology onto a sandbox.
