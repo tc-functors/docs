@@ -7,8 +7,12 @@ description: Example - Enhance, Transform and Load
 This is a rough draft
 :::
 
+The goal of this example is to introduce you to defining and composing entities without leaking any infrastructure details into it.
+
+## Preamble
+
 In this example, we will attempt to build the world's best ETL system. Just kidding! It's far from it.
-The goal is to introduce you to defining and composing entities without leaking any infrastructure details into it. Additionally, this example covers an end-to-end application (fullstack as kids call it).
+
 
 We will try to design a simple serverless ETL system that has the following features:
 
@@ -19,13 +23,14 @@ We will try to design a simple serverless ETL system that has the following feat
 5. Host a simple html page to show the notifications.
 
 
+## Composition
+
 If you were to ask an architect or Chat GPT, we may get an architecture something like this:
 
 [![Etl image]][Etl source]
 
 [Etl image]: ../../../assets/etl.png
 [Etl source]: ../../../assets/etl.png
-
 
 Can we define this topology at a high-level without knowing anything about the underlying services ? It's possible with `tc`.
 Let's break it down and incrementally design the topology:
