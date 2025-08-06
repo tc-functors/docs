@@ -222,7 +222,7 @@ tc create -s yoda -e dev
 [![Mutcast image]][Mutcast source]
 
 [Mutcast image]: ../../../assets/mutation-cast.gif
-[Mutcast source]: ../../../assets/mutation-cast.gif
+[Mutcast source]: /assets/mutation-cast.gif
 
 
 How does this look on AWS you ask ? Here is how:
@@ -231,3 +231,9 @@ How does this look on AWS you ask ? Here is how:
 
 [Mut2 image]: ../../../assets/mutation-2.png
 [Mut2 source]: ../../../assets/mutation-2.png
+
+To summarize, here is what we learned:
+
+1. We can build sophisticated topologies using _abstract mutation types_. This is well suited for reactive webapps that need to display lot of events.
+2. Any event entity can trigger a mutation and thus propagating that change to the subscriber, without an external database.
+3. Every entity has a set of composition rules and properties. These rules magically map to constraints in the cloud (AWS et al).
