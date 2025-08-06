@@ -5,12 +5,17 @@ description: Example - Progress Tracker
 
 [https://github.com/tc-functors/tc/examples/progress-tracker](https://github.com/tc-functors/tc/examples/progress-tracker)
 
+The goal of this example is to introduce you to entity composition, `Mutation` entity and building stateless reactive web applications.
+
 ## Preamble
 
 In this example, we will try to start an arbitrary asynchronous job and capture it's completion state, without any database. We also would like to have a webpage that subscribes to these status changes preferably through websocket.
-The kneejerk reaction, as developers, is to draw an architecture diagram (or ask ChatGPT you say?) with sophisticated AWS services. With functors, we start with datastructures.
+
+The kneejerk reaction, as developers, is to draw an architecture diagram (or ask ChatGPT you say?) with a zoo AWS services. With functors, we start with datastructures.
 
 Rather than think of it like connecting random services in the cloud, we think of them as composition of entities without consideration of underlying services.
+
+## Types
 
 Let's say we define a type called `Job` which captures the status of a job or task.
 
