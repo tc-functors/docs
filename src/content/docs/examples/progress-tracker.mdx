@@ -126,7 +126,7 @@ We don't need to explicitly generate the provider-specific graphql code. tc does
 
 Now that we have defined a _type_ that can be mutated and have set resolvers and subscribers to it. Let's try and wire the mutations up.
 
-Oh did I say, AWS Appsync also provides a routing endpoint to invoke any arbitrary resolver. Let's remove the `routes` block and just use the default routes.
+Oh did I say, AWS Appsync also provides a routing endpoint to invoke any arbitrary resolver ? Let's remove the `routes` block and just use the default routes.
 
 
 ```yaml title="topology.yml"
@@ -235,5 +235,5 @@ How does this look on AWS you ask ? Here is how:
 To summarize, here is what we learned:
 
 1. We can build sophisticated topologies using _abstract mutation types_. This is well suited for reactive webapps that need to display lot of events.
-2. Any event entity can trigger a mutation and thus propagating that change to the subscriber, without an external database.
+2. Any event entity can trigger a mutation and thus propagate that change to the subscriber, without an external database.
 3. Every entity has a set of composition rules and properties. These rules magically map to constraints in the cloud (AWS et al).
