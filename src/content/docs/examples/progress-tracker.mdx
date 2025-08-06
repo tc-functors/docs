@@ -47,7 +47,7 @@ How did we arrive at this diagram ? We started by choosing a Mutation entity and
 
 In this diagram, a `route` mutates the abstract type which in turn triggers a function named `starter`. The `starter` function then runs the arbitrary job and triggers a `CompleteTask` event. This event mutates the abstract type (remember the first rule - type can be mutated only by event or route). In both the mutations, the subscribers were notified.
 
-We mentioned briefly about `resolvers`. A resolver is any backing entity (function, table etc) that returns data suitable for subscribers. For example, this is how we define `startJob`. It has a backing entity function named `starter` that takes in data with input Type (JobInput) and returns data with output Type (Job). The subscriber, HTML page in this case, gets the value of `Job` as payload.
+We had mentioned briefly about `resolvers`. A resolver is any backing entity (function, table etc) that returns data suitable for subscribers. For example, this is how we define `startJob`.
 
 ```yaml
 startJob:
@@ -56,6 +56,8 @@ startJob:
   output: Job
   subscribe: true
 ```
+
+`startJob` resolver has a backing entity function named `starter` that takes in data with input Type (JobInput) and returns data with output Type (Job). The subscriber, HTML page in this case, gets the value of `Job` as payload.
 The backing entity, however, is optional. If no resolver function or table is specified, the type's value is returned as is with no augmentation.
 In this example however, we have the functions return data with the `Job` schema.
 
