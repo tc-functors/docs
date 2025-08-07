@@ -76,9 +76,8 @@ export default defineConfig({
             {
               label: "Progress Tracker",
               link: "/examples/progress-tracker",
-            },
+            }
 	]
-
 	},
 
 	{
