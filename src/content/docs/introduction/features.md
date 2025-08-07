@@ -29,7 +29,7 @@ tc update -s sandbox -e env -c events|routes|mutations|functions|flow
 
 ## Dynamic Infrastructure
 
-`tc compile` generates a lot of the infrastructure (permissions, default configurations etc) boilerplate needed for the configured provider. Think of infrastructure as _Types_ in a dynamic programming language. We can override the defaults or inferred configurations separate from the topology definition. For example we can have a repository layout as follows:
+`tc compose` generates a lot of the infrastructure (permissions, default configurations, graphql, ASL etc) boilerplate needed for the configured provider. Think of infrastructure as _Types_ in a dynamic programming language. We can override the defaults or inferred configurations separate from the topology definition. For example we can have a repository layout as follows:
 
 ```
 services/<topology>/<function>

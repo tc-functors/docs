@@ -13,6 +13,7 @@ routes:
   /foo:
     method: POST
     function: function1
+
 ```
 
 ## Patterns
