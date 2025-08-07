@@ -13,7 +13,7 @@ name: topology-name
 pages:
   my-app:
     kind: SPA | PWA | Static
-    dist: './dist'
+    dist: 'app/dist'
     dir: 'app'
     build:
       - npm install --quiet
@@ -40,6 +40,25 @@ const REST_ENDPOINT="{{REST_API_ENDPOINT}}"
 const API_KEY="ssm://path/to/my/key"
 const MY_DATA="s3://bucket/prefix/key"
 ```
+
+Dynamic config can be enabled by specifying the path to the config
+
+```
+pages:
+  my-app:
+    kind: SPA | PWA | Static
+    dist: app/dist
+    dir: app
+	config: app/src/config.json
+    build:
+      - npm install --quiet
+      - npm run build
+```
+
+:::note
+tc can only render variables associated with entities defined in the topology. For example, if you have routes, then REST_API_ENDPOINT is available. If mutations are defined, GRAPHQL_REALTIME_URL is available. If channels are defined, CHANNEL_URL is available.
+:::
+
 
 ## Customization
 
