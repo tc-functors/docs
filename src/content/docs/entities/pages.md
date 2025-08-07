@@ -49,7 +49,7 @@ pages:
     kind: SPA | PWA | Static
     dist: app/dist
     dir: app
-	config: app/src/config.json
+    config: app/src/config.json
     build:
       - npm install --quiet
       - npm run build
