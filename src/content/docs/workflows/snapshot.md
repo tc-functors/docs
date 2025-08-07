@@ -70,7 +70,7 @@ tc create -s stable -e staging --manifest --save s3://bucket/:env/:sandbox/:date
 If we need to write to a bucket in a different target profile:
 
 ```sh
-tc create -s stable -e staging --manifest s3://bucket/:env/:sandbox/:date.json
+tc create -s stable -e staging --manifest s3://bucket/:env/:sandbox/:date.json --target-profile cicd
 ```
 
 ## Versions
