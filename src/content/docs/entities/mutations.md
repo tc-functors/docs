@@ -69,11 +69,12 @@ tc generates `graphql` for the above mutation definition.
 
 We don't need to explictly generate graphql. `tc compose -c mutations -f gql` is useful for debugging purposes.
 
+```
+
 ## Implict Types
 
 `tc` provides a set of convenient implicit Types. These Types capture the shape or path access in input entity's payload.
 
-```
 
 |                | Input Path        | Input Entity | Target Type |
 |----------------|-------------------|--------------|-------------|
@@ -81,6 +82,10 @@ We don't need to explictly generate graphql. `tc compose -c mutations -f gql` is
 | EventData      | $.detail.data     | Event        | String      |
 | EventDataJSON* | $.detail.data     | Event        | AWSJSON     |
 | EventMetadata  | $.detail.metadata | Event        | String      |
+
+:::note
+`EventDataJSON` is currently not functional.
+:::
 
 ## Components
 
