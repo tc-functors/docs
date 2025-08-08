@@ -3,7 +3,10 @@ title: Mutations
 description: Mutations Entity Reference
 ---
 
-## Definitions
+
+Read [Progress Tracker Example](/examples/progress-tracker/) for concepts and design.
+
+## Spec
 
 ```yaml
 name: mutations-basic
@@ -24,6 +27,8 @@ mutations:
       output: Status
       subscribe: true
 ```
+
+## Graphql
 
 tc generates `graphql` for the above mutation definition.
 
