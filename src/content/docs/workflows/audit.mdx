@@ -1,8 +1,12 @@
 ---
-title: Snapshotting
-description: Snapshots and manifest-driven deploys
+title: Audit Workflow
+description: Workflow workflow
 ---
-The snapshotter module takes a snapshot of a given sandbox and outputs the same datastructure as the compiler output. This `isomorphic` characteristic is useful to see the diffs between sandboxes.
+
+import { Steps } from '@astrojs/starlight/components';
+import { FileTree } from '@astrojs/starlight/components';
+
+tc provides a sophisticated mechanism to audit changes to a sandbox. This typically involves snapshotting the manifests of a sandbox and saving it in some store for queries.
 
 For example the following outputs a JSON with the topology structure
 
@@ -85,9 +89,7 @@ tc snapshot -s stable -e qa -f table|json
 
 ```
 tc snapshot -s stable -e qa  -f table
-```
 
-```pre
  namespace  | sandbox | version  | frozen | tc_version | updated_at
 ------------+---------+----------+--------+------------+---------------------
  node1      | stable  | 0.0.6    |        | 0.0.3      | 04:09:2025-18:20:42
@@ -96,7 +98,6 @@ tc snapshot -s stable -e qa  -f table
  node11     | stable  | 0.0.15   |        | 0.0.3      | 04:09:2025-18:19:28
  node12     | stable  | 0.0.2    |        | 0.6.262    | 12:13:2024-06:46:57
 ```
-
 
 To see versions across profiles for a sandbox, provide a csv of profiles/envs:
 
@@ -118,6 +119,4 @@ tc snapshot -s stable -e qa,staging
  node12     | 0.0.147  | 0.0.143
 ```
 
-## Audit logs
-
-wip
+### Searching manifests

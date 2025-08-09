@@ -83,6 +83,7 @@ export default defineConfig({
 	{
 	  label: 'Entities',
 	  collapsed: true,
+	  collapsed: true,
 	  items: [
             {
               label: "Functions",
@@ -126,7 +127,24 @@ export default defineConfig({
 	{
 	  label: 'Workflows',
 	  collapsed: true,
-	  autogenerate: { directory: 'workflows' },
+	   items: [
+            {
+              label: "Development",
+              link: "/workflows/development",
+            },
+            {
+              label: "Sandbox Lifecycle",
+              link: "/workflows/sandbox",
+            },
+            {
+              label: "Release",
+              link: "/workflows/release",
+            },
+            {
+              label: "Audit",
+              link: "/workflows/audit",
+            }
+	   ]
 	},
 
 	{

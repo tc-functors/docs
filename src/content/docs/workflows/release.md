@@ -1,5 +1,5 @@
 ---
-title: Release
+title: Release Workflow
 description: Release Workflow
 ---
 
