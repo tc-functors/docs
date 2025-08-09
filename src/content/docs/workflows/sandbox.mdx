@@ -48,19 +48,23 @@ Following shows the stages or steps in managing a sandbox. Let's assume the name
 
 5. Freeze
 
+	Freeze any updates to the sandbox. Useful for testing a shared sandbox typically QA or if there are continuous deploys.
+
 	```sh
 	tc freeze -s yoda -e dev
 	```
 
 6. Snapshot
 
-	Snapshot the manifests of a sandbox.
+	Snapshot the manifests of a sandbox. The manifest is a self-contained executable representaion of the sandbox
 
 	```sh
 	tc snapshot -s yoda -e dev --manifest --save s3://bucket/key.json
 	```
 
 7. Unfreeze
+
+	Unfreeze any updates to the sandbox.
 
 	```sh
 	tc unfreeze -s yoda -e dev
@@ -88,7 +92,7 @@ Following shows the stages or steps in managing a sandbox. Let's assume the name
 
 10. Route
 
-	Route traffic from anothe sandbox
+	Route core traffic from another sandbox. This is how canaries can be implemented using tc.
 
 	```sh
 	tc route -s yoda -e dev --from <from-sandbox> --root ENTITY/NAME
