@@ -8,14 +8,12 @@ tableOfContents: false
 
 tc (topology composer) provides a higher-level abstraction for serverless development, focusing on the logical relationships between abstract entities (functions, events, routes, queues, channels, mutations and pages) rather than the underlying infrastructure details. tc is an **application composer**.
 
+tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a `Cloud Functor`. A Cloud Functor has 3 key concepts - Entity Abstraction, Namespacing and Entity Composition. tc implements the Cloud Functor pattern.
+
 [![Entity image]][Entity source]
 
 [Entity image]: ../../assets/entities.png
 [Entity source]: ../../assets/entities.png
-
-
-tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a `Cloud Functor`.
-
 
 :::caution
 tc is still quite nascent and is being actively developed. This documentation is work in progress.
@@ -54,6 +52,6 @@ Commands:
 
 
 :::note
-- tc is primarily an application composer meant for developers.
+- tc is an application composer meant for developers.
 - No AI or LLM was ever used to write tc or generate this documentation.
 :::
