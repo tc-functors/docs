@@ -6,7 +6,7 @@ tableOfContents: false
 
 > “The purpose of abstraction is not to be vague, but to create a new semantic level in which one can be absolutely precise.” -  Edsger W. Dijkstra
 
-tc (topology composer) provides a higher-level abstraction for serverless development, focusing on the logical relationships between abstract entities (functions, events, routes, queues, channels, mutations and pages) rather than the underlying infrastructure details. tc is an **application composer**.
+tc (topology composer) provides a higher-level abstraction for serverless development, focusing on the logical relationships between abstract entities (functions, events, routes, queues, channels, mutations and pages) rather than the underlying infrastructure details. tc is a stateless, graph-based, cloud-agnostic* **application composer**.
 
 tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a `Cloud Functor`. A Cloud Functor has 3 key concepts - Entity Abstraction, Namespacing and Entity Composition. tc implements the Cloud Functor pattern.
 
@@ -54,4 +54,5 @@ Commands:
 :::note
 - tc is an application composer meant for developers.
 - No AI or LLM was ever used to write tc or generate this documentation.
+- Currently tc supports only AWS serverless provider. Work is underway to support other cloud providers.
 :::
