@@ -20,7 +20,28 @@ In the Cloud Functor world, a lambda is a not a micro service, a topology is. A 
 
 #### How does it compare to other Cloud deployers ?
 
-tc is an application composer that implements the Cloud Functor pattern. It is not fair to compare these tools (Terraform, SST, amplify etc) as all of them are unique and suited for different needs. `tc` may or may not be for you. If you like to express your architecture and application topology at a high-level with minimal or no infrastructure code, then tc is for you!
+tc is an application composer that implements the Cloud Functor pattern. It is not fair to compare these tools as all of them are unique and suited for different needs. `tc` may or may not be for you. If you like to express your architecture and application topology at a high-level with minimal or no infrastructure code, then tc is for you!
+
+If you still need to compare it as a deloyer:
+
+
+
+|                     | Terraform | Amplify   | Serverless | SST        | tc            |
+|---------------------|-----------|-----------|------------|------------|---------------|
+| Entity Abstraction  | No        | No        | No         | No         | Yes           |
+| Entity Composition  | No        | No        | No         | No         | Yes           |
+| Dynamic Permissions | No        | No        | No         | No         | Yes           |
+| Dynamic Flows       | No        | No        | No         | No         | Yes           |
+| Stateful            | Yes       | Yes       | Yes        | Yes        | No            |
+| Namespacing         | No        | No        | No         | No         | Yes           |
+| Sandboxing          | No        | No        | No         | Yes        | Yes           |
+| Canaries            | No        | No        | No         | No         | Yes           |
+| Written in          | Go        | Nodejs    | Nodejs     | Typescript | Rust          |
+| IAC                 | Yes       | Yes       |            |            | Generated     |
+| Fullstack           | Maybe     | Yes       | Yes        | Yes        | Yes           |
+| Cloud Agnostic      | Yes       | No        | No         | No         |               |
+| Function builders   | No        | No        | Limited    | Limited    | Sophisticated |
+| License             | BSL       | Apache2.0 | MIT        | MIT        | MIT           |
 
 #### If tc generates the infrastructure boilerplate, can I modify and update it ?
 
