@@ -160,7 +160,7 @@ TC_SYNC_CREATE=1 tc create ..
 
 ```
 
-### Release variables
+## Release variables
 
 **TC_UPDATE_METADATA**
 
