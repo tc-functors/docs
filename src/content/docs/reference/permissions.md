@@ -41,7 +41,7 @@ The permissions defined in shared base permission files are typically quite perm
 
 ### Global permissions
 
-If you don't want to use either dynamic or shared, you could use `Global Permissions`. Provided permissions are like shared except it is not created per sandbox. There is no template.
+If you don't want to use either dynamic or shared, you could use `Global Permissions`. Global permissions are like shared except it is not created per sandbox. There is no template.
 
 This is best suited for teams where infrastructure and permissions are managed by dedicated teams and tools. For example, you could create the roles and permissions usind Cloudformation or Terraform, but would like to have tc just use it.
 
