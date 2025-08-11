@@ -10,7 +10,7 @@ Download the executable for your OS
 | [0.8.102](https://github.com/tc-functors/tc/releases/download/0.8.102/tc-x86_64-linux) | [0.8.102](https://github.com/tc-functors/tc/releases/download/0.8.102/tc-aarch64-macos)
 
 
-:::info
+:::note
 
 For Mac Users:
 
