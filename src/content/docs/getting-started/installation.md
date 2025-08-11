@@ -7,12 +7,15 @@ Download the executable for your OS
 
 | GNU/Linux x86                                                                   | MacOSX M1/M2                                                       |
 |---------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| [0.8.99](https://github.com/tc-functors/tc/releases/download/0.8.99/tc-x86_64-linux) | [0.8.99](https://github.com/tc-functors/tc/releases/download/0.8.99/tc-aarch64-macos)
+| [0.8.102](https://github.com/tc-functors/tc/releases/download/0.8.102/tc-x86_64-linux) | [0.8.102](https://github.com/tc-functors/tc/releases/download/0.8.102/tc-aarch64-macos)
 
 
-:::caution
+:::info
 
 For Mac Users:
+
+sudo mv ~/Downloads/tc /usr/local/bin/tc
+sudo chmod +x /usr/local/bin/tc
 
 The first time you run the downloaded executable you will get a popup that says it may be "malicious software"
 
@@ -21,10 +24,6 @@ Do the following:
 * Should have `App Store and identified developers` selected
 * Where it says `tc was blocked from use becasue it is not from an identified developer`
     * Click on `Allow Anyway`
-
-mv ~/Downloads/tc /usr/local/bin/tc
-
-chmod +x /usr/local/bin/tc
 
 :::
 
@@ -40,7 +39,7 @@ tc upgrade
 or downgrade/upgrade to specific version
 
 ```
-tc upgrade --version 0.8.99
+tc upgrade --version 0.8.102
 ```
 
 
@@ -53,6 +52,7 @@ If you prefer to build `tc` yourself, install rustc/cargo.
 Install Cargo/Rust https://www.rust-lang.org/tools/install
 
 ```sh
+git clone https://github.com/tc-functors/tc.git
 cd tc
 cargo build --release
 sudo mv target/release/tc /usr/local/bin/tc
