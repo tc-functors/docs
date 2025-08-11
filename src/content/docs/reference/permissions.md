@@ -3,20 +3,22 @@ title: Permissions
 description: Managing Permissions
 ---
 
+Permissions are like _Types_ in a dynamic programming language. We miss them until you realize you don't need to _type_ 'em.
+
+
 ## AWS IAM Permissions
 
 tc provides 3 different mechanisms to specify permissions.
 
-
 ### Dynamic permissions
 
-This is the default mechanism. When creating a sandbox, tc creates a base set of roles for the entity types defined in the topology. For example, if routes and events, functions are defined, tc creates `tc-base-route-<sandbox>` , `tc-base-event-<sandbox>`and `tc-base-function-<sandbox>` roles with corresponding inline policies. tc uses `ABAC` [Attribute Based Access Control](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_attribute-based-access-control.html) to set tag-based access for entities in the sandbox. Entities defined outside the sandbox are not accessible.
+This is the default mechanism. When creating a sandbox, tc creates a base set of roles for the entity types defined in the topology. For example, if routes and events, functions are defined, tc creates `tc-base-route-<sandbox>` , `tc-base-event-<sandbox>`and `tc-base-function-<sandbox>` roles with corresponding inline policies. tc uses `ABAC` [Attribute Based Access Control](https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction_attribute-based-access-control.html) to set tag-based access for entities in the sandbox. Entities defined outside the sandbox are not accessible. Dynamic generation of permissions is possible because of namespacing and composition.
 
 The advantages of using _Dynamic permissions_:
 
 1. The permissions are granular and secure.
 2. We don't need to write any permissions manually, unless there are entity-specific overrides.
-
+3. Sandbox isolation leads to sophisticated workflows.
 
 A major (questionable) disadvantage of _dynamic permissions_ is that it makes it harder to access entities outside the sandbox.
 
