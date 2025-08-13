@@ -3,12 +3,79 @@ title: Development Workflow
 description: Dev workflow
 ---
 
-[![Dev image]][Dev source]
+import { Steps } from '@astrojs/starlight/components';
+import { FileTree } from '@astrojs/starlight/components';
 
-[Dev image]: ../../../assets/dev.png
-[Dev source]: ../../../assets/dev.png
+Following shows the stages or steps in developing, testing and debugging a topology using tc. Let's assume the name of the sandbox is `yoda` and the AWS_PROFILE (provider environment) is dev.
 
-## Defining Topology
+
+<Steps>
+
+1. Scaffold
+
+	```sh
+	tc scaffold
+	```
+
+2. Compose
+
+	```sh
+	tc compose
+	```
+
+3. Create
+
+	```sh
+	tc create -s yoda -e dev
+	```
+
+4. Update
+
+	```sh
+	tc update -s yoda -e dev
+	```
+	or update specific components for faster iteration
+
+	```sh
+	tc update -s yoda -e dev -c ENTITY
+	tc update -s yoda -e dev -c ENTITY/COMPONENT
+
+	e.g
+	tc update -s yoda -e dev -c routes
+	tc update -s yoda -e dev -c functions/vars
+
+	```
+5. List
+
+	```sh
+	tc list -s yoda -e dev
+	```
+
+6. Invoke
+
+	```sh
+	tc invoke -s yoda -e dev -p payload.json
+	tc invoke -s yoda -e dev -p s3://bucket/key.json
+	```
+
+7. Test
+
+
+	```sh
+	tc test -s yoda -e dev [--recursive]
+	```
+
+8. Delete
+
+
+	```sh
+	tc delete -s yoda -e dev [--recursive]
+	```
+
+</Steps>
+
+
+## Scaffold
 
 - Define your events, routes, channels, queues, pages in topology.yml
 ```yaml
@@ -50,7 +117,7 @@ pages:
 tc scaffold --kind function
 ```
 
-## Composing
+## Compose
 
 We can now validate the entity definitions and their connections by running `tc compose`.
 `tc compose` will generate a giant JSON that represents the target infrastructure (AWS Serverless by default).
@@ -71,7 +138,7 @@ tc compose -c mutations -f graphql
 We can also use the external tc-inspector UI to visualize and inspect the topology.
 :::
 
-## Building and testing
+### Building Images
 
 Most often, tc infers the kind of function, it's runtime and how to build it. However, we can override the kind of build, for example `Image` or `Inline`. See [Building Function Dependencies](/entities/functions#dependencies)
 
@@ -86,7 +153,7 @@ tc build --image base --publish
 tc build --image code --publish
 ```
 
-## Sandboxing
+## Create Sandbox
 
 
 The following command create a sandbox in the given AWS profile (-e|--profile)
@@ -95,6 +162,8 @@ The following command create a sandbox in the given AWS profile (-e|--profile)
 cd <topology-dir>
 tc create [--sandbox SANDBOX] [-e PROFILE]
 ```
+
+## Update Sandbox
 
 While developing, we often need to incrementally deploy certain components without recreating the entire topology. `tc` provides an update command that updates given entity and components.
 An entity is a core composable servereless resource. . A component is an attribute or instance of the entity.
@@ -155,7 +224,16 @@ tc update -s SANDBOX -e PROFILE -c routes/ROUTE_NAME/authorizer
 tc update -s SANDBOX -e PROFILE -c routes/roles
 ```
 
-## Invoking
+## List sandbox
+
+To list the entities in provisioned sandbox, do
+
+```
+tc list -s SANDBOX -e PROFILE [--format table|json]
+tc list -s SANDBOX -e PROFILE -c ENTITY
+```
+
+## Invoke
 
 
 ### Payloads
@@ -203,7 +281,7 @@ To trigger/invoke a specific event. (Note the payload does not include detail-ty
 tc invoke -s SANDBOX -e PROFILE -c events/EVENT_NAME -p payload.json
 ```
 
-### Interactive invoker
+### Interactive REPL
 
 tc also provides an interactive REPL and is useful to step through the components in given entity
 
@@ -220,7 +298,7 @@ This feature is still being developed and is quite unstable.
 :::
 
 
-## Deleting Sandbox
+## Delete Sandbox
 
 To delete a sandbox:
 

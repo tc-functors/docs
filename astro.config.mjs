@@ -141,10 +141,6 @@ export default defineConfig({
               link: "/workflows/development",
             },
             {
-              label: "Sandbox Lifecycle",
-              link: "/workflows/sandbox",
-            },
-            {
               label: "Release",
               link: "/workflows/release",
             },
