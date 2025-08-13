@@ -7,7 +7,7 @@ Download the executable for your OS
 
 | GNU/Linux x86                                                                   | MacOSX M1/M2                                                       |
 |---------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| [0.8.102](https://github.com/tc-functors/tc/releases/download/0.8.102/tc-x86_64-linux) | [0.8.102](https://github.com/tc-functors/tc/releases/download/0.8.102/tc-aarch64-macos)
+| [0.8.106](https://github.com/tc-functors/tc/releases/download/0.8.106/tc-x86_64-linux) | [0.8.106](https://github.com/tc-functors/tc/releases/download/0.8.106/tc-aarch64-macos)
 
 
 :::note
