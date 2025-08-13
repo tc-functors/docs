@@ -8,7 +8,7 @@ description: Dev workflow
 [Dev image]: ../../../assets/dev.png
 [Dev source]: ../../../assets/dev.png
 
-### Defining Topology
+## Defining Topology
 
 - Define your events, routes, channels, queues, pages in topology.yml
 ```yaml
@@ -44,13 +44,13 @@ pages:
     dir: webapp
 ```
 
-- Additional scaffold the functions if they don't exist
+- Additional scaffold the functions if they don't exist, interactively.
 
 ```sh
-tc scaffold --entity function
+tc scaffold --kind function
 ```
 
-### Composing
+## Composing
 
 We can now validate the entity definitions and their connections by running `tc compose`.
 `tc compose` will generate a giant JSON that represents the target infrastructure (AWS Serverless by default).
@@ -71,7 +71,7 @@ tc compose -c mutations -f graphql
 We can also use the external tc-inspector UI to visualize and inspect the topology.
 :::
 
-### Building and testing
+## Building and testing
 
 Most often, tc infers the kind of function, it's runtime and how to build it. However, we can override the kind of build, for example `Image` or `Inline`. See [Building Function Dependencies](/entities/functions#dependencies)
 
@@ -86,7 +86,7 @@ tc build --image base --publish
 tc build --image code --publish
 ```
 
-### Sandboxing
+## Sandboxing
 
 
 The following command create a sandbox in the given AWS profile (-e|--profile)
@@ -155,39 +155,78 @@ tc update -s SANDBOX -e PROFILE -c routes/ROUTE_NAME/authorizer
 tc update -s SANDBOX -e PROFILE -c routes/roles
 ```
 
-### Invoking
+## Invoking
 
 
-To simply invoke a functor
-
-```
-tc invoke --SANDBOX main --env PROFILE
-```
-By default, tc picks up a `payload.json` file in the current directory. You could optionally specify a payload file
+To invoke the sandbox with a payload, run the following:
 
 ```
-tc invoke --sandbox SANDBOX --env PROFILE --payload payload.json
+tc invoke -s SANDBOX -e PROFILE
+```
+
+### Payloads
+
+
+By default, tc picks up a `payload.json` file in the current directory. You could optionally specify a payload file or an uri.
+
+```
+tc invoke -s SANDBOX -e PROFILE --payload payload.json
 ```
 
 or via stdin
 ```
-cat payload.json | tc invoke --sandbox SANDBOX --env PROFILE
+cat payload.json | tc invoke -s SANDBOX -e PROFILE
 ```
 
 or as a param
 ```
-tc invoke --sandbox SANDBOX --env PROFILE --payload '{"data": "foo"}'
+tc invoke -s SANDBOX -e PROFILE --payload '{"data": "foo"}'
 ```
 
-By default, `tc` invokes a stepfn. We can also invoke a lambda or trigger an Eventbridge event
+or as s3 URI:
 
 ```
-tc invoke --kind lambda -e dev --payload '{"data"...}'
-tc invoke --kind event -e dev --payload '{"data"...}'
+tc invoke -s SANDBOX -e PROFILE --payload s3://bucket/key.json
 ```
 
+### Invoke specific entities
 
-### Deleting Sandbox
+:::note
+tc invokes the root entity of the topology. It could be state (stepfunction), route or event. tc does a topological sort to identify the root entity.
+:::
+
+We can also invoke specify entity and/or component.
+
+For example, to invoke a specific function in the topology:
+
+```
+tc invoke -s SANDBOX -e PROFILE -c functions/FUNCTION-NAME -p payload.json
+```
+
+To trigger/invoke a specific event. (Note the payload does not include detail-type or source of the event payload. It only has detail)
+
+```
+tc invoke -s SANDBOX -e PROFILE -c events/EVENT_NAME -p payload.json
+```
+
+### Interactive invoker
+
+tc also provides an interactive REPL and is useful to step through the components in given entity
+
+```
+tc invoke -s SANDBOX -e PROFILE -c events
+
+repl> /list
+repl> !foo -p payload.json
+Triggering event foo
+```
+
+:::caution
+This feature is still being developed and is quite unstable.
+:::
+
+
+## Deleting Sandbox
 
 To delete a sandbox:
 
@@ -205,7 +244,7 @@ tc delete -s sandbox -e env -c ENTITY/COMPONENT
 Optionally, you way want to prune stale resources in your sandbox. tc does not maintain an external state to keep track of stale resources (those you delete locally but not in your sandbox).
 
 ```sh
-tc prune -s
+tc prune -s SANDBOX -e PROFILE [--filter regexp]
 ```
 
 :::caution

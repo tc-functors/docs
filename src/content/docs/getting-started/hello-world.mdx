@@ -34,22 +34,20 @@ import { FileTree } from '@astrojs/starlight/components';
    For this example, let's write it in python (I know!).
 
    ```sh
-   mkdir responder
+   tc scaffold
+    > Function name: responder
+    > Function kind: Namespaced
+    > Select language: python3.12
+    > Select dependency mechanism: None
+    > Select format:  YAML
+    > Override default runtime parameters (roles, vars) ? No
    ```
 
-	Add the following handler code:
-
-	```python title="responder/handler.py"
-
-	def handler(event, context):
-		return {"message": "hello world"}
-	```
-
-	<FileTree>
-	- topology.yml
+   <FileTree>
+    - topology.yml
     - responder
       - handler.py
-	</FileTree>
+   </FileTree>
 
 
 3. Create sandbox

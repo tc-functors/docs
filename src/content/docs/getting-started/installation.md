@@ -15,6 +15,7 @@ Download the executable for your OS
 For Mac Users:
 
 sudo mv ~/Downloads/tc /usr/local/bin/tc
+
 sudo chmod +x /usr/local/bin/tc
 
 The first time you run the downloaded executable you will get a popup that says it may be "malicious software"
