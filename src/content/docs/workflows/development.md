@@ -158,12 +158,6 @@ tc update -s SANDBOX -e PROFILE -c routes/roles
 ## Invoking
 
 
-To invoke the sandbox with a payload, run the following:
-
-```
-tc invoke -s SANDBOX -e PROFILE
-```
-
 ### Payloads
 
 
