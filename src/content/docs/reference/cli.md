@@ -3,19 +3,21 @@ title: CLI
 description: CLI Reference
 ---
 
-This document contains the help content for the `tc` command-line program.
-
 **Command Overview:**
 
 * [`tc`↴](#tc)
 * [`tc build`↴](#tc-build)
+* [`tc changelog`↴](#tc-changelog)
 * [`tc compose`↴](#tc-compose)
 * [`tc create`↴](#tc-create)
 * [`tc delete`↴](#tc-delete)
 * [`tc freeze`↴](#tc-freeze)
 * [`tc invoke`↴](#tc-invoke)
+* [`tc list`↴](#tc-list)
 * [`tc prune`↴](#tc-prune)
 * [`tc resolve`↴](#tc-resolve)
+* [`tc route`↴](#tc-route)
+* [`tc scaffold`↴](#tc-scaffold)
 * [`tc snapshot`↴](#tc-snapshot)
 * [`tc test`↴](#tc-test)
 * [`tc tag`↴](#tc-tag)
@@ -31,13 +33,17 @@ This document contains the help content for the `tc` command-line program.
 ###### **Subcommands:**
 
 * `build` — Build layers, extensions and pack function code
+* `changelog` — Generate changelog for topology
 * `compose` — Compose a Topology
 * `create` — Create a sandboxed topology
 * `delete` — Delete a sandboxed topology
 * `freeze` — Freeze a sandbox and make it immutable
 * `invoke` — Invoke a topology synchronously or asynchronously
+* `list` — List resources in a topology
 * `prune` — Prune all resources in given sandbox
 * `resolve` — Resolve a topology
+* `route` — Route traffic to the given sandbox
+* `scaffold` — Scaffold functions
 * `snapshot` — Snapshot of current sandbox and env
 * `test` — Run tests in topology
 * `tag` — Create semver tags scoped by a topology
@@ -71,6 +77,20 @@ Build layers, extensions and pack function code
 * `-s`, `--sync`
 * `--parallel`
 * `--remote`
+
+
+
+## `tc changelog`
+
+Generate changelog for topology
+
+**Usage:** `tc changelog [OPTIONS]`
+
+###### **Options:**
+
+* `-b`, `--between <BETWEEN>`
+* `-s`, `--search <SEARCH>`
+* `-v`, `--verbose`
 
 
 
@@ -156,11 +176,27 @@ Invoke a topology synchronously or asynchronously
 * `-e`, `--profile <PROFILE>`
 * `-R`, `--role <ROLE>`
 * `-s`, `--sandbox <SANDBOX>`
-* `-n`, `--name <NAME>`
-* `-S`, `--step <STEP>`
-* `-k`, `--kind <KIND>`
+* `-c`, `--entity <ENTITY>`
+* `-d`, `--dir <DIR>`
 * `--local`
 * `--dumb`
+* `-t`, `--trace`
+
+
+
+## `tc list`
+
+List resources in a topology
+
+**Usage:** `tc list [OPTIONS]`
+
+###### **Options:**
+
+* `-e`, `--profile <PROFILE>`
+* `-s`, `--sandbox <SANDBOX>`
+* `-c`, `--entity <ENTITY>`
+* `-f`, `--format <FORMAT>`
+* `-v`, `--versions`
 * `-t`, `--trace`
 
 
@@ -198,6 +234,37 @@ Resolve a topology
 * `--diff`
 * `--cache`
 * `-t`, `--trace`
+
+
+
+## `tc route`
+
+Route traffic to the given sandbox
+
+**Usage:** `tc route [OPTIONS] --service <SERVICE>`
+
+###### **Options:**
+
+* `-e`, `--profile <PROFILE>`
+* `-E`, `--event <EVENT>`
+* `-s`, `--sandbox <SANDBOX>`
+* `-S`, `--service <SERVICE>`
+* `-r`, `--rule <RULE>`
+* `--list`
+* `-t`, `--trace`
+
+
+
+## `tc scaffold`
+
+Scaffold functions
+
+**Usage:** `tc scaffold [OPTIONS]`
+
+###### **Options:**
+
+* `-k`, `--kind <KIND>`
+* `-d`, `--dir <DIR>`
 
 
 
