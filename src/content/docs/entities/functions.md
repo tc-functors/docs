@@ -143,7 +143,7 @@ runtime:
   package_type: zip
   handler: handler.handler
 ```
-[Example](https://github.com/informed-labs/tc/blob/main/examples/function-builders/python-basic/function.yml)
+[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-basic/function.yml)
 
 and then `tc create -s <sandbox> -e <env>` builds this function using the given `command` and creates it in the given sandbox and env.
 
@@ -161,7 +161,7 @@ build:
   kind: Inline
   command: zip -9 -q lambda.zip *.py
 ```
-[Example](https://github.com/informed-labs/tc/blob/main/examples/function-builders/python-inline/function.yml)
+[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-inline/function.yml)
 
 `tc create -s <sandbox> -e <env>` will implicitly build the artifact with _inlined_ deps and create the function in the given sandbox and env. The dependencies are typically in `lib/` including shared objects (.so files).
 
@@ -250,7 +250,7 @@ build:
       commands: []
 ```
 
-[Example](https://github.com/informed-labs/tc/blob/main/examples/function-builders/python-image/function.yml#L1)
+[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-image/function.yml#L1)
 
 In the above example, we define the `base` image with dependencies and `code` image that packs just the code. Note that `code`  references `base` as the _parent_. Effectively, we can build a tree of images (say base dependencies, models, assets and code). These `images` can be built at any point in the lifecycle of the function. To build the `base` image do:
 

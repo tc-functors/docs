@@ -1,0 +1,180 @@
+---
+title: Test Workflow
+description: Test workflow
+---
+
+`tc` provides a simple, yet powerful, mechanism to test a topology in it's entirety or it's inidividual entities (functions, events, states, mutations, routes). This mechanism involves testing various entities using specific input payload, a condition to filter or transform the output and match it with the expected value. It leverages tc's polymorphic invocation and sandboxing features.
+Local code is not tested but instead the unit tests (short for units) run sequentially or concurrently against the given sandbox.
+
+A test spec (`TestSpec`) looks like the following:
+
+```yaml
+tests:
+  TestName:
+    entity: ENTITY/COMPONENT_NAME (Optional)
+    payload: JSON | file path | S3 or HTTP URI
+    condition: JSON Path | matches | includes
+    expect: JSON
+```
+
+## Testing functions
+
+Let's say we have a simple function whose's handler returns the value `{"status": "ok", "message": {"a": 1}}`.
+
+```yaml
+name: myfn
+runtime: RuntimeSpec
+build: BuildSpec
+
+tests:
+  test1:
+    payload: '{"foo": "bar"}'
+    condition: includes
+    expect: '{"status": "ok"}'
+
+  test2:
+    payload: '{"foo": "bar"}'
+    condition: $.message
+    expect: '{"a": 1}'
+
+  test3:
+    payload: 's3://{{TC_TEST_BUCKET}}/payload.json'
+    condition: $.message
+    expect: '{"a": 1}'
+
+  test4:
+    payload: my-payloads/test4.json
+    condition: $.message
+    expect: '{"a": 2}'
+
+```
+We can specify payload as inline JSON, path to JSON file locally or S3/HTTP URI. Payloads via URIs are particularly useful if we need to test it in CI environments where we may not have access to these payloads locally.
+
+
+To run the test:
+
+```sh
+tc test --sandbox SANDBOX --profile dev
+tc test -s yoda -e dev
+
+Test unit state-test (state) (pass) 1.015 seconds
+Test unit test1 (function/foo) (pass) 517.051 milliseconds
+Test unit test2 (function/foo) (pass) 556.090 milliseconds
+Test unit test3 (function/foo) (pass) 556.090 milliseconds
+Test unit test4 failed:
+expected {"a": 1}
+actual   {"a": 2}
+```
+
+To invoke a specific unit:
+
+```
+tc test -s yoda -e dev --unit test1
+```
+
+
+### Testing Topology
+
+While the function-level unit tests are useful, topology-level tests have interesting features.
+
+1. Test the topology in it's entirety as a flow.
+2. Test the entities and their components independently.
+3. Test all the testspecs in the topology, recursively
+
+The `TestSpec` in function.yml  and topology.yml look identical except that there is an additional `entity` attribute that is mandatory when specifying in topology.yml. For example:
+
+```yaml
+name: mytopo
+
+events: EventSpecs
+routes: RouteSpecs
+functions: FunctionSpecs
+states: StateSpecs
+
+tests:
+  function-test:
+    entity: functions/foo
+    payload: '{"foo": "bar"}'
+    condition: matches
+    expect: '{"foo": "bar"}'
+  state-test:
+    entity: state
+    payload: '{"start": "process"}'
+    condition: matches
+    expect: '{"status": "ok"}'
+```
+
+In the above test specs, we specified how to test `state` (stepfunction), `functions`.
+
+:::note
+We are working on supporting testing other entities viz events, routes, mutations as above. They are not implemented yet.
+:::
+
+## Conditions
+
+The condition keywords `matches` and `includes` semantically compare the response and expected values, there may be a need to have more sophisticated path mapping, transformation and filtering. tc used JsonPath to specify these conditions.
+
+Following are some examples using JSON Path. Consider the following JSON (response from cloud entity).
+
+```json
+{
+ "store": {
+   "book": [
+     {
+       "category": "reference",
+       "author": "Nigel Rees",
+       "title": "Sayings of the Century",
+       "price": 8.95
+     },
+     {
+       "category": "fiction",
+       "author": "Evelyn Waugh",
+       "title": "Sword of Honour",
+       "price": 12.99
+     },
+     {
+       "category": "fiction",
+       "author": "Herman Melville",
+       "title": "Moby Dick",
+       "isbn": "0-553-21311-3",
+       "price": 8.99
+     },
+     {
+       "category": "fiction",
+       "author": "J. R. R. Tolkien",
+       "title": "The Lord of the Rings",
+       "isbn": "0-395-19395-8",
+       "price": 22.99
+     }
+   ],
+   "bicycle": {
+     "color": "red",
+     "price": 19.95
+   }
+ },
+ "expensive": 10
+}
+```
+
+| JsonPath                           | Result                                                       |
+|------------------------------------|:-------------------------------------------------------------|
+| `$.store.book[*].author`           | The authors of all books                                     |
+| `$..book[?@.isbn]`                 | All books with an ISBN number                                |
+| `$.store.*`                        | All things, both books and bicycles                          |
+| `$..author`                        | All authors                                                  |
+| `$.store..price`                   | The price of everything                                      |
+| `$..book[2]`                       | The third book                                               |
+| `$..book[-2]`                      | The second to last book                                      |
+| `$..book[0,1]`                     | The first two books                                          |
+| `$..book[:2]`                      | All books from index 0 (inclusive) until index 2 (exclusive) |
+| `$..book[1:2]`                     | All books from index 1 (inclusive) until index 2 (exclusive) |
+| `$..book[-2:]`                     | Last two books                                               |
+| `$..book[2:]`                      | Book number two from tail                                    |
+| `$.store.book[?@.price < 10]`      | All books in store cheaper than 10                           |
+| `$..book[?@.price <= $.expensive]` | All books in store that are not "expensive"                  |
+| `$..book[?@.author ~= '(?i)REES']` | All books matching regex (ignore case)                       |
+| `$..*`                             | Give me every thing                                          |
+
+:::note
+We can also specify S-expressions instead of JsonPath in condition. However, it is still experimental.
+:::

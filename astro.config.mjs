@@ -137,9 +137,14 @@ export default defineConfig({
 	  collapsed: true,
 	   items: [
             {
-              label: "Development",
-              link: "/workflows/development",
+              label: "Develop",
+              link: "/workflows/develop",
             },
+            {
+              label: "Test",
+              link: "/workflows/test",
+            },
+
             {
               label: "Release",
               link: "/workflows/release",
