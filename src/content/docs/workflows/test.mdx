@@ -23,7 +23,7 @@ Examples: [https://github.com/tc-functors/tc/examples/tests](https://github.com/
 
 Let's say we have a simple function whose's handler returns the value `{"status": "ok", "message": {"a": 1}}`.
 
-```yaml
+```yaml title="function.yml"
 name: myfn
 runtime: RuntimeSpec
 build: BuildSpec
@@ -85,7 +85,7 @@ While the function-level unit tests are useful, topology-level tests have intere
 
 The `TestSpec` in function.yml  and topology.yml look identical except that there is an additional `entity` attribute that is mandatory when specifying in topology.yml. For example:
 
-```yaml
+```yaml title="topology.yml"
 name: mytopo
 
 events: EventSpecs
