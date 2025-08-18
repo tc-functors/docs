@@ -141,11 +141,6 @@ export default defineConfig({
               link: "/workflows/develop",
             },
             {
-              label: "Test",
-              link: "/workflows/test",
-            },
-
-            {
               label: "Release",
               link: "/workflows/release",
             },
