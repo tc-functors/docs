@@ -3,7 +3,7 @@ title: Test Workflow
 description: Test workflow
 ---
 
-`tc` provides a simple, yet powerful, mechanism to test a topology in it's entirety or it's inidividual entities (functions, events, states, mutations, routes). This mechanism involves testing various entities using specific input payload, a condition to filter or transform the output and match it with the expected value. It leverages tc's polymorphic invocation and sandboxing features.
+`tc` provides a simple, yet powerful, mechanism to test a topology in it's entirety or it's individual entities (functions, events, states, mutations, routes). This mechanism involves testing various entities using specific input payload, a condition to filter or transform the output and match it with the expected value. It leverages tc's polymorphic invocation and sandboxing features.
 Local code is not tested but instead the unit tests (also called an `unit`) run sequentially or concurrently against the given sandbox.
 
 A test spec (`TestSpec`) or `unit` looks like the following:
@@ -193,7 +193,9 @@ We can also specify S-expressions instead of JsonPath in condition. However, it 
 :::
 
 
-### Future scope:
+### Future scope
 
 - Use schemas for entities (events, functions etc) to generate payloads.
 - Richer s-expression for conditions.
+- Polling for async entities (events etc)
+- Tests `routes` like functions (postman-like features)
