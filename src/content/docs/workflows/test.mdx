@@ -4,9 +4,9 @@ description: Test workflow
 ---
 
 `tc` provides a simple, yet powerful, mechanism to test a topology in it's entirety or it's inidividual entities (functions, events, states, mutations, routes). This mechanism involves testing various entities using specific input payload, a condition to filter or transform the output and match it with the expected value. It leverages tc's polymorphic invocation and sandboxing features.
-Local code is not tested but instead the unit tests (short for units) run sequentially or concurrently against the given sandbox.
+Local code is not tested but instead the unit tests (also called an `unit`) run sequentially or concurrently against the given sandbox.
 
-A test spec (`TestSpec`) looks like the following:
+A test spec (`TestSpec`) or `unit` looks like the following:
 
 ```yaml
 tests:
@@ -114,7 +114,7 @@ We are working on supporting testing other entities viz events, routes, mutation
 
 ## Conditions
 
-While the condition keywords `matches` and `includes` semantically compare the response and expected values, there may be a need to have more sophisticated path mapping, transformation and filtering. tc used JsonPath to specify these conditions.
+While the condition keywords `matches` and `includes` semantically compare the response and expected values, there may be a need to have more sophisticated path mapping, transformation and filtering. tc uses JsonPath to specify these conditions.
 
 Following are some examples using JSON Path. Consider the following JSON (response from cloud entity).
 
@@ -191,3 +191,9 @@ tests:
 :::note
 We can also specify S-expressions instead of JsonPath in condition. However, it is still experimental.
 :::
+
+
+### Future scope:
+
+- Use schemas for entities (events, functions etc) to generate payloads.
+- Richer s-expression for conditions.
