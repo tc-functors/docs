@@ -114,7 +114,7 @@ We are working on supporting testing other entities viz events, routes, mutation
 
 ## Conditions
 
-The condition keywords `matches` and `includes` semantically compare the response and expected values, there may be a need to have more sophisticated path mapping, transformation and filtering. tc used JsonPath to specify these conditions.
+While the condition keywords `matches` and `includes` semantically compare the response and expected values, there may be a need to have more sophisticated path mapping, transformation and filtering. tc used JsonPath to specify these conditions.
 
 Following are some examples using JSON Path. Consider the following JSON (response from cloud entity).
 
@@ -176,6 +176,17 @@ Following are some examples using JSON Path. Consider the following JSON (respon
 | `$..book[?@.price <= $.expensive]` | All books in store that are not "expensive"                  |
 | `$..book[?@.author ~= '(?i)REES']` | All books matching regex (ignore case)                       |
 | `$..*`                             | Give me every thing                                          |
+
+Let's say we want to test if our response from a function with the above JSON response includes all _authors_. The TestSpec for that is as follows:
+
+```yaml
+tests:
+  all-authors-check:
+    payload: '{"test": "123"}'
+    condition: $..author
+    expect: '["Nigel Rees", "Evelyn Waugh", "Herman Melville", "J. R. R. Tolkien"]'
+
+```
 
 :::note
 We can also specify S-expressions instead of JsonPath in condition. However, it is still experimental.
