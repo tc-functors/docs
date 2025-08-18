@@ -156,6 +156,11 @@ export default defineConfig({
 	  collapsed: true,
 	  autogenerate: { directory: 'extras' },
 	},
+	{
+	  label: 'News',
+	  collapsed: true,
+	  autogenerate: { directory: 'news' },
+	},
       ],
     }),
 
