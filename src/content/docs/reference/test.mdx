@@ -89,11 +89,16 @@ The `TestSpec` in function.yml  and topology.yml look identical except that ther
 name: mytopo
 
 events: EventSpecs
-routes: RouteSpecs
 functions: FunctionSpecs
 states: StateSpecs
 mutations: MutationSpecs
 pages: PageSpecs
+
+routes:
+  ping:
+    path: /api/ping
+    method: GET
+    function: pinger
 
 tests:
   function-test:
@@ -106,12 +111,28 @@ tests:
     payload: '{"start": "process"}'
     condition: matches
     expect: '{"status": "ok"}'
+  route-test:
+    entity: routes/ping
+    payload: ''
+    condition: includes
+    expect: '{"status": "not-ok"}'
 ```
 
 In the above test specs, we specified how to test `state` (stepfunction), `functions`.
 
+```sh
+tc test -s yoda -e dev
+Test unit function-test (functions/foo) (pass) 401.655 milliseconds
+Test unit state-test (state) (pass) 524.142 milliseconds
+Test unit route-test (routes/ping) (failed)
+   expected:
+        "not-ok"
+    actual:
+        "ok"
+```
+
 :::note
-We are working on supporting testing other entities viz events, routes, mutations as above. They are not implemented yet.
+We are working on supporting testing other entities viz events, mutations as above. They are not implemented yet.
 :::
 
 ## Conditions
