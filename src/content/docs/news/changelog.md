@@ -3,6 +3,13 @@ title: Changelog
 description: Tc changelog
 ---
 
+### 0.8.118
+
+- Adds `interactive` modes to `tc update` and`tc test`. Interactive mode provides a richer experience to update and test sandboxes incrementally.
+- Defaults to function.yml instead of function.json for function specs.
+- Adds `tc invoke` for routes (without auth)
+
+
 ### 0.8.115
 
 08-18-2025
