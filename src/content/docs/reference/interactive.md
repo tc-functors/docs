@@ -13,6 +13,7 @@ Most `tc` commands have an interactive mode. This is a convenient mode to intera
 Following commands currently have an interactive mode:
 
 ```
+tc scaffold
 tc update -s SANDBOX -e PROFILE --[i]nteractive
 tc test -s SANDBOX -e PROFILE --[i]nteractive
 tc sync -s SANDBOX -e PROFILE --[i]nteractive
