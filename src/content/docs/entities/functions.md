@@ -140,16 +140,44 @@ In the simplest case, when there are no dependencies in a function, we can speci
 name: simple-function
 runtime:
   lang: python3.10
-  package_type: zip
   handler: handler.handler
 ```
 [Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-basic/function.yml)
+
+The above is a pretty trivial example and it gets complicated as we start adding more dependencies. We can specify how the function needs to be built. For example:
+
+
+```yaml
+name: funciton-with-deps-example
+runtime:
+  lang: python3.10 | python3.11 | python3.12 | ruby3.2
+  handler: handler.handler
+build:
+  kind: Code |Inline |Image | Layer
+  pre: [String]
+  post: [<String>]
+  command <String>
+```
+
+| Attribute | Description                                                                                                                                                                                                                                                        |
+|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| kind      | Specifies how the dependencies are packaged <br> Available options are Code, Inline, Image, Layer                                                                                                                                                                  |
+| pre       | Array of commands to run before the dependencies are installed. <br>  Has shared build context, Host ssh-agent access. Typically useful to install system dependencies (yum) or private packages (ssh://github etc)                                                |
+| post      | Array of commands to run after the dependencies are installed. <br> Has shared build context, Host ssh-agent access and AWS access for given sandbox or centralized repo. Typically useful to pull models, CSV files etc from S3 or object stores and package them in the build artifact |
+| command   | Command to pack the code. <br> Typically it is the zip command (zip -9 -q lambda.zip *)                                                                                                                                                                            |
+
+:::note
+The build kinds are interchangeable. All of the build kinds take the same options. We can replace Image with Inline at any point if the size is reasonable (< 50MB) and it will just work.
+:::
+
+
+
 
 and then `tc create -s <sandbox> -e <env>` builds this function using the given `command` and creates it in the given sandbox and env.
 
 ### Inline
 
-The above is a pretty trivial example and it gets complicated as we start adding more dependencies. If the dependencies are reasonably small (< 50MB), we can inline those in the code's artifact (lambda.zip).
+If the dependencies are reasonably small (< 50MB), we can inline those in the code's artifact (lambda.zip).
 
 ```yaml
 name: python-inline-example
@@ -178,15 +206,15 @@ If `inline` build is heavy, we can try to layer the dependencies:
 name: ppd
 runtime:
   lang: python3.10
-  package_type: zip
   handler: handler.handler
   layers:
    - ppd-layer
 build:
+  kind: Layer
   pre:
    - yum install -y git
    - yum install -y gcc gcc-c++
-  kind: Layer
+
 
 ```
 
@@ -209,26 +237,9 @@ AWS has a limit on the number of layers and size of each zipped layer. tc automa
 :::
 
 
-### Library
-
-A library is a special kind of layer where there are no transitive dependencies packed into the layer artifact. This is useful if we have a directory of utilities.
-
-```
-lib/foo
-   - bar
-   - baz
-```
-
-```sh
-tc build --kind library --name foo --publish -e <env>
-```
-
-`foo` now can be used a regular layer in function.yml:runtime:layers
-
-
 ### Image
 
-While `Layer` and `Inline` build kind should suffice to pack most dependencies, there are cases where 250MB is not good enough. Container `Image` kind is a good option. However, building the deps and updating just the code is challenging using pure docker as you need to know the sequence to build. `tc` provides a mechanism to build a `tree` of images. For example:
+While `Layer` and `Inline` build kind should suffice to pack most dependencies, there are cases where 250MB is not good enough. Container `Image` kind is a good option. For example:
 
 
 ```yaml
@@ -239,36 +250,9 @@ runtime:
   handler: handler.handler
 build:
   kind: Image
-  images:
-    base:
-      version: 0.1.1
-      commands:
-      - yum install -y git wget unzip
-      - yum install -y gcc gcc-c++ libXext libSM libXrender
-    code:
-      parent: base
-      commands: []
 ```
-
-[Example](https://github.com/informed-labs/tc/blob/main/examples/functions/python-image/function.yml#L1)
-
-In the above example, we define the `base` image with dependencies and `code` image that packs just the code. Note that `code`  references `base` as the _parent_. Effectively, we can build a tree of images (say base dependencies, models, assets and code). These `images` can be built at any point in the lifecycle of the function. To build the `base` image do:
-
-```sh
-tc build --image base --publish
 ```
-
-When `--publish` is specified, it publishes to the configured ECR repo [See Configuration]. Alternatively, `TC_ECR_REPO` env variable can be specified to override the config. The value of variable is the ECR repo URI
-
-
-With python functions, the image can be built either by having a 'requirements.txt' file in the function directory or a pyproject.toml. `tc build` works with requirements.txt and poetry.
-
-When all "parent" images have been built, `tc create` will create the `code` image just-in-time. The tag is the SHA1 checksum of the function directory. The code tag is typically of the format "{{repo}}/code:req-0d4043e5ae0ebc83f486ff26e8e30f3bd404b707""
-
-We can also optionally build the `code` image.
-
-```
-tc build --image code --publish
+tc build --publish
 ```
 
 Note that the child image uses the parent's version of the image as specified in the parent's block.
@@ -288,28 +272,21 @@ It is recommended that the ECR repo has a <namespace>/<label> format. The label 
 
 :::
 
+### Library
 
-#### External parent image
-
-At times, we may need to use a parent image that is shared and defined in another function or build. The following function definition is an example that shows how to specify a parent URI in code image-spec.
-
-```yaml
-name: req-external-example
-runtime:
-  lang: python3.10
-  package_type: image
-  handler: handler.handler
-build:
-  kind: Image
-  images:
-    code:
-      parent: '{{repo}}/base:req-0.1.1'
-      commands: []
-
+A library is a special kind of layer where there are no transitive dependencies packed into the layer artifact. This is useful if we have a directory of utilities.
 
 ```
+lib/foo
+   - bar
+   - baz
+```
 
-`parent` in the `code` image-spec is an URI. This is also a way to pin the parent image.
+```sh
+tc build --kind library --name foo --publish -e <env>
+```
+
+`foo` now can be used a regular layer in function.yml:runtime:layers
 
 ### Filesystems
 
@@ -366,13 +343,6 @@ runtime:
   provider: Fargate
 build:
   kind: Image
-  images:
-    base:
-      version: 0.1.1
-      commands: []
-    code:
-      parent: base
-      commands: []
 ```
 
 ## Testing
