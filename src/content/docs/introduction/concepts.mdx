@@ -19,54 +19,6 @@ The above entities can be namespaced arbitrarily - typically domain-specific. Na
 
 tc provides a simple mechanism to define and connect these namespaced entities as a graph and thus the use of word topology. As a result of entity composition, tc can infer the infrastrucuture permissions etc and render it in arbitrary sandboxes thus enabling sophisticated workflows.
 
-## Entity Abstraction
-
-import { Card, CardGrid } from '@astrojs/starlight/components';
-
-<CardGrid>
-  <Card title="Function">
-  Any computing resource that runs a piece of code given an input payload. It has no knowledge of the caller or callee.
-  </Card>
-  <Card title="Event">
-  An occurence of emitting data by a specified producer. It has knowledge of the consumer(s)
-  </Card>
-  <Card title="Route">
-  Any resource that routes data to arbitrary entities without knowledge of the caller or producer. This is not necessarily HTTP route always. A route can also be a resource that routes low-level TCP traffic or a hypertext page route
-  </Card>
-
-  <Card title="Queue">
-  A resource that maintains the specified order of data for a duration of time and has no knowledge of the producer or consumer
-  </Card>
-
-  <Card title="Channel">
-  A resource that outputs a stream of data without knowledge of the producer. It has knowledge of consumers or subscribers.
-  </Card>
-
-  <Card title="Mutation">
-  A resource that operates on abstract or virtual types with no storage characteristics. Any change to the values of this defined Type results in triggering other entities and notifying subscribers.
-  </Card>
-
-  <Card title="Page">
-  Any HTML document with hypertext and hypermedia characteristics
-  </Card>
-</CardGrid>
-
-
-We can define these entities without considering the provider-specific configuration. The following table shows how these entities map to various provider services.
-
-|          | AWS Serverless          | GCP | Fly | Emulator           |
-|----------|-------------------------|-----|-----|--------------------|
-| Function | Lambda, ECS Fargate     |     |     | Docker/Firecracker |
-| Event    | Eventbridge             |     |     |                    |
-| Route    | API Gateway, Cloudfront |     |     |                    |
-| State    | Stepfunction            |     |     |                    |
-| Queue    | SQS                     |     |     |                    |
-| Mutation | Appsync Graphql         |     |     | Juniper            |
-| Channel  | Appsync Events          |     |     |                    |
-| Page     | Cloudfront              |     |     | nginx              |
-| Table    | Dynamodb                |     |     |                    |
-
-
 ## Namespacing
 
 Consider the following directory structure:
