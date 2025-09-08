@@ -15,7 +15,7 @@ We can configure the executor to use in `config.executor.provider` [See Configur
 
 1. Build
 
-   To build functions in the remote executor (CI). Typically, we can use this to build heavy base images for functions with `Image` build kind. Make sure you commit and push your changes to the current branch. `tc` runs the build by checking out the branch on the remote executor.
+   We can use a `remote executor` to build heavy base images for functions with `Image` build kind. Make sure you commit and push your changes to the current branch. `tc` runs the build by checking out the branch on the remote executor.
 
    ```sh
    cd any-function-dir
