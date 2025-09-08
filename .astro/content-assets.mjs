@@ -1,7 +1,7 @@
 
+import __ASTRO_IMAGE_IMPORT_ZnSqp4 from "../../../assets/etl.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fexamples%2Fetl.md";
 import __ASTRO_IMAGE_IMPORT_ZVDDO3 from "../../../assets/inspector-overview.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md";
 import __ASTRO_IMAGE_IMPORT_1yBibU from "../../../assets/inspector-visual.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md";
-import __ASTRO_IMAGE_IMPORT_ZnSqp4 from "../../../assets/etl.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fexamples%2Fetl.md";
 import __ASTRO_IMAGE_IMPORT_yJ5mP from "../../../assets/interactive.gif?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Freference%2Finteractive.md";
-export default new Map([["../../../assets/inspector-overview.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md", __ASTRO_IMAGE_IMPORT_ZVDDO3], ["../../../assets/inspector-visual.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md", __ASTRO_IMAGE_IMPORT_1yBibU], ["../../../assets/etl.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fexamples%2Fetl.md", __ASTRO_IMAGE_IMPORT_ZnSqp4], ["../../../assets/interactive.gif?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Freference%2Finteractive.md", __ASTRO_IMAGE_IMPORT_yJ5mP]]);
+export default new Map([["../../../assets/etl.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fexamples%2Fetl.md", __ASTRO_IMAGE_IMPORT_ZnSqp4], ["../../../assets/inspector-overview.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md", __ASTRO_IMAGE_IMPORT_ZVDDO3], ["../../../assets/inspector-visual.png?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Fextras%2Finspector.md", __ASTRO_IMAGE_IMPORT_1yBibU], ["../../../assets/interactive.gif?astroContentImageFlag=&importer=src%2Fcontent%2Fdocs%2Freference%2Finteractive.md", __ASTRO_IMAGE_IMPORT_yJ5mP]]);
 		
