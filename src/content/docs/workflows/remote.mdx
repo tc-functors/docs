@@ -1,0 +1,44 @@
+---
+title: Remote Development
+description: Remote Dev workflow
+---
+
+import { Steps } from '@astrojs/starlight/components';
+import { FileTree } from '@astrojs/starlight/components';
+
+Most tc commands can optionally run in a remote executor - typically your CI environment or a container in the cloud.
+
+We can configure the executor to use in `config.executor.provider` [See Configuration].
+
+
+<Steps>
+
+1. Build
+
+   To build functions in the remote executor (CI). Typically, we can use this to build heavy base images for functions with `Image` build kind. Make sure you commit and push your changes to the current branch. `tc` runs the build by checking out the branch on the remote executor.
+
+   ```sh
+   cd any-function-dir
+   tc build --remote
+   ```
+   You could optionally sync those build images locally using `tc build --sync`. This is not required if your workflow is completely via remote executor.
+
+   :::note
+   Note `tc build --remote` is not recursive.
+   :::
+
+2. Create
+
+   ```sh
+   cd topology-to-function-dir
+   tc create -s sandbox -e profile --remote
+   ```
+
+3. Update
+
+   ```sh
+   cd topology-to-function-dir
+   tc update -s sandbox -e profile --remote
+   ```
+
+</Steps>

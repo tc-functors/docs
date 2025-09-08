@@ -281,23 +281,6 @@ To trigger/invoke a specific event. (Note the payload does not include detail-ty
 tc invoke -s SANDBOX -e PROFILE -c events/EVENT_NAME -p payload.json
 ```
 
-### Interactive REPL
-
-tc also provides an interactive REPL and is useful to step through the components in given entity
-
-```
-tc invoke -s SANDBOX -e PROFILE -c events
-
-repl> /list
-repl> !foo -p payload.json
-Triggering event foo
-```
-
-:::caution
-This feature is still being developed and is quite unstable.
-:::
-
-
 ## Delete Sandbox
 
 To delete a sandbox:

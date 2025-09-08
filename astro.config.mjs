@@ -141,6 +141,10 @@ export default defineConfig({
               link: "/workflows/develop",
             },
             {
+              label: "Develop (Remote)",
+              link: "/workflows/remote",
+            },
+            {
               label: "Release",
               link: "/workflows/release",
             },
