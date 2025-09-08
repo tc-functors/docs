@@ -29,12 +29,16 @@ We can configure the executor to use in `config.executor.provider` [See Configur
 
 2. Create
 
+   We can create topologies from their respective directories via the `remote executor`. The default options are `--sync --trace`.
+
    ```sh
-   cd topology-or-function-dir
+   cd topology
    tc create -s sandbox -e profile --remote
    ```
 
 3. Update
+
+   We can update any branch in the tree recursively or otherwise via the `remote executor`. This is incredibly useful to selectively `patch` a subgraph in the topology or a specific node.
 
    ```sh
    cd topology-or-function-dir
