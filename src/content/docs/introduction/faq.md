@@ -25,7 +25,6 @@ tc is an application composer that implements the Cloud Functor pattern. It is n
 If you still need to compare it as a deloyer:
 
 
-
 |                     | Terraform | Amplify   | Serverless | SST        | tc            |
 |---------------------|-----------|-----------|------------|------------|---------------|
 | Entity Abstraction  | No        | No        | No         | No         | Yes           |
@@ -39,9 +38,10 @@ If you still need to compare it as a deloyer:
 | Written in          | Go        | Nodejs    | Nodejs     | Typescript | Rust          |
 | IAC                 | Yes       | Yes       |            |            | Generated     |
 | Fullstack           | Maybe     | Yes       | Yes        | Yes        | Yes           |
-| Cloud Agnostic      | Yes       | No        | No         | No         |               |
+| Cloud Agnostic      | Yes       | No        | No         | No         | Pending       |
 | Function builders   | No        | No        | Limited    | Limited    | Sophisticated |
-| License             | BSL       | Apache2.0 | MIT        | MIT        | MIT           |
+| License             | BSL       | Apache2.0 | MIT        | MIT        | GPL-v2        |
+
 
 #### If tc generates the infrastructure boilerplate, can I modify and update it ?
 

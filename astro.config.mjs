@@ -156,9 +156,9 @@ export default defineConfig({
 	},
 
 	{
-	  label: 'External Modules',
+	  label: 'Internals',
 	  collapsed: true,
-	  autogenerate: { directory: 'extras' },
+	  autogenerate: { directory: 'internals' },
 	},
 	{
 	  label: 'News',

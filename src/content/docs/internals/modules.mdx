@@ -1,0 +1,71 @@
+---
+title: Modules
+description: Internal Modules
+---
+
+`tc` has 3 core internal modules that provide the required datastructures to build sophisticated workflows.
+
+1. Compiler
+2. Composer
+3. Resolver
+
+
+[![Stage1 image]][Stage1 source]
+
+[Stage1 image]: ../../../assets/internal-flow.png
+[Stage1 source]: ../../../assets/internal-flow.png
+
+We can test this out in the command line:
+
+```sh
+cd examples/states/basic
+tc compile | tc compose | tc resolve --sandbox yoda --profile dev
+```
+The input to the `compiler` is a shallow definition of entities in YAML or LISP. `LISP` interpreter is still being worked on and will eventually be the default input language. The compiler also walks the topology directory for functions or fetches any remote functions and interns them. The job of the `compiler` is to make sure the entity definitions are valid. The compiler's output is cloud-agnostic.
+
+The `composer` builds a DAG of these entities and based on the configured provider, figures out the connectors and shims. For example, how a queue is composed with a state (stepfn) or how lambdas are composed together. The composer also generates ASL for orchestrating the functions using stepfn.
+The output of the composer is a templated topology (in JSON) that can be rendered on any sandbox or account.
+
+The output of the `resolver` is a self-contained topology in JSON containing all the generated infrastructure boilerplate, references (arns, ids), versions of all sub components, entity-component relationships etc. We can then use this topology for deployment and other workflows.
+
+
+```sh
+
+tc create --sandbox yoda --profile --topology <TOPOLOGY.json>
+```
+
+If we don't specify `topology`, `tc` implicitly does `compile, compose and resolve`. This is true for all other workflow commands - `invoke`, `snapshot`, `tesst`, `delete`, `update` etc
+
+
+## Lisp interpreter
+
+The compiler also has an embedded LISP interpreter
+
+```lisp
+(defevent MyEvent)
+
+(defn myfn :uri "./foo")
+
+(defroute ping
+    :path "/api/ping"
+    :method POST)
+
+(compose
+  route/ping
+  event/MyEvent
+  function/myfn)
+
+```
+
+```sh
+cat topology.lisp | tc compile -f -
+
+```
+
+Or a repl
+
+```sh
+tc compile --repl
+
+tc> (defevent MyEvent)
+```
