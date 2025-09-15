@@ -156,15 +156,17 @@ build:
   kind: Code |Inline |Image | Layer
   pre: [String]
   post: [<String>]
-  command <String>
+  command: <String>
 ```
 
-| Attribute | Description                                                                                                                                                                                                                                                        |
-|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| kind      | Specifies how the dependencies are packaged <br> Available options are Code, Inline, Image, Layer                                                                                                                                                                  |
-| pre       | Array of commands to run before the dependencies are installed. <br>  Has shared build context, Host ssh-agent access. Typically useful to install system dependencies (yum) or private packages (ssh://github etc)                                                |
-| post      | Array of commands to run after the dependencies are installed. <br> Has shared build context, Host ssh-agent access and AWS access for given sandbox or centralized repo. Typically useful to pull models, CSV files etc from S3 or object stores and package them in the build artifact |
-| command   | Command to pack the code. <br> Typically it is the zip command (zip -9 -q lambda.zip *)                                                                                                                                                                            |
+| Attribute     | Description                                                                                                                                                                                                                                                                              |
+|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| kind          | Specifies how the dependencies are packaged <br> Available options are Code, Inline, Image, Layer                                                                                                                                                                                        |
+| pre           | Array of commands to run before the dependencies are installed. <br>  Has shared build context, Host ssh-agent access. Typically useful to install system dependencies (yum) or private packages (ssh://github etc)                                                                      |
+| post          | Array of commands to run after the dependencies are installed. <br> Has shared build context, Host ssh-agent access and AWS access for given sandbox or centralized repo. Typically useful to pull models, CSV files etc from S3 or object stores and package them in the build artifact |
+| command       | Command to pack the code. <br> Typically it is the zip command (zip -9 -q lambda.zip *)                                                                                                                                                                                                  |
+| share_context | Default: true. If true, copied current git repository for referencing any shared relative paths in the build container                                                                                                                                                                   |
+| skip_dev_deps | Default: false. Skips dev dependencies when building deps                                                                                                                                                                                                                                |
 
 :::note
 The build kinds are interchangeable. All of the build kinds take the same options. We can replace Image with Inline at any point if the size is reasonable (< 50MB) and it will just work.

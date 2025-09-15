@@ -13,7 +13,7 @@ name: topology-name
 pages:
   my-app:
     kind: SPA | PWA | Static
-    dist: 'app/dist'
+    dist: 'app/dist' <optional>
     dir: 'app'
     build:
       - npm install --quiet
@@ -30,33 +30,51 @@ See [Examples](https://github.com/tc-functors/tc/tree/main/examples/pages)
 
 `tc` injects secrets and configs dynamically for a sandbox during build time.
 
-Let's say you have src/config.js or src/config.json file with the following template variables. tc will render the template variables and resolve the right URI.
+Let's say you have `frontend/.env` or src/config.json file with the following template variables. tc will render the template variables and resolve the right URI.
 
 ```js
 
-const APPSYNC_REALTIME_URL="{{CHANNEL_URL}}"
-const APPSYNC_GRAPHQL_URL="{{GRAPHQL_REALTIME_URL}}"
-const REST_ENDPOINT="{{REST_API_ENDPOINT}}"
-const API_KEY="ssm://path/to/my/key"
-const MY_DATA="s3://bucket/prefix/key"
+APPSYNC__URL={{GRAPHQL_ENDPOINT}}
+APPSYNC_GRAPHQL_URL="{{GRAPHQL_WSS_ENDPOINT}}"
+REST_ENDPOINT="{{REST_ENDPOINT}}"
+GRAPHQL_API_KEY="ssm://path/to/my/key"
+MY_SECRET_KEY="ssm://path/to/my/key"
 ```
 
-Dynamic config can be enabled by specifying the path to the config
+Dynamic config can be enabled by specifying the path to the config. Typically it is a `dotenv` file
 
 ```
 pages:
   my-app:
     kind: SPA | PWA | Static
-    dist: app/dist
-    dir: app
-    config: app/src/config.json
+    dir: frontend
+    config_template: .env
     build:
       - npm install --quiet
       - npm run build
 ```
 
+The following variables are available based on the entity defined:
+
+| Entity   | Variable             |
+|----------|----------------------|
+| Mutation | GRAPHQL_ENDPOINT     |
+| Mutation | GRAPHQL_ID           |
+| Mutation | GRAPQHL_WSS_ENDPOINT |
+| Mutation | GRAPHQL_API_KEY      |
+| Route    | REST_ENDPOINT        |
+| Generic  | REGION               |
+| Generic  | ACCOUNT              |
+
+
+GRAPHQL_ID
+GRAPHQL_ENDPOINT
+
+
+The config file rendered is specific to the sandbox and is created at the time of building the frontend page or app.
+
 :::note
-tc can only render variables associated with entities defined in the topology. For example, if you have routes, then REST_API_ENDPOINT is available. If mutations are defined, GRAPHQL_REALTIME_URL is available. If channels are defined, CHANNEL_URL is available.
+tc can only render variables associated with entities defined in the topology. For example, if you have routes, then REST_ENDPOINT is available. If mutations are defined, GRAPHQL_ENDPOINT is available. If channels are defined, CHANNEL_URL is available.
 :::
 
 
