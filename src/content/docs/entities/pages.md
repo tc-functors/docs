@@ -60,7 +60,7 @@ The following variables are available based on the entity defined:
 |----------|----------------------|
 | Mutation | GRAPHQL_ENDPOINT     |
 | Mutation | GRAPHQL_ID           |
-| Mutation | GRAPQHL_WSS_ENDPOINT |
+| Mutation | GRAPHQL_WSS_ENDPOINT |
 | Mutation | GRAPHQL_API_KEY      |
 | Route    | REST_ENDPOINT        |
 | Generic  | REGION               |
@@ -70,8 +70,17 @@ The following variables are available based on the entity defined:
 GRAPHQL_ID
 GRAPHQL_ENDPOINT
 
-
 The config file rendered is specific to the sandbox and is created at the time of building the frontend page or app.
+
+
+#### Entity URIs
+
+We can also inject URLs from other namespaces in the .env file. For example, the following resolves the GRAPHQL_URL from a diferrent namespace:
+
+```
+GRAPHQL_ENDPOINT=mutation://OTHER-NAMESPACE_{{SANDBOX}}
+```
+
 
 :::note
 tc can only render variables associated with entities defined in the topology. For example, if you have routes, then REST_ENDPOINT is available. If mutations are defined, GRAPHQL_ENDPOINT is available. If channels are defined, CHANNEL_URL is available.
