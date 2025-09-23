@@ -67,9 +67,6 @@ The following variables are available based on the entity defined:
 | Generic  | ACCOUNT              |
 
 
-GRAPHQL_ID
-GRAPHQL_ENDPOINT
-
 The config file rendered is specific to the sandbox and is created at the time of building the frontend page or app.
 
 
@@ -98,13 +95,13 @@ tc does not create domains, zones or certs. Assuming you have created the domain
 ```
 pages:
   dashboard:
-    dist: '.'
+    dir: dir1
     domains:
-      - dashboard.foo.com
+      stable: dashboard.foo.com
   onboarding:
-    dist: '.'
+    dir: dir2
     domains:
-      - onboarding.foo.com
+      stable: onboarding.{{env}}.foo.com
 ```
 
 ### Bucket
@@ -118,8 +115,6 @@ pages:
   dashboard:
     dist: '.'
 	bucket: 'my-bucket-{{env}}'
-    domains:
-      - dashboard.foo.com
 ```
 
 2. Set `TC_PAGES_BUCKET` env var
