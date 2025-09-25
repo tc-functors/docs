@@ -36,11 +36,11 @@ The permissions defined in shared base permission files are typically quite perm
 
 ### Namespaced permissions
 
-`infrastructure/tc/<namespace>/{function, event, state, mutation}.json` will override the above base permissions.
+`infrastructure/tc/<namespace>/roles/{function, event, state, mutation}.json` will override the above base permissions.
 
 ### Specific permissions
 
-`infrastructure/tc/<namespace>/<function-name>.json` will override the base and namespaced permissions.
+`infrastructure/tc/<namespace>/roles/<function-name>.json` will override the base and namespaced permissions.
 
 ### Dynamic permissions
 
