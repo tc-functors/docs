@@ -7,7 +7,7 @@ export default new Map([
 ["src/content/docs/introduction/concepts.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fintroduction%2Fconcepts.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/reference/test.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Freference%2Ftest.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/workflows/audit.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fworkflows%2Faudit.mdx&astroContentModuleFlag=true")],
-["src/content/docs/workflows/develop.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fworkflows%2Fdevelop.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/workflows/release.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fworkflows%2Frelease.mdx&astroContentModuleFlag=true")],
+["src/content/docs/workflows/develop.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fworkflows%2Fdevelop.mdx&astroContentModuleFlag=true")],
 ["src/content/docs/workflows/remote.mdx", () => import("astro:content-layer-deferred-module?astro%3Acontent-layer-deferred-module=&fileName=src%2Fcontent%2Fdocs%2Fworkflows%2Fremote.mdx&astroContentModuleFlag=true")]]);
 		

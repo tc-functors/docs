@@ -37,8 +37,8 @@ Let's say you have `frontend/.env` or src/config.json file with the following te
 APPSYNC__URL={{GRAPHQL_ENDPOINT}}
 APPSYNC_GRAPHQL_URL="{{GRAPHQL_WSS_ENDPOINT}}"
 REST_ENDPOINT="{{REST_ENDPOINT}}"
-GRAPHQL_API_KEY="ssm://path/to/my/key"
-MY_SECRET_KEY="ssm://path/to/my/key"
+GRAPHQL_API_KEY=ssm://path/to/my/key
+MY_SECRET_KEY=ssm://path/to/my/key
 ```
 
 Dynamic config can be enabled by specifying the path to the config. Typically it is a `dotenv` file
@@ -90,7 +90,7 @@ tc can only render variables associated with entities defined in the topology. F
 ### Domains
 
 
-tc does not create domains, zones or certs. Assuming you have created the domains to associate, for example foo.com , you can set them either in the topology file or correspoding infra dir.
+tc does not create domains, zones or certs. Assuming you have created the domains to associate, for example foo.com , we can set them either in the topology file or correspoding infra dir.
 
 ```
 pages:
@@ -103,6 +103,26 @@ pages:
     domains:
       stable: onboarding.{{env}}.foo.com
 ```
+
+We can also specify a more detailed mapping in `infrastructure/tc/<namespace>/pages/<page>.json`:
+
+```
+{
+  "bucket": "my-bucket-{{env}}",
+  "domains": {
+    "default": {
+      "stable": "app.{{env}}.foo.com",
+      "yoda": "app-yoda.{{env}}.foo.com",
+      "test": "app-test.{{env}}.foo.com"
+    },
+    "prod": {
+      "stable": "app.foo.com"
+    }
+  }
+}
+
+```
+
 
 ### Bucket
 
@@ -139,6 +159,8 @@ To update specific components
 ```sh
 tc update -s sandbox -e profile -c pages/code
 tc update -s sandbox -e profile -c pages/build
+tc update -s sandbox -e profile -c pages/domains
+tc update -s sandbox -e profile -c pages/config
 ```
 
 Or you can update a specific page
