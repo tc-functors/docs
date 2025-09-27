@@ -90,7 +90,7 @@ tc can only render variables associated with entities defined in the topology. F
 ### Domains
 
 
-tc does not create domains, zones or certs. Assuming you have created the domains to associate, for example foo.com , we can set them either in the topology file or correspoding infra dir.
+tc creates domains, certs and associates the aliases. Assuming you have created the domains to associate, for example foo.com , we can set them either in the topology file or correspoding infra dir.
 
 ```
 pages:
