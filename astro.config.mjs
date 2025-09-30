@@ -156,9 +156,31 @@ export default defineConfig({
 	},
 
 	{
-	  label: 'Internals',
+	  label: 'Modules',
 	  collapsed: true,
-	  autogenerate: { directory: 'internals' },
+	   items: [
+            {
+              label: "Overview",
+              link: "/modules/overview",
+            },
+            {
+              label: "Compiler",
+              link: "/modules/compiler",
+            },
+            {
+              label: "Composer",
+              link: "/modules/composer",
+            },
+            {
+              label: "Inspector",
+              link: "/modules/inspector",
+            }
+	   ]
+	},
+	{
+	  label: 'Integrations',
+	  collapsed: true,
+	  autogenerate: { directory: 'integrations' },
 	},
 	{
 	  label: 'News',

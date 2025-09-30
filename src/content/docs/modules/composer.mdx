@@ -1,0 +1,47 @@
+---
+title: Composer
+description: Composer Module
+---
+
+### Features
+
+1. Takes a `TopologySpec` and generates a DAG of entities.
+2. The connectors are provider-specific. For example, an `event->function` target is implemented using Eventbridge Targets in AWS. A `function->event` is using `Lambda Destinations` to orchestrate. A `function->function` could be using stepfunctions and so forth.
+3. The generated output has a `Topology` structure
+
+```rust
+pub struct Topology {
+    pub namespace: String,
+    pub env: String,
+    pub fqn: String,
+    pub kind: TopologyKind,
+    pub infra: String,
+    pub dir: String,
+    pub sandbox: String,
+    pub version: String,
+    pub nodes: HashMap<String, Topology>,
+    pub events: HashMap<String, Event>,
+    pub routes: HashMap<String, Route>,
+    pub functions: HashMap<String, Function>,
+    pub mutations: HashMap<String, Mutation>,
+    pub schedules: HashMap<String, Schedule>,
+    pub queues: HashMap<String, Queue>,
+    pub channels: HashMap<String, Channel>,
+    pub pools: HashMap<String, Pool>,
+    pub pages: HashMap<String, Page>,
+    pub tags: HashMap<String, String>,
+    pub flow: Option<Flow>,
+    pub config: Config,
+    pub roles: HashMap<String, Role>,
+    pub tests: HashMap<String, TestSpec>,
+}
+```
+### Visualization
+
+To visualize the generated graph
+
+```
+tc compose --diagram graph -f dot
+tc compose --diagram sequence -f svg
+tc compose --diagram block -f svg
+```

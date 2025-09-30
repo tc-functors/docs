@@ -1,0 +1,111 @@
+---
+title: Compiler
+description: Compiler Module
+---
+
+### Features
+
+1. Generates provider-agnostic Topology specification by scanning the filesytem or repository.
+2. The input and output forms are isomorphic. If the input fields are not specified, the compiler infers them.
+3. The compiler validates the entity definitions
+
+### Structure
+
+
+Compiler parses the topology.yml or topology.lisp file and generates a `TopologySpec` structure. The input is also a `TopologySpec`
+
+```rust
+pub struct TopologySpec {
+    pub name: String,
+    pub recursive: Option<bool>,
+    pub fqn: Option<String>,
+    pub dir: Option<String>,
+    pub kind: Option<TopologyKind>,
+    pub version: Option<String>,
+    pub infra: Option<String>,
+    pub config: Option<Config>,
+    pub mode: Option<String>,
+    pub pools: Option<Vec<String>>,
+    pub nodes: Nodes,
+    pub children: Option<HashMap<String, TopologySpec>>,
+    pub functions: Option<HashMap<String, FunctionSpec>>,
+    pub events: Option<HashMap<String, EventSpec>>,
+    pub routes: Option<HashMap<String, RouteSpec>>,
+    pub mutations: Option<MutationSpec>,
+    pub queues: Option<HashMap<String, QueueSpec>>,
+    pub channels: Option<HashMap<String, ChannelSpec>>,
+    pub triggers: Option<HashMap<String, TriggerSpec>>,
+    pub pages: Option<HashMap<String, PageSpec>>,
+    pub tables: Option<HashMap<String, TableSpec>>,
+    pub schedules: Option<HashMap<String, ScheduleSpec>>,
+    pub roles: Option<HashMap<String, RoleSpec>>,
+    pub tests: Option<HashMap<String, TestSpec>>,
+    pub tags: Option<HashMap<String, String>>,
+    pub states: Option<Value>,
+    pub auto: Option<bool>,
+    pub flow: Option<Value>,
+```
+```rust
+compile(spec: &TopologySpec) -> TopologySpec
+```
+
+Note that the input and output have the same structure. Most fields are optional. tc tries to infer or scan the filesystem to fill in the optional values _if not provided as input_.
+
+| Field     | Description                                                                                                                                                                                                                                                                                                                                                         |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| fqn       | Determines the Fully qualified name of the topology                                                                                                                                                                                                                                                                                                                 |
+| version   | The version is the git tag associated with this namespace.                                                                                                                                                                                                                                                                                                          |
+| functions | Walks the current directory recursively to discover _functions_. It also looks for interned, shared and remote functions specified in the topology. If there are no function specs (function.yml) defined then the compiler tries to infer the function characteristics. Compiler also loads runtime variables for the function from `INFRA_DIR`/vars/FUNCTION.json |
+| roles     | Scans the repository for base, namespaced and specific role policies. Specific roles are in If the policy is partially defined, it is merged with the base                                                                                                                                                                                                          |
+| tags      | Generates default tags and loads namespace-specific tags in `INFRA_DIR/tags.json`                                                                                                                                                                                                                                                                                   |
+| schedules | Looks up schedule definitions from `INFRA_DIR/schedules.json`                                                                                                                                                                                                                                                                                                       |
+| mutations | Expands inline mutations or loads external graphql file                                                                                                                                                                                                                                                                                                             |
+| states    | Loads inline state or ASL definition or from specified file                                                                                                                                                                                                                                                                                                         |
+| tests     | Recursively scans for tests in the topology for each of the entities                                                                                                                                                                                                                                                                                                |
+| children  | Parallelly walks the filesystem tree to identify child topologies.                                                                                                                                                                                                                                                                                                  |
+
+### Commands
+
+```
+tc compile --format tree | bin | json | yaml
+```
+
+`tc compile -f bin` outputs a bincoded binary output file (`<namespace>.tc`). This `.tc` file can then be used in other commands:
+
+```
+tc compile -f bin | tc compose --i - | tc create -s <sandbox> -e <profile>
+```
+
+
+### Lisp Interpreter
+
+tc compiler has an embedded LISP interpreter
+
+```lisp
+(defevent MyEvent)
+
+(defn myfn :uri "./foo")
+
+(defroute ping
+    :path "/api/ping"
+    :method POST)
+
+(compose
+  route/ping
+  event/MyEvent
+  function/myfn)
+
+```
+
+```sh
+cat topology.lisp | tc compile -f -
+
+```
+
+Or a repl
+
+```sh
+tc compile --repl
+
+tc> (defevent MyEvent)
+```

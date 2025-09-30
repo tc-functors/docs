@@ -1,6 +1,6 @@
 ---
-title: Modules
-description: Internal Modules
+title: Overview
+description: Overview of modules
 ---
 
 `tc` has 3 core internal modules that provide the required datastructures to build sophisticated workflows.
@@ -35,37 +35,3 @@ tc create --sandbox yoda --profile --topology <TOPOLOGY.json>
 ```
 
 If we don't specify `topology`, `tc` implicitly does `compile, compose and resolve`. This is true for all other workflow commands - `invoke`, `snapshot`, `tesst`, `delete`, `update` etc
-
-
-## Lisp interpreter
-
-The compiler also has an embedded LISP interpreter
-
-```lisp
-(defevent MyEvent)
-
-(defn myfn :uri "./foo")
-
-(defroute ping
-    :path "/api/ping"
-    :method POST)
-
-(compose
-  route/ping
-  event/MyEvent
-  function/myfn)
-
-```
-
-```sh
-cat topology.lisp | tc compile -f -
-
-```
-
-Or a repl
-
-```sh
-tc compile --repl
-
-tc> (defevent MyEvent)
-```
