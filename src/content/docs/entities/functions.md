@@ -93,7 +93,8 @@ Specify env variables in $GIT_ROOT/infrastructure/tc/TOPOLOGY-NAME/vars/FUNCTION
     "memory_size": 128,
     "environment": {
       "API_KEY": "ssm:/path/to/api-key",
-      "DB_HOST": "dev.db.net"
+      "DB_HOST": "dev.db.net",
+      "API_GATEWAY_URL": "{{API_GATEWAY_URL}}"
     }
   },
   "prod": {
@@ -114,6 +115,8 @@ Specify env variables in $GIT_ROOT/infrastructure/tc/TOPOLOGY-NAME/vars/FUNCTION
 
 ```
 The `vars` or runtime file is map of default and sandbox-specific overrides. Environment variables in the runtime file can be either an URI or plain text. Supported URIs are `ssm:/` , `s3:/` and `file:/`. If an URI is specified, tc resolves the values and injects them as actual values when creating the lambda. Decryption using `extensions` is also available. See Extensions.
+
+We can also discover Endpoints for routes and mutations that are sandbox-specific. tc does a topological sort and gets the URLs ahead of time before rendering the vars.json file.
 
 
 ### Update components
