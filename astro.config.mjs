@@ -149,6 +149,10 @@ export default defineConfig({
               link: "/workflows/release",
             },
             {
+              label: "Changes",
+              link: "/workflows/changes",
+            },
+            {
               label: "Audit",
               link: "/workflows/audit",
             }
