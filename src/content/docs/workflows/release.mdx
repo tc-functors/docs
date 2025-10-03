@@ -38,32 +38,6 @@ import { FileTree } from '@astrojs/starlight/components';
 
 </Steps>
 
-## Changelog
-
-To see the changelog of a specific topology
-
-```
-cd topology-dir
-tc changelog
-
-AI-123 Another command
-AI-456 Thing got added
-
-# or
-
-tc changelog --between 0.8.1..0.8.6
-```
-
-To search for a specific text in all changelogs
-
-```
-cd root-topology-dir
-tc changelog --search AI-1234
-
-=> topology-name, version
-
-```
-
 ## Notifications
 
 All tc sandbox commands (create, update, delete, freeze, unfreeze, tag) have notification hooks. For slack notifications, we can specify `TC_SLACK_URL` env variable with the Slack webhook. Alternatively, if you need per-topology slack hooks, you could set a map of topology name and their webhook urls in `TC_CONFIG`. See [Configuration](/reference/config/)
