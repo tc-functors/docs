@@ -164,6 +164,21 @@ export default defineConfig({
 	},
 
 	{
+	  label: 'Web UIs',
+	  collapsed: true,
+	  autogenerate: { directory: 'ui' },
+	},
+	{
+	  label: 'Integrations',
+	  collapsed: true,
+	  autogenerate: { directory: 'integrations' },
+	},
+	{
+	  label: 'News',
+	  collapsed: true,
+	  autogenerate: { directory: 'news' },
+	},
+	{
 	  label: 'Internals',
 	  collapsed: true,
 	   items: [
@@ -181,21 +196,7 @@ export default defineConfig({
             }
 	   ]
 	},
-	{
-	  label: 'Web UIs',
-	  collapsed: true,
-	  autogenerate: { directory: 'ui' },
-	},
-	{
-	  label: 'Integrations',
-	  collapsed: true,
-	  autogenerate: { directory: 'integrations' },
-	},
-	{
-	  label: 'News',
-	  collapsed: true,
-	  autogenerate: { directory: 'news' },
-	},
+
       ],
     }),
 
