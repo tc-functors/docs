@@ -3,9 +3,11 @@ title: CircleCI
 description: CircleCI Integration
 ---
 
+## Global Configuration
+
 The following is an opinionated CircleCI workflow configuration for a monorepo comprising of several topologies.
 
-```
+```sh title="circleci/config.yml"
 version: 2.1
 
 setup: true
@@ -26,7 +28,6 @@ parameters:
 
 orbs:
   path-filtering: circleci/path-filtering@0.1.1
-  split-config: bufferings/split-config@0.1.0
   continuation: circleci/continuation@2.0.1
 
 commands:
@@ -82,28 +83,6 @@ jobs:
           command: |
             git fetch --tags && tc tag --next patch --service << parameters.service >> --push
 
-  tc-release-minor:
-    docker:
-      - image: cimg/base:2025.08
-    resource_class: small
-    parameters:
-      suffix:
-        type: string
-        default: "default"
-      workdir:
-        type: string
-        default: "default"
-      service:
-        type: string
-        default: "default"
-    steps:
-      - checkout
-      - download-tc
-      - run:
-          name: "Release minor"
-          working_directory: << parameters.workdir >>
-          command: tc tag --next minor --service << parameters.service >> --suffix << parameters.suffix >> --push
-
   tc-deploy:
     docker:
       - image: cimg/base:2025.08
@@ -155,64 +134,94 @@ jobs:
           working_directory: << parameters.workdir >>
           command: tc create -e << parameters.env >> --sandbox << parameters.sandbox >> << parameters.opts >>
 
+workflows:
+  setup-config:
+    jobs:
+    - path-filtering/filter:
+        name: check-updated-files
+        workspace_path: /tmp
+        config-path: /tmp/generated_config.yml
+        mapping: |-
+          topologies/topo-1/.* run-topo-1 true
+          topologies/topo-2/.* run-topo-2 true
+```
 
-  tc-deploy-branch:
-    docker:
-      - image: cimg/base:2025.08
-    resource_class: large
-    parameters:
-      env:
-        type: string
-      sandbox:
-        type: string
-      branch:
-        type: string
-      workdir:
-        type: string
-        default: "default"
-      opts:
-        type: string
-        default: "--notify"
-    steps:
-      - checkout
-      - run: git fetch origin << parameters.branch >>
-      - run: git checkout origin/<< parameters.branch >>
-      - download-tc
-      - setup_remote_docker
-      - run:
-          name: "Deploy branch"
-          working_directory: << parameters.workdir >>
-          command: tc create -e << parameters.env >> --sandbox << parameters.sandbox >> << parameters.opts >>
+In the above workflow in the top-level `.circleci/config.yml`, we define the path filtering rules to trigger the corresponding .circleci config (say topologies/topo-1/.circleci/config.yml)
 
-  tc-create-from-dir:
-    docker:
-      - image: cimg/base:2025.08
-    resource_class: large
-    parameters:
-      env:
-        type: string
-      sandbox:
-        type: string
-      branch:
-        type: string
-      workdir:
-        type: string
-        default: "default"
-      opts:
-        type: string
-        default: "--notify"
-    steps:
-      - checkout
-      - run: git fetch origin << parameters.branch >>
-      - run: git checkout origin/<< parameters.branch >>
-      - download-tc
-      - setup_remote_docker
-      - run:
-          name: "Create from dir"
-          working_directory: << parameters.workdir >>
-          command: tc create -e << parameters.env >> --sandbox << parameters.sandbox >> << parameters.opts >>
+## Workflows
+
+With the above 4 jobs (`tc-test`, `tc-release-patch`, `tc-deploy`, `tc-deploy-tag`), we can define sophisticated workflows in each of the topology ci configs:
+
+### Run tests on PR create
 
 ```
+workflows:
+  topo1-PR:
+    when:
+      and:
+        - equal: [true, << pipeline.parameters.run-topo-1 >>]
+        - not:
+            equal: [topo-1, << pipeline.parameters.tc-release-service >>]
+        - not:
+            equal: [topo-1, << pipeline.parameters.tc-deploy-service >>]
+        - equal: [false, << pipeline.parameters.api_call>>]
+        - not:
+            equal: [api, << pipeline.trigger_source >> ]
+        - not:
+            equal: [main, << pipeline.git.branch >>]
+    jobs:
+      - tc-deploy:
+          name: sid-update
+          workdir: topologies/classification
+          sandbox: sid
+          env: dev
+          opts: "--recursive --trace"
+          context:
+            - tc
+            - aws-user-creds
+      - tc-test:
+          name: sid-unit-tests
+          workdir: topologies/topo-1
+          sandbox: sid
+          env: qa
+          requires:
+            - sid-update
+          context:
+            - tc
+            - aws-user-creds
+```
+
+### Create tag on PR merge
+
+```
+workflows:
+  code-merged:
+    when:
+      and:
+        - equal: [true, << pipeline.parameters.run-topo-1 >>]
+        - not:
+            equal: [application, << pipeline.parameters.tc-release-service >>]
+        - not:
+            equal: [application, << pipeline.parameters.tc-deploy-service >>]
+        - equal: [false, << pipeline.parameters.api_call >>]
+        - not:
+            equal: [api, << pipeline.trigger_source >> ]
+        - equal: [main, << pipeline.git.branch >>]
+    jobs:
+
+      - tc-release-patch:
+          name: release-patch
+          workdir: topology/application
+          service: my-topo1
+          context: tc
+```
+
+### Continuous deploys on PR merge
+
+
+## Create sandbox with arbitrary tag
+
+###
 
 To trigger these pipeline jobs, set CIRCLE_CI_TOKEN env variable
 

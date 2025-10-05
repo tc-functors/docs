@@ -178,7 +178,7 @@ export default defineConfig({
 	   ]
 	},
 	{
-	  label: 'UI',
+	  label: 'Web UIs',
 	  collapsed: true,
 	  autogenerate: { directory: 'ui' },
 	},
