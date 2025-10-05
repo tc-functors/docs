@@ -3,7 +3,7 @@ title: Inspector
 description: HTMX-based Inspector UI
 ---
 
-The `inspector` is an in-built HTMX-based UI to inspect core tc entities in the filesystem. It also has an interface to generate topologies using LLM models specific to tc.
+The `inspector` is a built-in HTMX-based UI to inspect core tc entities in the filesystem. It also has an interface to generate topologies using LLM models specific to tc.
 
 By default, `inspector` uses SurrealDB in-memory mode.
 
