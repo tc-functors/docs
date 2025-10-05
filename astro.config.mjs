@@ -52,6 +52,10 @@ export default defineConfig({
               link: "/introduction/features",
             },
             {
+              label: "Comparison",
+              link: "/introduction/comparison",
+            },
+            {
               label: "FAQ",
               link: "/introduction/faq"
             }

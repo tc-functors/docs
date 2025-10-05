@@ -3,6 +3,8 @@ title: States
 description: States Entity Reference
 ---
 
+### Generating ASL
+
 State transitions can be defined using the Amazon States Language and executed as Step functions. ASL is noisy as it gets and has quite a bit of boilerplate. tc tries to define flows between functions without needing ASL.
 
 For example, let's consider the ETL example in ASL.

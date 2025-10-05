@@ -44,16 +44,10 @@ tc inspect --port 8080 --config tc-inspector.yml
 
 The inspector has a simple interface to generate topologies using pre-trained tc examples and specifications.
 
-[![LLM]][LLM]
-
-[LLM]: ../../../assets/inspector-llm.gif
+![llm](../../../assets/inspector-llm.gif)
 
 ### Screenshots
 
-[![Overview]][Overview]
+![overview](../../../assets/inspector-overview.png)
 
-[Overview]: ../../../assets/inspector-overview.png
-
-[![Visual]][Visual]
-
-[Visual]: ../../../assets/inspector-visual.png
+![visual](../../../assets/inspector-visual.png)
