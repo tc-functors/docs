@@ -3,19 +3,18 @@ title: Inspector
 description: HTMX-based Inspector UI
 ---
 
-The `inspector` is an external standalone application that provides a simple
-HTMX-based web ui to inspect core tc entities in the filesystem and/or cloud.
-
-Download standalone executable from here https://github.com/tc-functors/inspector/releases
+The `inspector` is an in-built HTMX-based UI to inspect core tc entities in the filesystem. It also has an interface to generate topologies using LLM models specific to tc.
 
 By default, `inspector` uses SurrealDB in-memory mode.
 
 
 ```sh
-tc-inspector --port 8080
+tc inspect --port 8080
 
 => http://localhost:8080
 ```
+
+### Optional external database
 
 Alternatively, we can run SurrealDB in network mode and connect to it.
 Follow instructions to install SurrealDB -  https://surrealdb.com/install
@@ -38,8 +37,18 @@ Run tc inspector with path to tc-inspector.yml file
 
 ```
 cd tc/examples
-tc-inspector --port 8080 --config tc-inspector.yml
+tc inspect --port 8080 --config tc-inspector.yml
 ```
+
+### LLM
+
+The inspector has a simple interface to generate topologies using pre-trained tc examples and specifications.
+
+[![LLM]][LLM]
+
+[LLM]: ../../../assets/inspector-llm.gif
+
+### Screenshots
 
 [![Overview]][Overview]
 

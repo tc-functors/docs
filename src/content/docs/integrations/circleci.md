@@ -3,8 +3,7 @@ title: CircleCI
 description: CircleCI Integration
 ---
 
-
-Below is a simple CircleCI workflow configuration:
+The following is an opinionated CircleCI workflow configuration for a monorepo comprising of several topologies.
 
 ```
 version: 2.1
@@ -64,28 +63,6 @@ jobs:
           name: "Run topology unit tests"
           working_directory: << parameters.workdir >>
           command: tc test -s << parameters.sandbox >> -e << parameters.env >> -r
-
-  tc-build:
-    docker:
-      - image: cimg/base:2025.08
-    resource_class: large
-    parameters:
-      workdir:
-        type: string
-        default: "default"
-      branch:
-        type: string
-    steps:
-      - checkout
-      - run: git fetch origin << parameters.branch >>
-      - run: git checkout origin/<< parameters.branch >>
-      - download-tc
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: "Build Function with Image build"
-          working_directory: << parameters.workdir >>
-          command: tc build --trace --publish -e cicd
 
   tc-release-patch:
     docker:
@@ -178,35 +155,6 @@ jobs:
           working_directory: << parameters.workdir >>
           command: tc create -e << parameters.env >> --sandbox << parameters.sandbox >> << parameters.opts >>
 
-  tc-deploy-tag-with-cache:
-    docker:
-      - image: cimg/base:2025.08
-    resource_class: large
-    parameters:
-      env:
-        type: string
-      sandbox:
-        type: string
-      tag:
-        type: string
-      workdir:
-        type: string
-        default: "default"
-      opts:
-        type: string
-        default: "--notify"
-    steps:
-      - checkout
-      - download-tc
-      - run: git fetch origin << parameters.tag >>
-      - run: git checkout << parameters.tag >>
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: "Deploy tag"
-          working_directory: << parameters.workdir >>
-          command: tc create -e << parameters.env >> --sandbox << parameters.sandbox >> << parameters.opts >>
-
 
   tc-deploy-branch:
     docker:
@@ -264,80 +212,11 @@ jobs:
           working_directory: << parameters.workdir >>
           command: tc create -e << parameters.env >> --sandbox << parameters.sandbox >> << parameters.opts >>
 
-  tc-update-from-dir:
-    docker:
-      - image: cimg/base:2025.08
-    resource_class: large
-    parameters:
-      env:
-        type: string
-      sandbox:
-        type: string
-      branch:
-        type: string
-      workdir:
-        type: string
-        default: "default"
-      opts:
-        type: string
-        default: "--notify"
-    steps:
-      - checkout
-      - run: git fetch origin << parameters.branch >>
-      - run: git checkout origin/<< parameters.branch >>
-      - download-tc
-      - setup_remote_docker
-      - run:
-          name: "Update from dir"
-          working_directory: << parameters.workdir >>
-          command: tc update -e << parameters.env >> --sandbox << parameters.sandbox >> << parameters.opts >>
+```
 
+To trigger these pipeline jobs, set CIRCLE_CI_TOKEN env variable
 
-  tc-deploy-branch-with-cache:
-    docker:
-      - image: cimg/base:2025.08
-    resource_class: large
-    parameters:
-      env:
-        type: string
-      sandbox:
-        type: string
-      branch:
-        type: string
-      workdir:
-        type: string
-        default: "default"
-      opts:
-        type: string
-        default: "--notify"
-    steps:
-      - checkout
-      - run: git fetch origin << parameters.branch >>
-      - run: git checkout origin/<< parameters.branch >>
-      - download-tc
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: "Deploy branch"
-          working_directory: << parameters.workdir >>
-          command: tc create -e << parameters.env >> --sandbox << parameters.sandbox >> << parameters.opts >>
-
-  tc-update-events:
-    docker:
-      - image: cimg/base:2025.08
-    parameters:
-      env:
-        type: string
-      sandbox:
-        type: string
-      workdir:
-        type: string
-    steps:
-      - checkout
-      - download-tc
-      - run:
-          name: "update events"
-          working_directory: << parameters.workdir >>
-          command: tc update -s << parameters.sandbox >> -e << parameters.env >> -c events
-
+```
+export CIRCLE_CI_TOKEN=xyz
+export TC_CI_PROVIDER=circleci
 ```

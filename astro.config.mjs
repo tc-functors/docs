@@ -183,6 +183,11 @@ export default defineConfig({
 	  autogenerate: { directory: 'ui' },
 	},
 	{
+	  label: 'Integrations',
+	  collapsed: true,
+	  autogenerate: { directory: 'integrations' },
+	},
+	{
 	  label: 'News',
 	  collapsed: true,
 	  autogenerate: { directory: 'news' },
