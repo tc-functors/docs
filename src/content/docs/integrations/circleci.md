@@ -200,9 +200,9 @@ workflows:
       and:
         - equal: [true, << pipeline.parameters.run-topo-1 >>]
         - not:
-            equal: [application, << pipeline.parameters.tc-release-service >>]
+            equal: [topo-1, << pipeline.parameters.tc-release-service >>]
         - not:
-            equal: [application, << pipeline.parameters.tc-deploy-service >>]
+            equal: [topo-1, << pipeline.parameters.tc-deploy-service >>]
         - equal: [false, << pipeline.parameters.api_call >>]
         - not:
             equal: [api, << pipeline.trigger_source >> ]
@@ -211,7 +211,7 @@ workflows:
 
       - tc-release-patch:
           name: release-patch
-          workdir: topology/application
+          workdir: topology/topo-1
           service: my-topo1
           context: tc
 ```
