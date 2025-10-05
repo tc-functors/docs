@@ -193,7 +193,7 @@ workflows:
 
 ### Create tag on PR merge
 
-```
+```yaml title="topo-1/.circleci/config.yml"
 workflows:
   code-merged:
     when:
@@ -216,16 +216,33 @@ workflows:
           context: tc
 ```
 
-### Continuous deploys on PR merge
+### Create sandbox with arbitrary tag
 
-
-## Create sandbox with arbitrary tag
-
-###
+```yaml title="topo-1/.circleci/config.yml"
+  topo-1-deploy:
+    when:
+      and:
+        - equal: [topo-1, << pipeline.parameters.tc-deploy-service >>]
+        - equal: [api, << pipeline.trigger_source >> ]
+        - equal: [true, << pipeline.parameters.api_call >>]
+        - equal: [main, << pipeline.git.branch >> ]
+    jobs:
+      - tc-deploy-tag:
+          name: deploy-tag
+          workdir: topologies/topo-1
+          env: << pipeline.parameters.tc-deploy-env >>
+          sandbox: << pipeline.parameters.tc-deploy-sandbox >>
+          tag: topo-1-<< pipeline.parameters.tc-deploy-version >>
+          context:
+            - tc
+            - cicd-aws-user-creds
+```
 
 To trigger these pipeline jobs, set CIRCLE_CI_TOKEN env variable
-
 ```
 export CIRCLE_CI_TOKEN=xyz
 export TC_CI_PROVIDER=circleci
+```
+```sh
+tc ci-deploy --topology topo-1 --version 0.x.y --env <profile> --sandbox <sandbox>
 ```
