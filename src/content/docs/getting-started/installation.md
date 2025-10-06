@@ -58,3 +58,32 @@ cd tc
 cargo build --release
 sudo mv target/release/tc /usr/local/bin/tc
 ```
+
+tc is primarily a CLI app. It has an built-in [HTMX-based Inspector UI](/extras/inspector/), a local emulator and a Lisp interpreter.
+
+The CLI app provides a core set of commands to manage the lifecycle of sandboxed topologies.
+
+```
+Usage: tc <COMMAND>
+
+Commands:
+  build     Build layers, image trees, extensions and pack function code
+  compose   Compose a Topology
+  create    Create a sandboxed topology
+  delete    Delete a sandboxed topology
+  freeze    Freeze a sandbox and make it immutable
+  invoke    Invoke a topology synchronously or asynchronously
+  prune     Prune all resources in given sandbox
+  resolve   Resolve a topology
+  snapshot  Snapshot given sandbox
+  test      Run tests in topology
+  tag       Create semver tags scoped by a topology
+  unfreeze  Unfreeze a sandbox and make it mutable
+  update    Update entity and components
+  upgrade   Upgrade tc version
+  version   display current tc version
+```
+
+<br/>
+
+![Demo image](../../../assets/peek.gif)

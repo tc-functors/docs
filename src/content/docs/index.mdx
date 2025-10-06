@@ -2,63 +2,54 @@
 title: ""
 description: "Simplify your serverless workflows"
 tableOfContents: false
-banner:
-  content: "tc is still not production-ready and is being actively developed. Current version: 0.9.27"
 ---
 
-> “The purpose of abstraction is not to be vague, but to create a new semantic level in which one can be absolutely precise.” -  Edsger W. Dijkstra
 
-tc (topology composer) provides a higher-level abstraction for serverless development, focusing on the logical relationships between abstract entities (functions, events, routes, queues, channels, mutations and pages) rather than the underlying infrastructure details. tc is a stateless, graph-based, cloud-agnostic* **application composer**.
+import { Card } from '@astrojs/starlight/components';
 
-tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a `Cloud Functor`. A Cloud Functor has 3 key concepts - Entity Abstraction, Namespacing and Entity Composition. tc implements the Cloud Functor pattern.
+> tc is a **graph-based, executable architecture description language and framework** for cloud-native serverless systems, with entity abstraction, composition and infrastructure generation capabilities. tc (topology composer) provides a higher-level abstraction for serverless development, focusing on the logical relationships between abstract entities (functions, events, routes, queues, channels, mutations and pages) rather than the underlying infrastructure details.
+
+<Card title="Elevator Pitch">
+tc lets you define serverless apps as graphs of relationships instead of lists of resources. You describe what connects to what, and tc generates all the infrastructure automatically. You can test any part in isolation, run unlimited parallel sandboxes, and your architecture diagram IS your code.
+
+*tc turns architecture diagrams into deployed serverless apps—your topology definition IS your infrastructure.*
+
+</Card>
 
 
-Cloud Functor and tc bring the abstractions and joy of functional programming to serverless computing.
+<Card title="Unique Value Proposition">
+
+	What makes tc genuinely different is the **graph-first, reletionship-first approach**. Every other tool still makes you think of infrastructure primitives (even if abstracted). tc says _"describe how things connect, we'll figure out the infrastructure."_
+
+  The **fractal composition** and **namespace versioning** are also unique - tc lets you zoom into a sub-topology, create a sandbox, test it, then zoom back out to the full system while maintaining graph integrity.
+
+	tc is unmatched when you have 30+ interconnected serverless components. You can see and understand the entire system topology at a glance becase relationships are explicit first-class citizens, not scattered implementation details.
+</Card>
 
 
-[![Entity image]][Entity source]
+<Card title="Aha! Moment">
+	tc is unique because it asks a different question:
+	<br/>
 
-[Entity image]: ../../assets/entities.png
-[Entity source]: ../../assets/entities.png
+	**Terraform:** "What resources do you need?" <br/>
+	**Serverless:** "What functions do you have?" <br/>
+	**SST:** "What constructs compose your app?" <br/>
+	**tc:** "What's the graph of your system?" <br/>
+
+	<br/>
+	tc is the *only infrastructure tool that thinks in graphs first*. Everything else is resource-first, function-first, or construct-first, then tries to add relationships. tc inverts this - **relationships are primary, implementation is derived**.
+
+	The closest analogy: tc is to infrastructure what **React** was to UI - a fundamentally different mental model that elevates certain concerns (component relationships) above traditional concerns (DOM manipulation/infrastructure management)
+
+</Card>
+
+<Card title="Who is it for?">
+    tc is for engineers building serverless systems **who value architecture clarity and team velocity** over fine-grained infrastructure control.
+
+	It's targeting teams where *managing the complexity of component relationships* has become more painful than managing infrastructure itself.
+
+</Card>
 
 :::caution
-tc is still quite nascent and is being actively developed. This documentation is work in progress.
-:::
-
-tc is primarily a CLI app. There are external modules which provide a [HTMX-based Inspector UI](/extras/inspector/), a [Local Emulator](/extras/emulator/) and a [Lisp Interpreter](/extras/lisp).
-The CLI app provides a core set of commands to manage the lifecycle of sandboxed topologies.
-
-```
-Usage: tc <COMMAND>
-
-Commands:
-  build     Build layers, image trees, extensions and pack function code
-  compose   Compose a Topology
-  create    Create a sandboxed topology
-  delete    Delete a sandboxed topology
-  freeze    Freeze a sandbox and make it immutable
-  invoke    Invoke a topology synchronously or asynchronously
-  prune     Prune all resources in given sandbox
-  resolve   Resolve a topology
-  snapshot  Snapshot given sandbox
-  test      Run tests in topology
-  tag       Create semver tags scoped by a topology
-  unfreeze  Unfreeze a sandbox and make it mutable
-  update    Update entity and components
-  upgrade   Upgrade tc version
-  version   display current tc version
-```
-
-<br/>
-
-[![Demo image]][Demo source]
-
-[Demo image]: ../../assets/peek.gif
-[Demo source]: ../../assets/peek.gif
-
-
-:::note
-- tc is an application composer meant for developers.
-- No AI or LLM was ever used to write tc or generate this documentation.
-- Currently tc supports only AWS serverless provider. Work is underway to support other cloud providers.
+tc is still not production-ready and is being actively developed. Current version: 0.9.27
 :::

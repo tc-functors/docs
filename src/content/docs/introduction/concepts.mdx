@@ -3,9 +3,14 @@ title: Concepts
 description: Tc concepts
 ---
 
+> “The purpose of abstraction is not to be vague, but to create a new semantic level in which one can be absolutely precise.” -  Edsger W. Dijkstra
+
+tc implements the Cloud Function Pattern. tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a `Cloud Functor`.
 A Cloud Functor has 3 core concepts: Entity Abstraction, Namespacing and Composition.
 
 **Entity Abstraction**
+
+![Entities](../../../assets/entities.png)
 
 Entities can be thought of like atoms. They are core cloud primitives which abstract away all the low-level details. Entities are defined in a cloud-agnostic way. tc provides eight entities that are sufficient to build sophisticated serverless topologies.
 
