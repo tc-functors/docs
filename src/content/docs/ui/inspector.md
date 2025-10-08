@@ -15,7 +15,7 @@ By default, `inspector` uses SurrealDB in-memory mode.
 
 ```
 git clone https://github.com/tc-functors/inspector.git
-cd tc
+cd inspector
 cargo build --release
 sudo mv target/release/tc-inspector /usr/local/bin/tc-inspector
 ```
