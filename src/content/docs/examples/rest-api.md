@@ -5,7 +5,7 @@ description: Rest API Example
 
 In the Hello World example, we learned how to create a simple synchronous API request-response using a function backend. In this example, we will learn to build a REST API with asynchronous response.
 
-## Aync Response
+## Async Response
 
 Let's say we want our api route to trigger an Event that invokes a chain of functions (linear DAG). The output of the function is consumed by a websocket channel and eventually a HTML page using a websocket client. For the purposes of this example, we create a single html file for testing. The function implementations don't matter.
 
