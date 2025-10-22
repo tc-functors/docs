@@ -3,7 +3,7 @@ title: Async Rest API
 description: Rest API Example
 ---
 
-In the Getting Started guide, we saw how to create a simple synchronous API request-response using a function backend. In this example, we will learn to build a REST API with asynchronous response.
+In the Hello World example, we learned how to create a simple synchronous API request-response using a function backend. In this example, we will learn to build a REST API with asynchronous response.
 
 ## Topology
 
