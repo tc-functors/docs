@@ -90,7 +90,7 @@ export default defineConfig({
               link: "/examples/chat",
             },
             {
-              label: "GQL Subscription",
+              label: "Progress Tracker (GQL)",
               link: "/examples/progress-tracker",
             }
 	]
