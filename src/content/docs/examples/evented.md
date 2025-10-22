@@ -1,5 +1,5 @@
 ---
-title: Event Chroeography
+title: Evented Chroeography
 description: Example - Evented Choreography
 ---
 
