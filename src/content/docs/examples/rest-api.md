@@ -129,4 +129,4 @@ routes:
 
 ## How does the composition work ?
 
-tc implicitly creates a _transducer_ function (lambda) and uses Lambda Destinations to orchestrate the composition on AWS.
+tc implicitly creates a _transducer_ function (lambda) for the topology and uses Lambda Destinations to orchestrate the composition on AWS. The _transducer_ is topology-aware and can resolve the input/output format given the name of the entity. It also resolves all the required permissions, keys, target hosts thereby keeping the composition abstract and pure.

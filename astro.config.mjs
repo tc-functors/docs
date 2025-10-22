@@ -86,11 +86,7 @@ export default defineConfig({
               link: "/examples/chat",
             },
             {
-              label: "ETL",
-              link: "/examples/etl",
-            },
-            {
-              label: "Graphql API",
+              label: "GQL Subscription",
               link: "/examples/progress-tracker",
             }
 	]
