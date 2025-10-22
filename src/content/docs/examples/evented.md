@@ -36,11 +36,10 @@ functions:
     event: e3
 
 ```
-
-The following is a better representation of an evented topology where multiple functions (f1, f2) get invoked by an event.
-
 ![Evented1](../../../assets/evented-1.png)
 
+
+The following is a better representation of an evented topology where multiple functions (f2, f3) get invoked by an event, concurrently,
 
 ```yaml
 name: example-evented
