@@ -78,11 +78,19 @@ export default defineConfig({
 	  collapsed: true,
 	   items: [
             {
+              label: "Rest API",
+              link: "/examples/rest-api",
+            },
+            {
+              label: "Chat",
+              link: "/examples/chat",
+            },
+            {
               label: "ETL",
               link: "/examples/etl",
             },
             {
-              label: "Progress Tracker",
+              label: "Graphql API",
               link: "/examples/progress-tracker",
             }
 	]
@@ -155,15 +163,14 @@ export default defineConfig({
             {
               label: "Audit",
               link: "/workflows/audit",
+            },
+            {
+              label: "Praxis (UI)",
+              link: "/workflows/praxis",
             }
 	   ]
 	},
 
-	{
-	  label: 'Web UIs',
-	  collapsed: true,
-	  autogenerate: { directory: 'ui' },
-	},
 	{
 	  label: 'Integrations',
 	  collapsed: true,
