@@ -21,7 +21,7 @@ routes:
 
 events:
   e1:
-    functions: f2
+    function: f2
   e2:
     function: f3
   e3:
