@@ -7,7 +7,7 @@ In the Getting Started guide, we saw how to create a simple synchronous API requ
 
 ## Topology
 
-Let's say we want our api route to trigger an Event that invokes a chain of functions (liner DAG). The output of the function is consumed by a websocket channel and eventually a HTML page using a websocket client. For the purposes of this example, we create a single html file for testing. The function implementations don't matter.
+Let's say we want our api route to trigger an Event that invokes a chain of functions (linear DAG). The output of the function is consumed by a websocket channel and eventually a HTML page using a websocket client. For the purposes of this example, we create a single html file for testing. The function implementations don't matter.
 
 ```
 name: example-rest-async
