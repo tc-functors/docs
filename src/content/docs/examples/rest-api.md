@@ -64,7 +64,7 @@ open dist/index.html
 
 ## Tracking Progress
 
-Now that we have an asynchrous websocket response, can we also track the progress of the actual processing (f1 -> f2 -> f3) ? Yes, we can add a channel as an _interceptor_ to each of the functions.
+Now that we have an asynchronous websocket response, can we also track the progress of the actual processing (f1 -> f2 -> f3) ? Yes, we can add a channel as an _interceptor_ to each of the functions.
 
 ```
 name: example-rest-progress
