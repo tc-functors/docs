@@ -82,6 +82,10 @@ export default defineConfig({
               link: "/examples/rest-api",
             },
             {
+              label: "Evented",
+              link: "/examples/evented",
+            },
+            {
               label: "Chat",
               link: "/examples/chat",
             },
