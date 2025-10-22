@@ -7,17 +7,11 @@ description: Example - Enhance, Transform and Load
 This is a rough working draft
 :::
 
-The goal of this example is to introduce you to defining and composing entities without leaking any infrastructure details into it.
+The goal of this example is to introduce you to defining and composing functions of different kinds: Runtime, different dependency packing mechanisms. It is also to introduce us to tc's sophisticated builder.
 
-## Preamble
-
-In this example, we will attempt to build the world's best ETL system. Just kidding! It's far from it.
+The pipeline
 
 
-We will try to design a simple serverless ETL system that has the following features:
-
-1. An API to trigger the pipeline asynchronously.
-2. Queue any requests and process them as FIFO
 3. The pipeline has 3 functions - Enhancer, Transformer and Loader.
 4. Notify on completion of the ETL process
 5. Host a simple html page to show the notifications.
