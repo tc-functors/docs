@@ -163,11 +163,8 @@ export default defineConfig({
             {
               label: "Audit",
               link: "/workflows/audit",
-            },
-            {
-              label: "Praxis (UI)",
-              link: "/workflows/praxis",
             }
+
 	   ]
 	},
 
