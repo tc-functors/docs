@@ -59,7 +59,7 @@ cargo build --release
 sudo mv target/release/tc /usr/local/bin/tc
 ```
 
-tc is primarily a CLI app. It has an built-in [HTMX-based Inspector UI](/extras/inspector/), a local emulator and a Lisp interpreter.
+tc is primarily a CLI app.
 
 The CLI app provides a core set of commands to manage the lifecycle of sandboxed topologies.
 
