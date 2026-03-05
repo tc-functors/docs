@@ -102,3 +102,33 @@ queues:
     function: function1
 
 ```
+## Sandbox-specific configuration
+
+We can set custom domains in a configuration, typically in INFRA_DIR/<topology>/routes.json
+
+```json
+{
+    "domains": {
+        "default": {
+            "stable": "service.mydomain.com",
+            "dev": "dev.mydomain.com"
+        },
+        "prod": {
+            "stable": "prod.mydomain.com"
+        }
+    },
+    "throttling": {
+        "default": {
+            "stable": {
+                "burst_limit": 120,
+                "rate_limit": 90
+            },
+            "alper": {
+                "burst_limit": 120,
+                "rate_limit": 90
+            }
+        }
+    }
+}
+
+```
