@@ -18,6 +18,9 @@ pages:
     build:
       - npm install --quiet
       - npm run build
+    functions: <optional>
+      request: ./my-request-handler.js
+      response: ./my-response-handler.js
 ```
 
 :::note
@@ -123,6 +126,36 @@ We can also specify a more detailed mapping in `infrastructure/tc/<namespace>/pa
 
 ```
 
+### Functions
+
+We can also augment the request and response headers using custom functions.
+For example:
+
+```
+pages:
+  app:
+    kind: SPA
+    dir: headers
+    dist: .
+    functions:
+      response: ./headers/response.js
+```
+
+Where `response.js` is something like:
+
+```js
+async function handler(event) {
+    var response = event.response;
+    var headers = response.headers;
+
+    headers['strict-transport-security'] = { value: 'max-age=63072000; includeSubdomains; preload'};
+    headers['content-security-policy'] = { value: "default-src 'none'; img-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; frame-ancestors 'none'"};
+    headers['referrer-policy'] = {value: 'same-origin'};
+    return response;
+}
+```
+
+If the provider is `cloudfront`, tc will create these as CF functions and attach them to the Request/Response actions.
 
 ### Bucket
 
