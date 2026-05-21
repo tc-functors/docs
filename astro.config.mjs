@@ -149,6 +149,10 @@ export default defineConfig({
               link: "/workflows/develop",
             },
             {
+              label: "Develop (LLM-driven)",
+              link: "/workflows/llm",
+            },
+            {
               label: "Develop (Remote)",
               link: "/workflows/remote",
             },
@@ -172,11 +176,6 @@ export default defineConfig({
 	  label: 'Integrations',
 	  collapsed: true,
 	  autogenerate: { directory: 'integrations' },
-	},
-	{
-	  label: 'News',
-	  collapsed: true,
-	  autogenerate: { directory: 'news' },
 	},
 	{
 	  label: 'Internals',
