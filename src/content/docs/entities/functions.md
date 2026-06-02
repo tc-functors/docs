@@ -350,6 +350,38 @@ build:
   kind: Image
 ```
 
+## Custom function dirs
+
+At times, we like to organize our functions in logical partitioned directories. Say something like the following:
+
+```
+├── bar
+│   ├── f3
+│   │   └── handler.clj
+│   └── f4
+│       └── handler.janet
+└── foo
+    ├── f1
+    │   └── handler.rb
+    └── f2
+        └── handler.py
+```
+By default, tc does not recursively discover functions. It looks for functions (dirs) in the current directory of the topology. In the above example, bar and foo are ignored and not discovered.
+
+To intern those functions, we can set the list of dirs to scan in the topology.yml file
+
+
+```yaml
+name: t1
+
+function_dirs:
+	- foo
+	- bar
+```
+
+`tc compose -f tree` to visualize the tree.
+
+
 ## Testing
 
 ### Invoke
