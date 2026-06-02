@@ -54,6 +54,10 @@ export default defineConfig({
             {
               label: "FAQ",
               link: "/introduction/faq"
+            },
+            {
+              label: "Resources",
+              link: "/introduction/resources"
             }
 	]
 	},
@@ -177,6 +181,7 @@ export default defineConfig({
 	  collapsed: true,
 	  autogenerate: { directory: 'integrations' },
 	},
+
 	{
 	  label: 'Internals',
 	  collapsed: true,
