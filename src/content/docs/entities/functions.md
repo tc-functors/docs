@@ -401,3 +401,48 @@ or as a param
 ```
 tc invoke --sandbox main --env dev --payload '{"data": "foo"}'
 ```
+
+
+## Tasks
+
+We can define tasks in `function spec`. For example, consider this spec:
+
+```yaml
+name: f1
+runtime:
+  lang: python3.10
+tasks:
+  clean: rm -f *.zip Dockerfile
+  lint: pylint handler.py
+  test: python run-test.py
+```
+
+```sh
+cd f1
+tc run --task :clean
+tc run --task :lint [--trace]
+tc run --task :test
+```
+
+:::note
+Note that the `:` in the task name specifies pre-defined tasks. The tasks are also templated.
+:::
+
+We can also run abitrary tasks instead of predefined task:
+
+```sh
+tc run --task "git log ." --trace
+```
+
+### Running tasks in a topology
+
+Let's say we have functions f1, f2, f3 in a topology. We can now run tasks recursively in all functions:
+
+```
+tc run --task :clean
+Running [f1] rm -rf *.zip pkg
+Skipping [f2]
+Running [f3] rm -f *.zip
+```
+
+`task` is either predefined (with a : prefix) or arbitrary.
