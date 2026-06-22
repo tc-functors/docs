@@ -176,8 +176,6 @@ The build kinds are interchangeable. All of the build kinds take the same option
 :::
 
 
-
-
 and then `tc create -s <sandbox> -e <env>` builds this function using the given `command` and creates it in the given sandbox and env.
 
 ### Inline
@@ -241,6 +239,35 @@ tc update -s <sandbox> -e <env> -c layers
 AWS has a limit on the number of layers and size of each zipped layer. tc automatically splits the layer into chunks if it exceeds the size limit (and still within the upper total limit of 256MB)
 :::
 
+## Layer lifecycle management
+
+On AWS, the layer versions are global and are not sandbox-aware. When associating layers with a function, we can pin the layers with monotonic versions as follows:
+
+```yaml
+name: ppd
+runtime:
+  lang: python3.10
+  package_type: zip
+  handler: handler.handler
+  layers:
+   - ppd-layer:3
+```
+However, this may not be practical when dealing with a large number of functions. Additionally, there is no way to tag layers and annotate if the version is stable or unusable. To solve this problem, tc provides a simple mechanism to differentiate between stable and dev layers. When creating a layer by default using `tc build --layer <layer-name>`, the layer's name is suffixed with the string `-dev`. On updating the sandbox with the layers or when creating/updating functions, tc will bump the functions to the latest "dev" layer versions.
+When a specific `dev` layer is ready to be _promoted_ as _stable_, we do
+
+```sh
+tc build --promote --layer NAME [--version 123]
+```
+
+If the version is not specified, tc will promote the latest dev layer to stable.
+
+If a sandbox is named `stable`, it will use the stable layers. This is configurable in TC_CONFIG.
+
+To use latest stable layers in your dev sandboxes, do:
+
+```sh
+TC_USE_STABLE_LAYERS=1 tc update -s SANDBOX -e PROFILE -c functions/layers
+```
 
 ### Image
 
@@ -306,34 +333,23 @@ runtime:
   handler: handler.handler
 ```
 
-## Layer lifecycle management
+### Extensions
 
-On AWS, the layer versions are global and are not sandbox-aware. When associating layers with a function, we can pin the layers with monotonic versions as follows:
+We can also build extensions (which are technically layers)
 
-```yaml
-name: ppd
+#### Using AWS-managed extensions
+
+We can use an URI for specifing extensions, particularly AWS-managed extensions. For example:
+
+```python
+name: example-ext
+description: basic example
 runtime:
-  lang: python3.10
+  lang: python3.12
   package_type: zip
   handler: handler.handler
-  layers:
-   - ppd-layer:3
-```
-However, this may not be practical when dealing with a large number of functions. Additionally, there is no way to tag layers and annotate if the version is stable or unusable. To solve this problem, tc provides a simple mechanism to differentiate between stable and dev layers. When creating a layer by default using `tc build --layer <layer-name>`, the layer's name is suffixed with the string `-dev`. On updating the sandbox with the layers or when creating/updating functions, tc will bump the functions to the latest "dev" layer versions.
-When a specific `dev` layer is ready to be _promoted_ as _stable_, we do
-
-```sh
-tc build --promote --layer NAME [--version 123]
-```
-
-If the version is not specified, tc will promote the latest dev layer to stable.
-
-If a sandbox is named `stable`, it will use the stable layers. This is configurable in TC_CONFIG.
-
-To use latest stable layers in your dev sandboxes, do:
-
-```sh
-TC_USE_STABLE_LAYERS=1 tc update -s SANDBOX -e PROFILE -c functions/layers
+  extensions:
+    - ssm:/aws/service/aws-parameters-and-secrets-lambda-extension/arm64/latest
 ```
 
 ## Providers
@@ -349,6 +365,10 @@ runtime:
 build:
   kind: Image
 ```
+
+
+
+
 
 ## Custom function dirs
 

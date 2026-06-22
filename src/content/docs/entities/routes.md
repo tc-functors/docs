@@ -132,3 +132,25 @@ We can set custom domains in a configuration, typically in INFRA_DIR/<topology>/
 }
 
 ```
+## Default configuration
+
+At times, we may want to define the defaults for all the routes. For example:
+
+```yaml
+routes:
+  default:
+    doc-only: true
+    gateway: my-gateway
+    CORS:
+      methods: [GET, POST]
+      origins: ["*"]
+      headers: [String]
+
+  /foo:
+    method: GET
+
+  /bar:
+    method: GET
+
+```
+Here we set the defaults for all routes in the topology. The individual route can still override the default.
