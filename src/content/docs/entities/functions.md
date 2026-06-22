@@ -352,6 +352,48 @@ runtime:
     - ssm:/aws/service/aws-parameters-and-secrets-lambda-extension/arm64/latest
 ```
 
+## Network
+
+To configure a function in a VPC, we can do:
+
+```
+name: my-fn
+runtime:
+  lang: Go
+  handler: bootstrap
+  network: true
+```
+
+And in it's corresponding infrastructure file, we can set the network. For example, in `infrastructure/tc/<topology-name>/vars/my-fn.json`
+
+```json
+{
+    "default": {
+        "timeout": 300,
+        "environment": {
+            "DYNAMODB_TABLE_NAME": "foo-bar",
+            "REDIS_LOOKUP_ENABLED": "false",
+        }
+    },
+    "dev": {
+        "environment": {
+            "REDIS_LOOKUP_ENABLED": "false"
+        },
+        "network": {
+            "security_groups": [
+                "sg-12345"
+            ],
+            "subnets": [
+                "subnet-1234",
+                "subnet-5678",
+                "subnet-9876"
+            ]
+        }
+    },
+```
+And then `tc create --sandbox dev1 --profile dev` will configure the function with the given network
+
+
 ## Providers
 
 Default function provider is `Lambda`. We can make the same function code run in ECS Fargate with no change.
@@ -365,8 +407,6 @@ runtime:
 build:
   kind: Image
 ```
-
-
 
 
 
