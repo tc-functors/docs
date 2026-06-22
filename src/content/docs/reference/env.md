@@ -48,20 +48,15 @@ TC_ASSUME_ROLE=my-iam-role tc create..
 ## Build-specific variables
 
 
-#### TC_FORCE_BUILD
+#### TC_CREATE_CHUNK_SIZE
 
-Tries various fallback strategies to build layers. One of the strategies is to build locally instead of a docker container. Another fallback is to use a specific version of python even if the transitive dependencies need specific version of Ruby or Python
 
-```
-TC_FORCE_BUILD=1 tc build --trace
-```
+default: 4
 
-#### TC_PARALLEL_BUILD
-
-To parallelize builds particularly in recursive mode.
+Sets the chunk size for concurrently creating entities
 
 ```
-TC_PARALLEL_BUILD=1 tc build --recursive
+TC_CREATE_CHUNK_SIZE=4 tc build --trace
 ```
 
 #### TC_SKIP_BUILD
@@ -91,20 +86,12 @@ To create, update, delete stable sandboxes (which are prohibited by default), us
 TC_FORCE_DEPLOY=1 tc create -s sandbox -e env
 ```
 
-#### TC_FORCE_DELETE
+#### TC_DELETE_ROOT
 
-To delete stable sandboxes (which are prohibited by default), use this var to override. `TC_FORCE_DEPLOY` also works but is deprecated.
+By default, tc does not delete the root entity (such as gateway, bus)
 
 ```
 TC_FORCE_DELETE=1 tc create -s sandbox -e env
-```
-
-#### TC_LEGACY_ROLES
-
-To use `tc-base-*` static roles, set this variable explicitly. Enabling it will not use any dynamic permissions.
-
-```
-TC_LEGACY_ROLES=1 tc create -s sandbox -e env
 ```
 
 #### TC_PAGES_BUCKET
