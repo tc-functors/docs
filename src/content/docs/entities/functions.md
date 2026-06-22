@@ -239,7 +239,7 @@ tc update -s <sandbox> -e <env> -c layers
 AWS has a limit on the number of layers and size of each zipped layer. tc automatically splits the layer into chunks if it exceeds the size limit (and still within the upper total limit of 256MB)
 :::
 
-## Layer lifecycle management
+#### Layer lifecycle management
 
 On AWS, the layer versions are global and are not sandbox-aware. When associating layers with a function, we can pin the layers with monotonic versions as follows:
 
