@@ -12,7 +12,7 @@ name: TOPOLOGY
 events:
   EventName:
     producer: String or Array
-	producers: Array
+    producers: Array
     filter: <filter-expression>
     pattern: <JSON Event Pattern>
     function: <function1>
