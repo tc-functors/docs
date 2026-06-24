@@ -4,7 +4,7 @@ description: Hooks
 ---
 
 `hooks` are set of commands and actions that are run before (`pre`) and after (`post`) sandbox creation. They are wrappers around `tc create` command.
-The hooks are defined per topology in it's corresponding dir (`INFRA_DIR/TOPOLOGY/hooks.json`)
+The hooks are defined per topology in it's corresponding infra dir (`INFRA_DIR/TOPOLOGY/hooks.json`)
 
 Example:
 
@@ -19,7 +19,7 @@ Example:
   ],
   "post": [
     {
-      "command": "tc test",
+      "command": "tc test -s {{sandbox}} -e {{env}}",
       "on_failure": "exit"
     }
   ]
