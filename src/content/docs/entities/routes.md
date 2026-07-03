@@ -36,20 +36,33 @@ Gateway is optional and required if you need to use an existing gateway. By defa
 
 ## Authorizer
 
-```
+### Function Authorizer
+
+```yaml
 name: TOPOLOGY-NAME
 
 routes:
   /foo:
     method: POST
-	authorizer: my-authorizer
+    authorizer: my-authorizer
     function: function1
 
 functions:
   my-authorizer:
-	uri: ../my-other/authorizer
+    uri: ../my-other/authorizer
 ```
 
+### Cognito Authorizer
+
+We could also specify a cognito authorizer
+
+```yaml
+routes:
+  /api/foo:
+    method: GET
+    authorizer: cognito
+    function: f1
+```
 
 ## Patterns
 
@@ -157,6 +170,7 @@ Here the `payment_beta`, `analytics_alpha` and `profile_stable` are seprate sand
 2. The custom domain to route should also be present in the domains block in routes.json. tc will manage the certs and zone records.
 3. It is also not possible to have a route same as the path prefix. For example `/payment` route in topology.yml and `/payment` path prefix in routes.json are invalid. However, `/payment/process` and `/payment` path prefix (vertical) are valid.
 
+Example: [examples/routes](https://github.com/tc-functors/tc/tree/main/examples/routes)
 
 ## Configuration
 
@@ -181,7 +195,7 @@ We can set custom domains in a configuration, typically in INFRA_DIR/<topology>/
                 "burst_limit": 120,
                 "rate_limit": 90
             },
-            "alper": {
+            "dev": {
                 "burst_limit": 120,
                 "rate_limit": 90
             }
