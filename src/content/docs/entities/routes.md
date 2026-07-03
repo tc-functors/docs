@@ -148,7 +148,7 @@ Now let's say we want to route these verticals (analytics, payment and profile) 
 
 ```
 {
-  "gateway_mapping": {
+  "verticals": {
     "api.myapp.com": {
       "payment_beta": ["/payment"],
       "analytics_alpha": ["/analytics"],

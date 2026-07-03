@@ -5,13 +5,14 @@ description: Functions Entity Reference
 
 ## Definitions
 
-There are 3 kinds of function definitions:
+There are 4 kinds of function definitions:
 
-1. Topology functions
+1. Dir functions
 2. Interned functions
-3. Standalone functions
+3. Nano functions
+4. Standalone functions
 
-### Topology functions
+### Dir functions
 
 tc discovers functions in the current directory. A function is any directory that contains a
 1. handler.{py,rb,clj,js} file  and/or
@@ -33,6 +34,37 @@ runtime:
   handler: handler.handler
 ```
 
+##### Custom function dirs
+
+At times, we like to organize our functions in logical partitioned directories. Say something like the following:
+
+```
+├── bar
+│   ├── f3
+│   │   └── handler.clj
+│   └── f4
+│       └── handler.janet
+└── foo
+    ├── f1
+    │   └── handler.rb
+    └── f2
+        └── handler.py
+```
+By default, tc does not recursively discover functions. It looks for functions (dirs) in the current directory of the topology. In the above example, bar and foo are ignored and not discovered.
+
+To intern those functions, we can set the list of dirs to scan in the topology.yml file
+
+
+```yaml
+name: t1
+
+function_dirs:
+	- foo
+	- bar
+```
+
+`tc compose -f tree` to visualize the tree.
+
 ### Interned functions
 
 Interned functions are those that are explicitly defined in topology.yml
@@ -47,12 +79,45 @@ functions:
 
 ```
 
+### Nano functions
+
+Nano functions are functions with tiny snippets of code embedded in the topology spec.
+
+:::note
+Available in upcoming tc 0.10.x
+:::
+
+```yaml
+name: example-nano
+
+events:
+  ConcatStrings:
+    function: f1
+
+functions:
+  f1:
+    runtime:
+      lang: python3.12
+      code: |
+        def handler(event, context):
+          return {'input': ['a', 'b']}
+      function: f2
+
+  f2:
+    runtime:
+      lang: clojure10.1
+      code: |
+        (defn handler [event context]
+           (clojure.string/join (:input event) ","))
+```
+
 ### Standalone functions
 
-A function that does belong to a topology or has no topology defined is a _standalone_ function.
+A function that does belong to a topology or has no topology defined is a _standalone_ function. We can set a namespace explicitly in the function spec (function.yml).
 
 ```yaml
 name: foo
+namespace: bar
 runtime:
   lang: python3.11
   handler: handler.handler
@@ -396,7 +461,25 @@ And then `tc create --sandbox dev1 --profile dev` will configure the function wi
 
 ## Providers
 
-Default function provider is `Lambda`. We can make the same function code run in ECS Fargate with no change.
+### Lambda
+
+`lambda` is the default provider. The rest of the documentation in this page is specific to Lambda provider.
+
+### MicroVM
+
+```yaml
+name: python-mvm
+runtime:
+  handler: "python handler.py"
+  package_type: image
+  provider: MicroVm
+build:
+  kind: Image
+```
+
+### Fargate
+
+We can make the same function code run in ECS Fargate.
 
 ```yaml
 name: python-image-fargate
@@ -407,40 +490,6 @@ runtime:
 build:
   kind: Image
 ```
-
-
-
-## Custom function dirs
-
-At times, we like to organize our functions in logical partitioned directories. Say something like the following:
-
-```
-├── bar
-│   ├── f3
-│   │   └── handler.clj
-│   └── f4
-│       └── handler.janet
-└── foo
-    ├── f1
-    │   └── handler.rb
-    └── f2
-        └── handler.py
-```
-By default, tc does not recursively discover functions. It looks for functions (dirs) in the current directory of the topology. In the above example, bar and foo are ignored and not discovered.
-
-To intern those functions, we can set the list of dirs to scan in the topology.yml file
-
-
-```yaml
-name: t1
-
-function_dirs:
-	- foo
-	- bar
-```
-
-`tc compose -f tree` to visualize the tree.
-
 
 ## Testing
 

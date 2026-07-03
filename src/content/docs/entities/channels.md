@@ -18,7 +18,3 @@ channels:
   my-room:
     function: path/to/handler.js
 ```
-
-## Authorizer
-
-wip

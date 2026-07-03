@@ -103,7 +103,6 @@ export default defineConfig({
 	{
 	  label: 'Entities',
 	  collapsed: true,
-	  collapsed: true,
 	  items: [
             {
               label: "Functions",
@@ -137,12 +136,57 @@ export default defineConfig({
               label: "States",
               link: "/entities/states",
             },
+            {
+              label: "Stores",
+              link: "/entities/stores",
+            }
 	  ]
 	},
 	{
-	  label: 'Reference',
+	  label: 'Composition',
 	  collapsed: true,
-	  autogenerate: { directory: 'reference' },
+	  items: [
+            {
+              label: "Basic",
+              link: "/composition/basic",
+            },
+            {
+              label: "Transducer",
+              link: "/composition/transducer",
+            },
+            {
+              label: "Lisp",
+              link: "/composition/lisp",
+            }
+	  ]
+	},
+
+	{
+	  label: 'Interface',
+	  collapsed: true,
+	  items: [
+            {
+              label: "CLI",
+              link: "/interface/cli",
+            },
+            {
+              label: "Interactive",
+              link: "/interface/interactive",
+            },
+            {
+              label: "MCP",
+              link: "/interface/mcp",
+            },
+            {
+              label: "WebUI",
+              link: "/interface/webui"
+            }
+	  ]
+	},
+	{
+	  label: 'Configuration',
+	  collapsed: true,
+	  autogenerate: { directory: 'configuration' },
 	},
 	{
 	  label: 'Workflows',
@@ -159,6 +203,10 @@ export default defineConfig({
             {
               label: "Develop (Remote)",
               link: "/workflows/remote",
+            },
+            {
+              label: "Tests",
+              link: "/workflows/test",
             },
             {
               label: "Release",
