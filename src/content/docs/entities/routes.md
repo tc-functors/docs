@@ -103,36 +103,6 @@ queues:
     function: function1
 
 ```
-## Sandbox-specific configuration
-
-We can set custom domains in a configuration, typically in INFRA_DIR/<topology>/routes.json
-
-```json
-{
-    "domains": {
-        "default": {
-            "stable": "service.mydomain.com",
-            "dev": "dev.mydomain.com"
-        },
-        "prod": {
-            "stable": "prod.mydomain.com"
-        }
-    },
-    "throttling": {
-        "default": {
-            "stable": {
-                "burst_limit": 120,
-                "rate_limit": 90
-            },
-            "alper": {
-                "burst_limit": 120,
-                "rate_limit": 90
-            }
-        }
-    }
-}
-
-```
 
 ## Route Verticals
 
@@ -188,7 +158,41 @@ Here the `payment_beta`, `analytics_alpha` and `profile_stable` are seprate sand
 3. It is also not possible to have a route same as the path prefix. For example `/payment` route in topology.yml and `/payment` path prefix in routes.json are invalid. However, `/payment/process` and `/payment` path prefix (vertical) are valid.
 
 
-## Default configuration
+## Configuration
+
+### Sandbox-specific configuration
+
+We can set custom domains in a configuration, typically in INFRA_DIR/<topology>/routes.json
+
+```json
+{
+    "domains": {
+        "default": {
+            "stable": "service.mydomain.com",
+            "dev": "dev.mydomain.com"
+        },
+        "prod": {
+            "stable": "prod.mydomain.com"
+        }
+    },
+    "throttling": {
+        "default": {
+            "stable": {
+                "burst_limit": 120,
+                "rate_limit": 90
+            },
+            "alper": {
+                "burst_limit": 120,
+                "rate_limit": 90
+            }
+        }
+    }
+}
+
+```
+
+
+### Default configuration
 
 At times, we may want to define the defaults for all the routes. For example:
 
