@@ -12,7 +12,7 @@ name: TOPOLOGY-NAME
 routes:
   NAME_OR_PATH:
     gateway: <String>
-	vertical: <String>
+    vertical: <String>
     authorizer: <String>
     method: POST|GET|DELETE|PUT
     path: <String>
@@ -87,8 +87,8 @@ routes:
 routes:
   /api/message:
     method: POST
-	async: true
-	event: GetMessages
+    async: true
+    event: GetMessages
 
 events:
   GetMessages:
