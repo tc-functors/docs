@@ -92,8 +92,8 @@ routes:
 
 events:
   GetMessages:
-	producer: fetcher
-	channel: messages
+    producer: fetcher
+    channel: messages
 
 channels:
   messages:

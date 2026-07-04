@@ -71,10 +71,10 @@ tc generates `graphql` for the above mutation definition.
   }
 }
 
-
-We don't need to explictly generate graphql. `tc compose -c mutations -f gql` is useful for debugging purposes.
-
 ```
+:::note
+We don't need to explictly generate graphql. `tc compose -c mutations -f gql` is useful for debugging purposes.
+:::
 
 ## Implict Types
 
