@@ -4,7 +4,7 @@ description: Using Lisp for composition
 ---
 
 :::note
-Lisp interpreter is publicly available in upcoming tc 0.10.x
+Lisp interpreter is available in upcoming tc 0.10.x
 :::
 
 While it is fairly straightforward to describe entity composition using YAML, tc provides a subset of the Lisp programming language to define compositions programatically. The reason Lisp is better suited at this is because of first-class entities, s-expressions and symbolic references.
@@ -45,7 +45,7 @@ cat topology.lisp | ./tc compose --
 
 #or
 
-./mt --repl
+./tc repl
 > (define-event e1)
 > (define-event e2)
 > (define-function f1 :uri "git://repo/f1.git")
