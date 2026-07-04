@@ -52,10 +52,6 @@ export default defineConfig({
               link: "/introduction/features",
             },
             {
-              label: "FAQ",
-              link: "/introduction/faq"
-            },
-            {
               label: "Resources",
               link: "/introduction/resources"
             }
