@@ -61,4 +61,4 @@ tc compose -f table
 
 We can also visualize the topology as dot SVG in a standalone HTML page by running `tc visualize` in the topology dir.
 
-![Visualizer](../../../assets/visualizerpng)
+![Visualizer](../../../assets/visualizer.png)
