@@ -101,7 +101,7 @@ functions:
       code: |
         def handler(event, context):
           return {'input': ['a', 'b']}
-      function: f2
+    function: f2
 
   f2:
     runtime:

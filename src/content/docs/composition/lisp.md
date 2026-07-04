@@ -7,7 +7,7 @@ description: Using Lisp for composition
 Lisp interpreter is publicly available in upcoming tc 0.10.x
 :::
 
-While it is fairly straightforward to describe entity composition using YAML, tc provides a Lisp interpreter which can process and render a topology as follows:
+While it is fairly straightforward to describe entity composition using YAML, tc provides a subset of the Lisp programming language to define compositions programatically. The reason Lisp is better suited at this is because of first-class entities, s-expressions and symbolic references.
 
 ```lisp
 
