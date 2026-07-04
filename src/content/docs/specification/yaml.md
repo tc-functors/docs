@@ -1,7 +1,9 @@
 ---
-title: Topology
-description: Topology Composer
+title: Specification in YAML
+description: Specification in YAML
 ---
+
+## Topology Specification
 
 `topology.yml`
 

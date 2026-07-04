@@ -105,7 +105,7 @@ functions:
 
   f2:
     runtime:
-      lang: clojure10.1
+      lang: clojure1.12
       code: |
         (defn handler [event context]
            (clojure.string/join (:input event) ","))

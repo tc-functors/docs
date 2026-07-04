@@ -174,8 +174,16 @@ export default defineConfig({
               link: "/interface/interactive",
             },
             {
+              label: "REPL",
+              link: "/interface/repl",
+            },
+            {
               label: "MCP",
               link: "/interface/mcp",
+            },
+            {
+              label: "Visualizer",
+              link: "/interface/visualizer",
             },
             {
               label: "WebUI",
@@ -183,6 +191,21 @@ export default defineConfig({
             }
 	  ]
 	},
+	{
+	  label: 'Specification',
+	  collapsed: true,
+	   items: [
+            {
+              label: "YAML",
+              link: "/specification/yaml",
+            },
+            {
+              label: "LISP",
+              link: "/specification/lisp",
+            }
+	]
+	},
+
 	{
 	  label: 'Configuration',
 	  collapsed: true,

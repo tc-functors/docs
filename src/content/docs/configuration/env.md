@@ -1,5 +1,5 @@
 ---
-title: Env
+title: Environment Variables
 description: Reference - Environment variables
 ---
 

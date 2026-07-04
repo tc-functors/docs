@@ -109,11 +109,3 @@ tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p payload.json
 # or from s3
 tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p s3://bucket/payload.json
 ```
-
-## Visualization
-
-To generate a visual flow:
-
-```sh
-tc compile -c events -f digraph | dot
-```

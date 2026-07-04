@@ -67,21 +67,31 @@ The CLI app provides a core set of commands to manage the lifecycle of sandboxed
 Usage: tc <COMMAND>
 
 Commands:
-  build     Build layers, image trees, extensions and pack function code
-  compose   Compose a Topology
-  create    Create a sandboxed topology
-  delete    Delete a sandboxed topology
-  freeze    Freeze a sandbox and make it immutable
-  invoke    Invoke a topology synchronously or asynchronously
-  prune     Prune all resources in given sandbox
-  resolve   Resolve a topology
-  snapshot  Snapshot given sandbox
-  test      Run tests in topology
-  tag       Create semver tags scoped by a topology
-  unfreeze  Unfreeze a sandbox and make it mutable
-  update    Update entity and components
-  upgrade   Upgrade tc version
-  version   display current tc version
+  build      Build layers, extensions and pack function code
+  changelog  Generate changelog for topology
+  compile    Compile Topology Spec
+  compose    Compose a Topology
+  create     Create a sandboxed topology
+  delete     Delete a sandboxed topology
+  diff       Diff Sandboxe and local state
+  emulate    Emulate a topology or entity
+  freeze     Freeze a sandbox and make it immutable
+  invoke     Invoke a topology synchronously or asynchronously
+  list       List resources in a topology
+  mcp        Run MCP server
+  prune      Prune all resources in given sandbox
+  resolve    Resolve a topology
+  route      Route traffic to the given sandbox
+  run        Run arbitrary task in function dirs
+  scaffold   Scaffold functions and topology using LLM
+  snapshot   Snapshot of current sandbox and env
+  test       Run tests in topology
+  tag        Create semver tags scoped by a topology
+  unfreeze   Unfreeze a sandbox and make it mutable
+  update     Update entity and components
+  upgrade    upgrade tc version
+  version    display current tc version
+  visualize  Visualize topology using HTML
 ```
 
 <br/>
