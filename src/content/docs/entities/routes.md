@@ -170,6 +170,16 @@ Here the `payment_beta`, `analytics_alpha` and `profile_stable` are seprate sand
 2. The custom domain to route should also be present in the domains block in routes.json. tc will manage the certs and zone records.
 3. It is also not possible to have a route same as the path prefix. For example `/payment` route in topology.yml and `/payment` path prefix in routes.json are invalid. However, `/payment/process` and `/payment` path prefix (vertical) are valid.
 
+
+#### Gateway Modes
+
+There are 3 modes in which tc handles API Gateways:
+
+1. If no gateway or vertical attribute is is specified in routes, tc uses the topology name as the gateway and will create it.
+2. If gateway is specified in the routes, tc will try to use it and not create/manage it.
+3. If vertical is specified, tc creates a sandboxed API gateway for that vertical. Verticals are not namespaced and are global.
+
+
 Example: [examples/routes](https://github.com/tc-functors/tc/tree/main/examples/routes)
 
 ## Configuration
