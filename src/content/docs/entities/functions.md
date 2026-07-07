@@ -467,28 +467,77 @@ And then `tc create --sandbox dev1 --profile dev` will configure the function wi
 
 ### MicroVM
 
+MicroVms provide the flexibility of EC2 instances, isolation of containers and performance of lambdas.
+
+tc makes it simple to create and manage MicroVM Images and MicroVms, while still retaining the ergonomics of managing sandboxes. For example, in the following function.yml:
+
 ```yaml
-name: python-mvm
+name: py-mvm
 runtime:
-  handler: "python handler.py"
-  package_type: image
   provider: MicroVm
+  handler: 'python3 main.py'
+  port: 8080
+
 build:
-  kind: Image
+  kind: MicroVmImage
+  bucket: my-microvm-bucket
+```
+This, along with `main.py` that serves a HTTP server on specified port is all hat is needed. tc will use the sane defaults to build and create the sandboxed microvm.
+
+We could override the defaults in function.yml or `{INFRA_DIR}/functions.json`.
+
+```yaml
+name: py-mvm
+name: pyex
+runtime:
+  provider: MicroVm
+  handler: 'python3 main.py'
+  lang: python3.12
+  role_name: tc-base-microvm-{{sandbox}}
+  port: 8080
+
+build:
+  kind: MicroVmImage
+  base_image_arn: arn:aws:lambda:us-west-2:aws:microvm-image:al2023-1
+  build_role_arn: arn:aws:iam::{{account}}:role/tc-base-microvm-{{sandbox}}
+  bucket: my-microvm-bucket
 ```
 
-### Fargate
+`main.py` looks something like this.
 
-We can make the same function code run in ECS Fargate.
+```python
+from http.server import HTTPServer, BaseHTTPRequestHandler
+import json, time, os
 
-```yaml
-name: python-image-fargate
-runtime:
-  handler: "python handler.py"
-  package_type: image
-  provider: Fargate
-build:
-  kind: Image
+class Handler(BaseHTTPRequestHandler):
+    start_time = time.time()
+    request_count = 0
+
+    def do_GET(self):
+        Handler.request_count += 1
+        body = json.dumps({
+            "message": "Hello from Lambda MicroVM!",
+            "uptime_seconds": round(time.time() - Handler.start_time, 2),
+            "requests_served": Handler.request_count,
+            "pid": os.getpid()
+        })
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        self.wfile.write(body.encode())
+
+HTTPServer(("0.0.0.0", 8080), Handler).serve_forever()
+```
+
+```
+cd py-mvm
+tc create -s yoda -e dev
+```
+
+To invoke the microvm with a payload. tc gets the Auth token and invokes the right sandboxed microvm.
+
+```
+tc invoke -s yoda -e dev -p '{"data": [1, 2]}'
 ```
 
 ## Testing
