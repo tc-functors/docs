@@ -190,6 +190,48 @@ The `vars` or runtime file is map of default and sandbox-specific overrides. Env
 
 We can also discover Endpoints for routes and mutations that are sandbox-specific. tc does a topological sort and gets the URLs ahead of time before rendering the vars.json file.
 
+### Network
+
+To configure a function in a VPC, we can do:
+
+```
+name: my-fn
+runtime:
+  lang: Go
+  handler: bootstrap
+  network: true
+```
+
+And in it's corresponding infrastructure file, we can set the network. For example, in `infrastructure/tc/<topology-name>/vars/my-fn.json`
+
+```json
+{
+    "default": {
+        "timeout": 300,
+        "environment": {
+            "DYNAMODB_TABLE_NAME": "foo-bar",
+            "REDIS_LOOKUP_ENABLED": "false",
+        }
+    },
+    "dev": {
+        "environment": {
+            "REDIS_LOOKUP_ENABLED": "false"
+        },
+        "network": {
+            "security_groups": [
+                "sg-12345"
+            ],
+            "subnets": [
+                "subnet-1234",
+                "subnet-5678",
+                "subnet-9876"
+            ]
+        }
+    },
+```
+And then `tc create --sandbox dev1 --profile dev` will configure the function with the given network
+
+
 
 ### Update components
 
@@ -423,47 +465,6 @@ runtime:
   extensions:
     - ssm:/aws/service/aws-parameters-and-secrets-lambda-extension/arm64/latest
 ```
-
-## Network
-
-To configure a function in a VPC, we can do:
-
-```
-name: my-fn
-runtime:
-  lang: Go
-  handler: bootstrap
-  network: true
-```
-
-And in it's corresponding infrastructure file, we can set the network. For example, in `infrastructure/tc/<topology-name>/vars/my-fn.json`
-
-```json
-{
-    "default": {
-        "timeout": 300,
-        "environment": {
-            "DYNAMODB_TABLE_NAME": "foo-bar",
-            "REDIS_LOOKUP_ENABLED": "false",
-        }
-    },
-    "dev": {
-        "environment": {
-            "REDIS_LOOKUP_ENABLED": "false"
-        },
-        "network": {
-            "security_groups": [
-                "sg-12345"
-            ],
-            "subnets": [
-                "subnet-1234",
-                "subnet-5678",
-                "subnet-9876"
-            ]
-        }
-    },
-```
-And then `tc create --sandbox dev1 --profile dev` will configure the function with the given network
 
 
 ## Providers
