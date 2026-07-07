@@ -469,7 +469,14 @@ And then `tc create --sandbox dev1 --profile dev` will configure the function wi
 
 MicroVms provide the flexibility of EC2 instances, isolation of containers and performance of lambdas.
 
-tc makes it simple to create and manage MicroVM Images and MicroVms, while still retaining the ergonomics of managing sandboxes. For example, in the following function.yml:
+tc makes it simple to create and manage MicroVM Images and MicroVms, while still retaining the ergonomics of managing sandboxes. For example, let's say we have a function directory with a function spec (function.yml) and the handler code (main.py).
+
+```
+tree .
+.
+├── function.yml
+└── main.py
+```
 
 ```yaml
 name: py-mvm
@@ -484,6 +491,7 @@ build:
 This, along with `main.py` that serves a HTTP server on specified port is all hat is needed. tc will use the sane defaults to build and create the sandboxed microvm.
 
 We could override the defaults in function.yml or `{INFRA_DIR}/functions.json`.
+`handler` is a command to run as the entry point instead of a function name. We can override bucket with `TC_MICROVMS_BUCKET` environment variable.
 
 ```yaml
 name: py-mvm
@@ -502,7 +510,7 @@ build:
   bucket: my-microvm-bucket
 ```
 
-We can override bucket with `TC_MICROVMS_BUCKET` environment variable.
+
 
 `main.py` looks something like this.
 
