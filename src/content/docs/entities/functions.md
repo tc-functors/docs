@@ -478,6 +478,8 @@ tree .
 └── main.py
 ```
 
+function.yml:
+
 ```yaml
 name: py-mvm
 runtime:
@@ -488,7 +490,7 @@ build:
   kind: MicroVmImage
   bucket: my-microvm-bucket
 ```
-This, along with `main.py` that serves a HTTP server on specified port is all hat is needed. tc will use the sane defaults to build and create the sandboxed microvm.
+This, along with `main.py` that serves a HTTP server on specified port is all that is needed. tc will use the sane defaults to build and create the sandboxed microvm.
 
 We could override the defaults in function.yml or `{INFRA_DIR}/functions.json`.
 `handler` is a command to run as the entry point instead of a function name. We can override bucket with `TC_MICROVMS_BUCKET` environment variable.
