@@ -476,7 +476,6 @@ name: py-mvm
 runtime:
   provider: MicroVm
   handler: 'python3 main.py'
-  port: 8080
 
 build:
   kind: MicroVmImage
@@ -502,6 +501,8 @@ build:
   build_role_arn: arn:aws:iam::{{account}}:role/tc-base-microvm-{{sandbox}}
   bucket: my-microvm-bucket
 ```
+
+We can override bucket with `TC_MICROVMS_BUCKET` environment variable.
 
 `main.py` looks something like this.
 
