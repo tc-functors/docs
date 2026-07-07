@@ -105,11 +105,18 @@ functions:
 
   f2:
     runtime:
-      lang: clojure1.12
+      lang: clojure1.10
       code: |
         (defn handler [event context]
            (clojure.string/join (:input event) ","))
 ```
+
+Nano functions are useful where
+
+1. functions have no external IO or need to access AWS resources. The IO is offloaded to other entity nodes in the graph.
+2. functions have no additional library dependencies.
+3. functions are tiny.
+
 
 ### Standalone functions
 
