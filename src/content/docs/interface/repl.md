@@ -3,6 +3,8 @@ title: REPL
 description: REPL interface
 ---
 
+tc's REPL (Read Eval Print Loop) exposes the commands in a persistent shell to the sandbox. This caches all the sandbox metadata on boot and makes subsequent commands run significantly faster. This is good for iterative and interactive development.
+
 [![REPL image]][REPL source]
 
 [REPL image]: ../../../assets/repl.gif
