@@ -64,6 +64,26 @@ routes:
     function: f1
 ```
 
+## Request Response Mapping
+
+To transform response and/or request mappings, we can set it as follows:
+
+```
+routes:
+  default:
+    authorizer: authorizer
+    request_params:
+      'append:header.auth_id': "$context.authorizer.auth_id"
+      'append:header.JWT': "$context.authorizer.jwt"
+
+  /foo:
+    method: GET
+```
+
+If set in default, the remaining routes defined in the topology inherit the default config. The individual routes can still override the default.
+
+See [Transforming API requests](https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-parameter-mapping.html)
+
 ## Patterns
 
 
@@ -238,3 +258,18 @@ routes:
 
 ```
 Here we set the defaults for all routes in the topology. The individual route can still override the default.
+
+
+#### Splitting routes to separate files
+
+To split the routes to separate files, including default, we can do the following:
+
+```
+name: example-routes
+infra: ./infra
+
+routes:
+  !read ./default.yml
+  !read ./v1/routes.yml
+  !read ./v2/routes.yml
+```
