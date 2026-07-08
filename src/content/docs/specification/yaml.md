@@ -184,7 +184,7 @@ mutations: !include ./mutations.yml
 
 ### !read
 
-Sometimes we'd like to not include entity blocks but split a entity block into multiple files. We could use the !read macro for that
+Sometimes we'd like to not include entity blocks but split an entity block into multiple files. We could use the !read macro for that
 
 ```
 name: my-topology
@@ -201,4 +201,33 @@ vertical1.yml
 /foo:
   method: GET
   vertical: v1
+```
+
+### !sexp
+
+We can inline s-expressions/Lisp to express the entities. For example
+
+```yaml
+name: my-topology
+
+!sexp ./topology.lisp
+```
+
+Where topology.lisp
+
+```lisp
+(define-event e1)
+
+(define-event e2)
+
+(define-function f1
+    :uri "./f1"
+    :runtime {:lang "python3.11"}
+    :build {:kind 'inline})
+
+(define-function f2
+    :uri "./f2"
+    :runtime {:lang "ruby3.3"}
+    :build {:kind 'inline})
+
 ```
