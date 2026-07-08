@@ -204,7 +204,7 @@ vertical1.yml
 ```
 
 :::note
-macros are recurive. We can use !read macro inside the file referenced by !include.
+macros are recursive. We can use !read macro inside the file referenced by !include. !include is different from !read. Use !include to include entire entity block, use !read to splice the entity blocks into multiple files.
 :::
 
 ### !sexp
