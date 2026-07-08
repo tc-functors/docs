@@ -3,10 +3,15 @@ title: REPL
 description: REPL interface
 ---
 
-:::note
-Available in tc 0.10.x
-:::
+[![REPL image]][REPL source]
 
+[MCP image]: ../../../assets/repl.gif
+[MCP source]: ../../../assets/repl.gif
+
+
+### Lisp Interpreter
+
+Available in 0.10.x
 ```
 ./tc repl
 > (define-event e1)
