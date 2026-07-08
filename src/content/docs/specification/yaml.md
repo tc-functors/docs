@@ -203,6 +203,10 @@ vertical1.yml
   vertical: v1
 ```
 
+:::note
+macros are recurive. We can use !read macro inside the file referenced by !include.
+:::
+
 ### !sexp
 
 We can inline s-expressions/Lisp to express the entities. For example
