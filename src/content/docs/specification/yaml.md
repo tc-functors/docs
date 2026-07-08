@@ -181,3 +181,24 @@ events: !include ./events.yml
 mutations: !include ./mutations.yml
 ...
 ```
+
+### !read
+
+Sometimes we'd like to not include entity blocks but split a entity block into multiple files. We could use the !read macro for that
+
+```
+name: my-topology
+
+routes:
+  !read ./vertical1.yml
+  !read ./vertical2.yml
+```
+Where vertical1.yml and vertical2.yml can contain the actual routes.
+
+vertical1.yml
+
+```yaml
+/foo:
+  method: GET
+  vertical: v1
+```
