@@ -109,3 +109,40 @@ tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p payload.json
 # or from s3
 tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p s3://bucket/payload.json
 ```
+
+## Schedules
+
+A schedule is a special kind of event. However, due to it's complexity and fixed payload configuration, they are defined in a separate file. For example, in `{INFRA_DIR}/<topology-name>/schedules.json
+
+```json
+{
+  "run-task1": {
+    "cron": "10 20 ? * SAT *",
+    "target": "arn:aws:states:{{region}}:{{account}}:stateMachine:s1",
+    "payload": {
+      "account": "{{account}}",
+      "region": "{{region}}",
+      "target": "nightly",
+      "job_id": "nightly",
+      "task_name": "task1"
+    }
+  },
+  "run-task2": {
+    "cron": "20 20 ? * SAT *",
+    "target": "arn:aws:states:{{region}}:{{account}}:function:f1",
+    "payload": {
+      "account": "{{account}}",
+      "region": "{{region}}",
+      "target": "nightly",
+      "job_id": "nightly",
+      "task_name": "task2"
+    }
+  }
+}
+```
+
+To update just the schedules
+
+```
+tc update -s sandbox -e profile -c schedules
+```
