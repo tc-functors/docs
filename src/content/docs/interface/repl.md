@@ -5,8 +5,8 @@ description: REPL interface
 
 [![REPL image]][REPL source]
 
-[MCP image]: ../../../assets/repl.gif
-[MCP source]: ../../../assets/repl.gif
+[REPL image]: ../../../assets/repl.gif
+[REPL source]: ../../../assets/repl.gif
 
 
 ### Lisp Interpreter
