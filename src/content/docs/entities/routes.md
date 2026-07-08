@@ -23,13 +23,14 @@ routes:
     event: <String>
     request_template: <String>
     response_template: <String>
+    request_params: <MAP>
+    response_params: <MAP>
     stage: <String>
     stage_variables: <Map>
     CORS:
       methods: [GET, POST]
       origins: ["*"]
       headers: [String]
-
 ```
 
 Gateway is optional and required if you need to use an existing gateway. By default, tc creates a gateway with the name of the topology (namespace).
