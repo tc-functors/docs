@@ -449,7 +449,12 @@ runtime:
 
 ### Extensions
 
-We can also build extensions (which are technically layers)
+We can also build extensions (which are technically layers).
+```
+tc build --kind extension
+```
+
+see [Example](https://github.com/tc-functors/tc/blob/main/examples/builds/python-extension/function.yml#L1)
 
 #### Using AWS-managed extensions
 
