@@ -553,7 +553,26 @@ cd py-mvm
 tc create -s yoda -e dev
 ```
 
-To invoke the microvm with a payload. tc gets the Auth token and invokes the right sandboxed microvm.
+Microvm-specific attributes in function.yml. All of these are optional and tc tries to infer the defaults.
+
+| Attribute                                  | Description                                                                     |
+|--------------------------------------------|---------------------------------------------------------------------------------|
+| runtime.port                               | Port that the application listen on. Default 8080                               |
+| runtime.role_name                          | Set a fixed role name                                                           |
+| runtime.handler                            | Command to run the app in the microvm                                           |
+| runtime.mem                                | Minumum memory to use                                                           |
+| runtime.microvm.ingress_network_connectors | ARN for ingress                                                                 |
+| runtime.microvm.egress_network_connectors  | ARN for egress                                                                  |
+| runtime.microvm.max_duration               | Max duration in secs before the microvm suspends (3600)                         |
+| build.kind                                 | MicroVm                                                                         |
+| build.base_image_arn                       | Base image arn to use to build the microvm image                                |
+| build.build_role_arn                       | Role to use when building the microvm image                                     |
+| build.bucket                               | S3 bucket to store the code artifact                                            |
+| build.pre                                  | List of commands to run locally before the codeartifact is generated            |
+| build.post                                 | List of commands that run on the base image when the microvm image is generated |
+
+
+To invoke the microvm with a payload run the following. tc gets the Auth token and invokes the right sandboxed microvm.
 
 ```
 tc invoke -s yoda -e dev -p '{"data": [1, 2]}'

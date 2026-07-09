@@ -342,7 +342,70 @@ When a specific <code dir="auto">dev</code> layer is ready to be <em>promoted</e
 </div></div><div class="ec-line"><div class="code"><span class="indent">    </span><span style="--0:#C792EA;--1:#8844AE">def</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#82AAFF;--1:#3B61B0">do_GET</span><span style="--0:#D9F5DD;--1:#111111">(</span><span style="--0:#7FDBCA;--1:#096E72">self</span><span style="--0:#D9F5DD;--1:#111111">)</span><span style="--0:#D6DEEB;--1:#403F53">:</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">        </span></span><span style="--0:#D6DEEB;--1:#403F53">Handler.request_count </span><span style="--0:#C792EA;--1:#8844AE">+=</span><span style="--0:#D6DEEB;--1:#403F53"> </span><span style="--0:#F78C6C;--1:#AA0982">1</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#D6DEEB;--1:#403F53">        </span></span><span style="--0:#D6DEEB;--1:#403F53">body </span><span style="--0:#C792EA;--1:#8844AE">=</span><span style="--0:#D6DEEB;--1:#403F53"> json.</span><span style="--0:#B2CCD6;--1:#096E72">dumps</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#82AAFF;--1:#3B61B0">{</span></div></div><div class="ec-line"><div class="code"><span class="indent">            </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">message</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#82AAFF;--1:#3B61B0">: </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">Hello from Lambda MicroVM!</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#82AAFF;--1:#3B61B0">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">            </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">uptime_seconds</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--1:#3B61B0"><span style="--0:#82AAFF">: </span><span style="--0:#C5E478">round</span></span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#82AAFF;--1:#3B61B0">time.</span><span style="--0:#B2CCD6;--1:#096E72">time</span><span style="--0:#D6DEEB;--1:#403F53">()</span><span style="--0:#82AAFF;--1:#3B61B0"> </span><span style="--0:#C792EA;--1:#8844AE">-</span><span style="--0:#82AAFF;--1:#3B61B0"> Handler.start_time</span><span style="--0:#D9F5DD;--1:#111111">,</span><span style="--0:#82AAFF;--1:#3B61B0"> </span><span style="--0:#F78C6C;--1:#AA0982">2</span><span style="--0:#D6DEEB;--1:#403F53">)</span><span style="--0:#82AAFF;--1:#3B61B0">,</span></div></div><div class="ec-line"><div class="code"><span class="indent">            </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">requests_served</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#82AAFF;--1:#3B61B0">: Handler.request_count,</span></div></div><div class="ec-line"><div class="code"><span class="indent">            </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">pid</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#82AAFF;--1:#3B61B0">: os.</span><span style="--0:#B2CCD6;--1:#096E72">getpid</span><span style="--0:#D6DEEB;--1:#403F53">()</span></div></div><div class="ec-line"><div class="code"><span class="indent"><span style="--0:#82AAFF;--1:#3B61B0">        </span></span><span style="--0:#82AAFF;--1:#3B61B0">}</span><span style="--0:#D6DEEB;--1:#403F53">)</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#8EACE3;--1:#AA0982">self</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#B2CCD6;--1:#096E72">send_response</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#F78C6C;--1:#AA0982">200</span><span style="--0:#D6DEEB;--1:#403F53">)</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#8EACE3;--1:#AA0982">self</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#B2CCD6;--1:#096E72">send_header</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">Content-Type</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D9F5DD;--1:#111111">,</span><span style="--0:#82AAFF;--1:#3B61B0"> </span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">application/json</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#D6DEEB;--1:#403F53">)</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#8EACE3;--1:#AA0982">self</span><span style="--0:#D6DEEB;--1:#403F53">.</span><span style="--0:#B2CCD6;--1:#096E72">end_headers</span><span style="--0:#D6DEEB;--1:#403F53">()</span></div></div><div class="ec-line"><div class="code"><span class="indent">        </span><span style="--0:#8EACE3;--1:#AA0982">self</span><span style="--0:#D6DEEB;--1:#403F53">.wfile.</span><span style="--0:#B2CCD6;--1:#096E72">write</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#82AAFF;--1:#3B61B0">body.</span><span style="--0:#B2CCD6;--1:#096E72">encode</span><span style="--0:#D6DEEB;--1:#403F53">())</span></div></div><div class="ec-line"><div class="code">
 </div></div><div class="ec-line"><div class="code"><span style="--0:#B2CCD6;--1:#096E72">HTTPServer</span><span style="--0:#D6DEEB;--1:#403F53">(</span><span style="--0:#82AAFF;--1:#3B61B0">(</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#ECC48D;--1:#984E4D">0.0.0.0</span><span style="--0:#D9F5DD;--1:#111111">"</span><span style="--0:#82AAFF;--1:#3B61B0">, </span><span style="--0:#F78C6C;--1:#AA0982">8080</span><span style="--0:#82AAFF;--1:#3B61B0">)</span><span style="--0:#D9F5DD;--1:#111111">,</span><span style="--0:#82AAFF;--1:#3B61B0"> Handler</span><span style="--0:#D6DEEB;--1:#403F53">).</span><span style="--0:#B2CCD6;--1:#096E72">serve_forever</span><span style="--0:#D6DEEB;--1:#403F53">()</span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="from http.server import HTTPServer, BaseHTTPRequestHandlerimport json, time, osclass Handler(BaseHTTPRequestHandler):    start_time = time.time()    request_count = 0    def do_GET(self):        Handler.request_count += 1        body = json.dumps({            &#x22;message&#x22;: &#x22;Hello from Lambda MicroVM!&#x22;,            &#x22;uptime_seconds&#x22;: round(time.time() - Handler.start_time, 2),            &#x22;requests_served&#x22;: Handler.request_count,            &#x22;pid&#x22;: os.getpid()        })        self.send_response(200)        self.send_header(&#x22;Content-Type&#x22;, &#x22;application/json&#x22;)        self.end_headers()        self.wfile.write(body.encode())HTTPServer((&#x22;0.0.0.0&#x22;, 8080), Handler).serve_forever()"><div></div></button></div></figure></div>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">cd py-mvm</span></div></div><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">tc create -s yoda -e dev</span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="cd py-mvmtc create -s yoda -e dev"><div></div></button></div></figure></div>
-<p>To invoke the microvm with a payload. tc gets the Auth token and invokes the right sandboxed microvm.</p>
+<p>Microvm-specific attributes in function.yml. All of these are optional and tc tries to infer the defaults.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th>Attribute</th><th>Description</th></tr></thead><tbody><tr><td>runtime.port</td><td>Port that the application listen on. Default 8080</td></tr><tr><td>runtime.role_name</td><td>Set a fixed role name</td></tr><tr><td>runtime.handler</td><td>Command to run the app in the microvm</td></tr><tr><td>runtime.mem</td><td>Minumum memory to use</td></tr><tr><td>runtime.microvm.ingress_network_connectors</td><td>ARN for ingress</td></tr><tr><td>runtime.microvm.egress_network_connectors</td><td>ARN for egress</td></tr><tr><td>runtime.microvm.max_duration</td><td>Max duration in secs before the microvm suspends (3600)</td></tr><tr><td>build.kind</td><td>MicroVm</td></tr><tr><td>build.base_image_arn</td><td>Base image arn to use to build the microvm image</td></tr><tr><td>build.build_role_arn</td><td>Role to use when building the microvm image</td></tr><tr><td>build.bucket</td><td>S3 bucket to store the code artifact</td></tr><tr><td>build.pre</td><td>List of commands to run locally before the codeartifact is generated</td></tr><tr><td>build.post</td><td>List of commands that run on the base image when the microvm image is generated</td></tr></tbody></table>
+<p>To invoke the microvm with a payload run the following. tc gets the Auth token and invokes the right sandboxed microvm.</p>
 <div class="expressive-code"><figure class="frame not-content"><figcaption class="header"></figcaption><pre data-language="plaintext"><code><div class="ec-line"><div class="code"><span style="--0:#d6deeb;--1:#403f53">tc invoke -s yoda -e dev -p '{"data": [1, 2]}'</span></div></div></code></pre><div class="copy"><button title="Copy to clipboard" data-copied="Copied!" data-code="tc invoke -s yoda -e dev -p &#x27;{&#x22;data&#x22;: [1, 2]}&#x27;"><div></div></button></div></figure></div>
 <div class="sl-heading-wrapper level-h2"><h2 id="testing">Testing</h2><a class="sl-anchor-link" href="#testing"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Testing”</span></a></div>
 <div class="sl-heading-wrapper level-h3"><h3 id="invoke">Invoke</h3><a class="sl-anchor-link" href="#invoke"><span aria-hidden="true" class="sl-anchor-icon"><svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentcolor" d="m12.11 15.39-3.88 3.88a2.52 2.52 0 0 1-3.5 0 2.47 2.47 0 0 1 0-3.5l3.88-3.88a1 1 0 0 0-1.42-1.42l-3.88 3.89a4.48 4.48 0 0 0 6.33 6.33l3.89-3.88a1 1 0 1 0-1.42-1.42Zm8.58-12.08a4.49 4.49 0 0 0-6.33 0l-3.89 3.88a1 1 0 0 0 1.42 1.42l3.88-3.88a2.52 2.52 0 0 1 3.5 0 2.47 2.47 0 0 1 0 3.5l-3.88 3.88a1 1 0 1 0 1.42 1.42l3.88-3.89a4.49 4.49 0 0 0 0-6.33ZM8.83 15.17a1 1 0 0 0 1.1.22 1 1 0 0 0 .32-.22l4.92-4.92a1 1 0 0 0-1.42-1.42l-4.92 4.92a1 1 0 0 0 0 1.42Z"></path></svg></span><span class="sr-only">Section titled “Invoke”</span></a></div>
