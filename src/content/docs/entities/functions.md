@@ -577,6 +577,11 @@ Microvm-specific attributes in function.yml. All of these are optional and tc tr
 | build.pre                                  | List of commands to run locally before the codeartifact is generated            |
 | build.post                                 | List of commands that run on the base image when the microvm image is generated |
 
+:::note
+If you already have an existing Dockerfile that you'd like to use in the microvm, place it in the function dir and tc will use it to build the microvm image. Make sure to EXPOSE ports and set the CMD to run.
+The advantage of specifying the build steps in function.yml instead of a custom Dockerfile is that tc can set up the right egress/ingress network connectors, allow the right ports and manage the versions.
+:::
+
 #### Invoking
 
 To invoke the microvm with a payload run the following. tc gets the Auth token and invokes the right sandboxed microvm.
