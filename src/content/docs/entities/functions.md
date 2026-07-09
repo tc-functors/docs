@@ -565,18 +565,75 @@ Microvm-specific attributes in function.yml. All of these are optional and tc tr
 | runtime.microvm.egress_network_connectors  | ARN for egress                                                                  |
 | runtime.microvm.max_duration               | Max duration in secs before the microvm suspends (3600)                         |
 | build.kind                                 | MicroVm                                                                         |
+| build.version                              | Override the image version                                                      |
 | build.base_image_arn                       | Base image arn to use to build the microvm image                                |
 | build.build_role_arn                       | Role to use when building the microvm image                                     |
 | build.bucket                               | S3 bucket to store the code artifact                                            |
 | build.pre                                  | List of commands to run locally before the codeartifact is generated            |
 | build.post                                 | List of commands that run on the base image when the microvm image is generated |
 
+#### Invoking
 
 To invoke the microvm with a payload run the following. tc gets the Auth token and invokes the right sandboxed microvm.
 
 ```
 tc invoke -s yoda -e dev -p '{"data": [1, 2]}'
 ```
+
+While we can invoke the microvm via tc, we can also get the endpoint URL and token to use it outside of tc.  To get the token and the endpoint to call:
+
+```
+tc list -s yoda -e dev
+
+microvm_id: microvm-123
+
+To invoke:
+curl https://123.lambda-microvm.us-west-2.on.aws -X 'x-aws-proxy-auth: <token>'
+```
+
+#### Infra override
+
+To override the execution role of the microvm (not the microvm Image), we can specify the IAM policy much like we do with other functions [See Configuration > Permissions]
+
+```yaml
+name: pyvm
+infra_dir: './infra'
+runtime:
+  provider: MicroVm
+  handler: 'python app.py'
+  port: 8080
+
+build:
+  kind: MicroVmImage
+```
+
+And we can override the function-specific permissions in `./infra/roles/pyvm.json`
+
+See [Example](https://github.com/tc-functors/tc/blob/main/examples/functions/python-microvm-deps/function.yml#L11)
+
+
+#### Lifecycle of Microvm Images
+
+To delete the microvm, which actually suspends the microvm instead of deleting it.
+
+```
+tc delete -s yoda -e dev
+```
+
+To delete the microvm image, we can do a force delete.
+
+```
+tc delete -s yoda -e dev --force
+```
+
+There is an issue with creating a MicroVm Image with the same name. To circumvent it, we can bump the version of the MicroVm Image and recreate it.
+
+```yaml
+build:
+  kind: MicroVmImage
+  version: 0.1.4
+```
+and `tc create -s yoda -e dev`
 
 ## Testing
 
