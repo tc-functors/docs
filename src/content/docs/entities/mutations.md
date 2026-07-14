@@ -157,3 +157,16 @@ tc update -s sandbox -e env -c mutations/types
 tc update -s sandbox -e env -c mutations/roles
 tc update -s sandbox -e env -c mutations/RESOLVER_NAME
 ```
+## Managing complexity
+
+To place the mutations in separate files, we can do the following:
+
+```
+name: example
+infra: ./infra
+
+mutations:
+  !read ./entities/mutations1.yml
+  !read ./entities/mutations2.yml
+  !read ./entities/mutations3.yml
+```

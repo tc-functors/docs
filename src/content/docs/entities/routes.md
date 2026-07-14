@@ -261,9 +261,9 @@ routes:
 Here we set the defaults for all routes in the topology. The individual route can still override the default.
 
 
-#### Splitting routes to separate files
+#### Managing complexity
 
-To split the routes to separate files, including default, we can do the following:
+To place the routes in separate files, including default, we can do the following:
 
 ```
 name: example-routes
