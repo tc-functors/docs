@@ -1,6 +1,6 @@
 ---
-title: Visualizer
-description: Visualizer
+title: Output Formats
+description: Composeer output formats
 ---
 
 The composer generates various output formats to visualize or inspect the topology.
@@ -17,6 +17,8 @@ The following are some available formats
 5. icepanel
 
 Let's try various formats in examples/patterns/rest-async-progress
+
+### Tree
 
 ```
 tc compose -f tree
@@ -47,6 +49,7 @@ example-rest-progress
     └╌╌ /api/message
 ```
 
+### Table
 
 ```
 tc compose -f table
@@ -59,6 +62,62 @@ tc compose -f table
  function | f2   | channel       | c1
 ```
 
+### Digraph
+
 We can also visualize the topology as dot SVG in a standalone HTML page by running `tc visualize` in the topology dir.
 
-![Visualizer](../../../assets/visualizer.png)
+```
+tc compose -f dot |dot -Tpng > ~/dot.png
+
+# or via stdin
+
+tc compose -f dot |dot -Tpng | feh -
+```
+
+![Visualizer](../../../assets/dot.png)
+
+### Icepanel
+
+```json
+tc compose -f icepanel
+
+{
+  "modelObjects": [
+    {
+      "id": "example-rest-progress",
+      "name": "example-rest-progress",
+      "tagIds": [
+        "tag-external"
+      ],
+      "type": "domain"
+    },
+    {
+      "id": "example-rest-progress_f1",
+      "name": "f1",
+      "parentId": "example-rest-progress",
+      "tagIds": [
+        "tag-external"
+      ],
+      "type": "app"
+    },
+    {
+      "id": "example-rest-progress_f2",
+      "name": "f2",
+      "parentId": "example-rest-progress",
+      "tagIds": [
+        "tag-external"
+      ],
+      "type": "app"
+    },
+    {
+      "id": "example-rest-progress_f3",
+      "name": "f3",
+      "parentId": "example-rest-progress",
+      "tagIds": [
+        "tag-external"
+      ],
+      "type": "app"
+    }
+  ]
+}
+```

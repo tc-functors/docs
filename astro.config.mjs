@@ -178,8 +178,8 @@ export default defineConfig({
               link: "/interface/mcp",
             },
             {
-              label: "Visualizer",
-              link: "/interface/visualizer",
+              label: "Formatter",
+              link: "/interface/formatter",
             },
             {
               label: "WebUI",

@@ -26,34 +26,6 @@ events:
     doc_only: <bool>
 ```
 
-## Triggers
-
-tc provides pre-defined triggers
-
-```yaml
-events:
-  MyEvent:
-    producer: S3/PUT_OBJECT
-    filter: '{"key": "foo/bar.png"}'
-    function: function1
-```
-
-The following are available triggers for AWS provider
-
-| Resource | Trigger                        | Description      |
-|----------|--------------------------------|------------------|
-| Cognito  | PRE_SIGNUP                     |                  |
-| Cognito  | POST_CONFIRMATION              |                  |
-| Cognito  | PRE_AUTHENTICATION             |                  |
-| Cognito  | POST_AUTHENTICATION            |                  |
-| Cognito  | CREATE_AUTH_CHALLENGE          |                  |
-| Cognito  | VERIFY_AUTH_CHALLENGE_RESPONSE |                  |
-| S3       | PUT_OBJECT                     |                  |
-| S3       | DELETE_OBJECT                  |                  |
-| DYNAMODB | PUT_ITEM                       |                  |
-
-
-
 ## Filters
 
 ```yaml
@@ -83,32 +55,36 @@ events:
     function: foo
 ```
 
-## Composition
+## Triggers
 
-Events can be _composed_ with other entities. For example:
+### Pre-defined Triggers
+
+tc provides pre-defined triggers
 
 ```yaml
-
 events:
-  ApiEvent:
+  MyEvent:
+    producer: S3/PUT_OBJECT
+    filter: '{"key": "foo/bar.png"}'
     function: function1
-
-events:
-  StateEvent:
-    state: state-fqn
-  MyOtherStateEvent:
-	state: '{{namespace}}_{{sandbox}}'
 ```
 
-## Invoke
+The following are available triggers for AWS provider
 
-To invoke an event with just the payload data ($.detail), do:
+| Resource | Trigger                        | Description      |
+|----------|--------------------------------|------------------|
+| Cognito  | PRE_SIGNUP                     |                  |
+| Cognito  | POST_CONFIRMATION              |                  |
+| Cognito  | PRE_AUTHENTICATION             |                  |
+| Cognito  | POST_AUTHENTICATION            |                  |
+| Cognito  | CREATE_AUTH_CHALLENGE          |                  |
+| Cognito  | VERIFY_AUTH_CHALLENGE_RESPONSE |                  |
+| S3       | PUT_OBJECT                     |                  |
+| S3       | DELETE_OBJECT                  |                  |
+| DYNAMODB | PUT_ITEM                       |                  |
 
-```
-tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p payload.json
-# or from s3
-tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p s3://bucket/payload.json
-```
+
+### Schedules
 
 ## Schedules
 
@@ -145,4 +121,31 @@ To update just the schedules
 
 ```
 tc update -s sandbox -e profile -c schedules
+```
+
+## Composition
+
+Events can be _composed_ with other entities. For example:
+
+```yaml
+
+events:
+  ApiEvent:
+    function: function1
+
+events:
+  StateEvent:
+    state: state-fqn
+  MyOtherStateEvent:
+	state: '{{namespace}}_{{sandbox}}'
+```
+
+## Invoke
+
+To invoke an event with just the payload data ($.detail), do:
+
+```
+tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p payload.json
+# or from s3
+tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p s3://bucket/payload.json
 ```
