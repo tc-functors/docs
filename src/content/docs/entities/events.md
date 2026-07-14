@@ -86,8 +86,6 @@ The following are available triggers for AWS provider
 
 ### Schedules
 
-## Schedules
-
 A schedule is a special kind of event. However, due to it's complexity and fixed payload configuration, they are defined in a separate file. For example, in `{INFRA_DIR}/<topology-name>/schedules.json
 
 ```json

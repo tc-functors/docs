@@ -14,6 +14,7 @@ The following are some available formats
 2. table
 3. tree
 4. digraph
+5. ascii graph
 5. icepanel
 
 Let's try various formats in examples/patterns/rest-async-progress
@@ -76,11 +77,21 @@ tc compose -f dot |dot -Tpng | feh -
 
 ![Visualizer](../../../assets/dot.png)
 
+### ASCII graph
+
+
+```
+tc compose -f ascii
+```
+
+
 ### Icepanel
 
-```json
+```sh
 tc compose -f icepanel
+```
 
+```json
 {
   "modelObjects": [
     {
