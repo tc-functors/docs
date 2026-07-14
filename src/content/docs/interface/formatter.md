@@ -64,7 +64,7 @@ tc compose -f table
 
 ### Digraph
 
-We can also visualize the topology as dot SVG in a standalone HTML page by running `tc visualize` in the topology dir.
+We can visualize the topology as digraph and render it using graphviz/dot.
 
 ```
 tc compose -f dot |dot -Tpng > ~/dot.png
