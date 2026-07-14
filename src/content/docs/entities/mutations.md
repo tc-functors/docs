@@ -78,7 +78,7 @@ mutations:
       subscribe: false
 ```
 
-(Refer AWS Post)[https://docs.aws.amazon.com/appsync/latest/devguide/graphql-types.html#input-components]
+[Refer AWS Post](https://docs.aws.amazon.com/appsync/latest/devguide/graphql-types.html#input-components)
 
 ### Implict Types
 
