@@ -65,11 +65,6 @@ mutations:
     ChannelInput:
       messages: '[Message!]!'
 
-  types:
-    Mess:
-      id: String!
-      text: String!
-
   resolvers:
     getMessage:
       function: foo
@@ -91,10 +86,6 @@ mutations:
 | EventData      | $.detail.data     | Event        | String      |
 | EventDataJSON* | $.detail.data     | Event        | AWSJSON     |
 | EventMetadata  | $.detail.metadata | Event        | String      |
-
-:::note
-`EventDataJSON` is currently not functional.
-:::
 
 
 ## Providers
