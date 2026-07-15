@@ -1,15 +1,17 @@
 ---
-title: Development Workflow using LLM
-description: Dev workflow using LLM
+title: Scaffolding
+description: Scaffolding
 ---
 
-## Scaffold function
+## Scaffold Functions
 
+To scaffold function dirs and function.yml in a topology dir:
 
+```sh
+tc scaffold --functions
+```
 
-## LLMs
-
-### Generating topology using LLM
+## Generate topology using LLM
 
 We can use Bedrock or Claude to generate a topology, instead of defining it manually.
 
@@ -44,7 +46,7 @@ cat Skills.md | tc scaffold --provider bedrock -e <profile> --llm --
 [llm image]: ../../../assets/scaffold-llm.gif
 [llm source]: ../../../assets/scaffold-llm.gif
 
-### Scaffold IAC
+## Scaffold IAC
 
 ```
 tc scaffold -e dev --iac tf --out-dir tf

@@ -68,6 +68,10 @@ export default defineConfig({
             {
               label: "Hello World",
               link: "/getting-started/hello-world",
+            },
+            {
+              label: "Scaffolding",
+              link: "/getting-started/scaffolding",
             }
 	]
 
@@ -214,10 +218,6 @@ export default defineConfig({
             {
               label: "Develop",
               link: "/workflows/develop",
-            },
-            {
-              label: "Develop (LLM-driven)",
-              link: "/workflows/llm",
             },
             {
               label: "Develop (Remote)",
