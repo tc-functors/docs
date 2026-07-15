@@ -65,10 +65,28 @@ tc compose -f table
 
 ### Digraph
 
-We can visualize the topology as digraph and render it using graphviz/dot.
+We can generate the topology as digraph.
 
 ```
-tc compose -f dot |dot -Tpng > ~/dot.png
+tc compose -f digraph
+
+digraph {
+    0 [ label = "\"f2\"" ]
+    1 [ label = "\"f1\"" ]
+    2 [ label = "\"ProcessStart\"" ]
+    3 [ label = "\"f3\"" ]
+    4 [ label = "\"/api/message\"" ]
+    1 -> 0 [ ]
+    0 -> 3 [ ]
+    4 -> 2 [ ]
+    2 -> 1 [ ]
+}
+```
+
+To visualize digraph using dot/graphviz
+
+```
+tc compose -f digraph | dot -Tpng > ~/dot.png
 
 # or via stdin
 
