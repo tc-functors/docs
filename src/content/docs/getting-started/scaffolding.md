@@ -48,10 +48,16 @@ cat Skills.md | tc scaffold --provider bedrock -e <profile> --llm --
 
 ## Scaffold IAC
 
+To generate Terraform code:
+
 ```
 tc scaffold -e dev --iac tf --out-dir tf
 ```
 
+To generate CDK
+
 ```
 tc scaffold -e dev --iac cdk --out-dir cdk
 ```
+
+Other available iac options: boto, go, rust, aws-cli
