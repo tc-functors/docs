@@ -46,7 +46,7 @@ cat Skills.md | tc scaffold --provider bedrock -e <profile> --llm --
 [llm image]: ../../../assets/scaffold-llm.gif
 [llm source]: ../../../assets/scaffold-llm.gif
 
-## Scaffold IAC
+## Scaffold IaC
 
 To generate Terraform code:
 

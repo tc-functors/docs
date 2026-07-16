@@ -159,14 +159,52 @@ tc update -s sandbox -e env -c mutations/RESOLVER_NAME
 ```
 ## Managing complexity
 
-To place the mutations in separate files, we can do the following:
+To place the mutations in separate files that are domain-specific, we can do the following:
 
 ```
 name: example
 infra: ./infra
 
 mutations:
-  !read ./entities/mutations1.yml
-  !read ./entities/mutations2.yml
-  !read ./entities/mutations3.yml
+  !mutations ./entities/m1.yml
+  !mutations ./entities/m2.yml
+
+```
+Where m1 and m2 are self-contained MutationSpecs.
+
+Where m1 is
+```yaml title=m1.yml
+authorizer: my-auth-fn
+
+inputs:
+  Foo:
+    text: String!
+
+types:
+  Message:
+    id: String!
+    text: String!
+
+resolvers:
+  getMessage:
+    function: foo
+    input: Message
+    output: AWSJSON
+    subscribe: true
+```
+
+```yaml title=m2.yml
+authorizer: auth-fn
+types:
+  Data:
+    id: String!
+    text: String!
+
+resolvers:
+  getData:
+    function: foo
+    input: Data
+    output: AWSJSON
+    subscribe: false
+
 ```

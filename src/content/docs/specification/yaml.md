@@ -207,6 +207,19 @@ vertical1.yml
 macros are recursive. We can use !read macro inside the file referenced by !include. !include is different from !read. Use !include to include entire entity block, use !read to splice the entity blocks into multiple files.
 :::
 
+### !mutations
+
+Let's say if we have tens and hundreds of mutations and we'd like to split them into domain-specific or semantically files.
+
+```
+name: example
+
+mutations:
+  !mutations ./entities/m1.yml
+  !mutations ./entities/m2.yml
+```
+Where m1 and m2 are self-contained MutationSpecs.
+
 ### !sexp
 
 We can inline s-expressions/Lisp to express the entities. For example
