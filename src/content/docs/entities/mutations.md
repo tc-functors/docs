@@ -172,7 +172,6 @@ mutations:
 ```
 Where m1 and m2 are self-contained MutationSpecs.
 
-Where m1 is
 ```yaml title=m1.yml
 authorizer: my-auth-fn
 
