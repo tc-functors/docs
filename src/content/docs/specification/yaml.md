@@ -209,7 +209,7 @@ macros are recursive. We can use !read macro inside the file referenced by !incl
 
 ### !mutations
 
-Let's say if we have tens and hundreds of mutations and we'd like to split them into domain-specific or semantically files.
+Let's say if we have tens and hundreds of mutations and we'd like to split them into separate files.
 
 ```
 name: example
