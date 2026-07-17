@@ -14,10 +14,10 @@ The following are some available formats
 2. table
 3. tree
 4. digraph
-5. ascii graph
-5. icepanel
+5. mermaid
+6. ascii graph
 
-Let's try various formats in examples/patterns/rest-async-progress
+Let's try various formats in examples/patterns/rest-async-progress directory.
 
 ### Tree
 
@@ -95,58 +95,56 @@ tc compose -f dot |dot -Tpng | feh -
 
 ![Visualizer](../../../assets/dot.png)
 
-### ASCII graph
+### Mermaid
 
+To output mermaid flowchart
+
+```
+tc compose -f mermaid
+```
+```
+ tc compose -f mermaid
+
+flowchart LR
+
+subgraph routes
+	route__api_message{/api/message}
+end
+subgraph events
+	ProcessStart
+end
+subgraph functions
+	f2
+	f1
+	f3
+end
+subgraph channels
+	c1
+end
+
+route__api_message{/api/message}-->ProcessStart
+
+ProcessStart-->f1
+f2-->f3
+f1-->f2
+f3-->c1
+```
+
+To visualize the generated mermaid, install [mermaid-cli](https://github.com/mermaid-js/mermaid-cli)
+
+```
+npm install -g @mermaid-js/mermaid-cli
+```
+
+```sh
+tc compose -f mermaid |  mmdc --input - -o output.png
+```
+
+![Mermaid](../../../assets/mermaid.png)
+
+
+### ASCII graph
 
 ```
 tc compose -f ascii
-```
-
-
-### Icepanel
-
-```sh
-tc compose -f icepanel
-```
-
-```json
-{
-  "modelObjects": [
-    {
-      "id": "example-rest-progress",
-      "name": "example-rest-progress",
-      "tagIds": [
-        "tag-external"
-      ],
-      "type": "domain"
-    },
-    {
-      "id": "example-rest-progress_f1",
-      "name": "f1",
-      "parentId": "example-rest-progress",
-      "tagIds": [
-        "tag-external"
-      ],
-      "type": "app"
-    },
-    {
-      "id": "example-rest-progress_f2",
-      "name": "f2",
-      "parentId": "example-rest-progress",
-      "tagIds": [
-        "tag-external"
-      ],
-      "type": "app"
-    },
-    {
-      "id": "example-rest-progress_f3",
-      "name": "f3",
-      "parentId": "example-rest-progress",
-      "tagIds": [
-        "tag-external"
-      ],
-      "type": "app"
-    }
-  ]
-}
 ```
