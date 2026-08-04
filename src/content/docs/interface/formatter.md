@@ -15,7 +15,7 @@ The following are some available formats
 3. tree
 4. digraph
 5. mermaid
-6. ascii graph
+6. structurizr
 
 Let's try various formats in examples/patterns/rest-async-progress directory.
 
@@ -143,8 +143,10 @@ tc compose -f mermaid |  mmdc --input - -o output.png
 ![Mermaid](../../../assets/mermaid.png)
 
 
-### ASCII graph
+### Structurizr
+
+To generate structurizr output
 
 ```
-tc compose -f ascii
+tc compose -f structurizr
 ```

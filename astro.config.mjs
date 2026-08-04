@@ -153,10 +153,6 @@ export default defineConfig({
             {
               label: "Transducer",
               link: "/composition/transducer",
-            },
-            {
-              label: "Lisp",
-              link: "/composition/lisp",
             }
 	  ]
 	},
@@ -186,8 +182,8 @@ export default defineConfig({
               link: "/interface/formatter",
             },
             {
-              label: "WebUI",
-              link: "/interface/webui"
+              label: "TUI",
+              link: "/interface/tui"
             }
 	  ]
 	},
@@ -198,10 +194,6 @@ export default defineConfig({
             {
               label: "YAML",
               link: "/specification/yaml",
-            },
-            {
-              label: "LISP",
-              link: "/specification/lisp",
             }
 	]
 	},
