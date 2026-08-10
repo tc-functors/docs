@@ -112,3 +112,14 @@ To view the pipeline generated for a snapshot
 ```sh
 tc snapshot --show qa/stable/2025-10-02 -f pipeline --target-env dev --target-sandbox stable
 ```
+
+### Snapshotter API Service
+
+At times, we may need to run the snapshotter commands with a checkout of your code. We can run it in a microvm. [Example](https://github.com/tc-functors/tc/blob/main/etc/tc-api/function.yml)
+
+```
+TC_ASSET_BUCKET=my-bucket tc create -s yoda -e dev
+=> microvm-url
+
+curl -X POST microvm-url -d '{"command": "snapshot", "env": "qa", "sandbox": "stable"}'
+```
