@@ -26,7 +26,7 @@ Snapshotting is not to be confused with capturing only the topology versions of 
 ```
 
 :::note
-The snapshot contains the partially rendered topology containing various sub-versions and resolved entity attributes.
+The snapshot contains the partially rendered topology containing various sub-versions and resolved entity attributes. The version is the root entity's version and not any entity's version. This is by design as the root entity always gets updated last. The root entity's version is also used as a way to potentially rollback.
 :::
 
 
