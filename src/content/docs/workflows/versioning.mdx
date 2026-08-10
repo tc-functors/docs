@@ -1,0 +1,35 @@
+---
+title: Versioning Topologies
+description: Versioning Topologies
+---
+
+The following flowchart shows how `tc` can be used in a CI/CD system to tag and version topologies.
+
+[![Stage1 image]][Stage1 source]
+
+[Stage1 image]: ../../../assets/release-1.png
+[Stage1 source]: ../../../assets/release-1.png
+
+
+import { Steps } from '@astrojs/starlight/components';
+import { FileTree } from '@astrojs/starlight/components';
+
+
+<Steps>
+
+1. PR Merge
+
+	```sh
+	tc tag --next patch
+	```
+
+2. Release to QA (bump Minor)
+
+	```sh
+	tc tag --next minor
+	```
+
+	Release step is optional.
+
+
+</Steps>

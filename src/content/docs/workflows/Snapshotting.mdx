@@ -1,0 +1,88 @@
+---
+title: Snapshotting Worflow
+description: Snapshotting Workflow
+---
+
+Snapshotting is a technique provided by tc to capture the Topology definition along with all the sub versions of its nodes and entities. It is not to be confused with a manifest of versions. We can freeze a sandbox, snapshot it, store the snapshot in S3 or filesystem and render the snapshot of a Topology in any sandbox and profile.
+
+Snapshotting is not to be confused with capturing only the topology versions of the system. Following is the structure of a snapshot:
+
+```json
+[{
+    "changed": true,
+    "changelog": ["PR-1123 ..."],
+    "dir": "./path/to/topology",
+    "git_version": "",
+    "kind": "routed",
+    "namespace": "topo-1",
+    "prev_version": "",
+    "sandbox": "stable",
+    "tc_version": "",
+    "updated_at": "",
+    "updated_by": "",
+    "version": "0.1.1",
+    "topology": Topology
+}]
+```
+
+:::note
+The snapshot contains the partially rendered topology containing various sub-versions and resolved entity attributes.
+:::
+
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+1. Freeze
+
+	```sh
+	tc freeze -s stable -e qa
+	```
+
+	Freeze is a software-enforced freeze. Test! Test! Test! after freeze.
+
+2. Snapshot
+
+	```sh
+	tc snapshot -s stable -e qa --save
+	```
+
+	This saves the snapshot of manifests, changelog and topology definitions to s3.
+
+3. Unfreeze
+
+
+	```sh
+	tc unfreeze -s stable -e qa
+	```
+	This allows Continuous deploys to continue.
+
+4. Promote
+
+	To promote a snapshot, we first go back and pick the one that has been certified and tested in QA.
+	For example:
+
+	```sh
+	tc snapshot --list
+	qa/stable/2025-10-02
+	qa/stable/2025-10-01
+	qa/stable/2025-09-30
+	qa/stable/2025-09-29
+	qa/stable/2025-09-18
+	```
+
+	To deploy a snapshot (say qa/stable/2025-10-02), we do:
+
+	```sh
+	 tc ci-deploy --env prod --sandbox stable --snapshot qa/stable/2025-10-02
+	```
+
+	Behind the scenes, ci-deploy triggers a pipeline using the snapshot:
+
+	```sh
+   	tc snapshot --show qa/stable/2025-10-02 -f pipeline --target-env dev --target-sandbox stable
+        ```
+
+
+</Steps>

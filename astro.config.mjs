@@ -220,9 +220,14 @@ export default defineConfig({
               link: "/workflows/test",
             },
             {
-              label: "Release",
-              link: "/workflows/release",
+              label: "Versioning",
+              link: "/workflows/versioning",
             },
+            {
+              label: "Snapshotting",
+              link: "/workflows/snapshotting",
+            },
+
             {
               label: "Changes",
               link: "/workflows/changes",
