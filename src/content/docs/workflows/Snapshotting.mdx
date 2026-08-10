@@ -5,7 +5,7 @@ description: Snapshotting Workflow
 
 Snapshotting is a technique provided by tc to capture the Topology definition along with all the sub versions of its nodes and entities. It is not to be confused with a manifest of versions. We can freeze a sandbox, snapshot it, store the snapshot in S3 or filesystem and render the snapshot of a Topology in any sandbox and profile.
 
-Snapshotting is not to be confused with capturing only the topology versions of the system. Following is the structure of a snapshot:
+Following is the structure of a snapshot:
 
 ```json
 [{
@@ -84,5 +84,31 @@ import { Steps } from '@astrojs/starlight/components';
    	tc snapshot --show qa/stable/2025-10-02 -f pipeline --target-env dev --target-sandbox stable
         ```
 
-
 </Steps>
+
+
+### Managing Snapshots
+
+To list snapshots:
+
+```sh
+tc snapshot --list
+
+qa/stable/2025-10-02
+qa/stable/2025-10-01
+qa/stable/2025-09-30
+qa/stable/2025-09-29
+qa/stable/2025-09-18
+```
+
+To view a snapshot
+
+```sh
+tc snapshot --show qa/stable/2025-10-02
+```
+
+To view the pipeline generated for a snapshot
+
+```sh
+tc snapshot --show qa/stable/2025-10-02 -f pipeline --target-env dev --target-sandbox stable
+```
