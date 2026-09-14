@@ -5,7 +5,12 @@ description: Tc concepts
 
 > “The purpose of abstraction is not to be vague, but to create a new semantic level in which one can be absolutely precise.” -  Edsger W. Dijkstra
 
-tc implements the Cloud Function Pattern. tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a `Cloud Functor`.
+
+The late Jim Weirich gave an excellent talk on [Lisp primitives](https://www.luisdelarosa.com/the-closing-jimnote-at-mountainwest-rubyconf/) which was enlightening to me.  Lisp, the programming language created by John McCarthy in 1958, has just seven primitives (car, cdr, cons, eq, atom, cond and lambda). All computation can be expressed using these primitives. Such an elegant idea!
+
+What if we can express the entities of a distributed computing system as a topology or graph of computation using similar primitives ?
+
+tc is a framework that implements this idea of composing cloud primitives. tc compiles a tree of entities defined in the filesystem as a topology. This composable, namespaced, sandboxed, recursive, versioned and isomorphic topology is called a `Cloud Functor`.
 A Cloud Functor has 3 core concepts: Entity Abstraction, Namespacing and Composition.
 
 **Entity Abstraction**
