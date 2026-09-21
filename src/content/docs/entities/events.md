@@ -146,4 +146,23 @@ To invoke an event with just the payload data ($.detail), do:
 tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p payload.json
 # or from s3
 tc invoke -s SANDBOX -e PROFILE -c events/MyEvent -p s3://bucket/payload.json
+
+```
+
+## Sandboxed Events
+
+To enable an eventbridge bus per sandbox, set `TC_SANDBOXED_EVENTS=1` env variable. Sandboxing buses has the advantage of isolating the eventbridge rules and events to a sandbox. This makes it simpler for consumers to set the bus to something like:
+
+```python
+  client = boto3.client('events')
+  res = client.put_events(
+    Entries=[
+      {
+        'Source': 'adHoc',
+        'EventBusName': os.environ.get('NAMESPACE') + "-" + os.environ.get('SANDBOX'),
+        'Detail': json.dumps(payload),
+        'DetailType': 'foo-event'
+      }
+    ]
+  )
 ```
