@@ -225,12 +225,12 @@ We can set custom domains in a configuration, typically in INFRA_DIR/<topology>/
       "stable": {
         "burst_limit": 120,
         "rate_limit": 90,
-	"authorizer_cache_ttl": 0
+		"authorizer_cache_ttl": 0
       },
       "dev": {
         "burst_limit": 120,
         "rate_limit": 90,
-	"authorizer_cache_ttl": 90
+		"authorizer_cache_ttl": 90
       }
     }
   }
