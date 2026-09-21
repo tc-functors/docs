@@ -211,27 +211,29 @@ We can set custom domains in a configuration, typically in INFRA_DIR/<topology>/
 
 ```json
 {
-    "domains": {
-        "default": {
-            "stable": "service.mydomain.com",
-            "dev": "dev.mydomain.com"
-        },
-        "prod": {
-            "stable": "prod.mydomain.com"
-        }
+  "domains": {
+    "default": {
+      "stable": "service.mydomain.com",
+      "dev": "dev.mydomain.com"
     },
-    "throttling": {
-        "default": {
-            "stable": {
-                "burst_limit": 120,
-                "rate_limit": 90
-            },
-            "dev": {
-                "burst_limit": 120,
-                "rate_limit": 90
-            }
-        }
+    "prod": {
+      "stable": "prod.mydomain.com"
     }
+  },
+  "throttling": {
+    "default": {
+      "stable": {
+        "burst_limit": 120,
+        "rate_limit": 90,
+	"authorizer_cache_ttl": 0
+      },
+      "dev": {
+        "burst_limit": 120,
+        "rate_limit": 90,
+	"authorizer_cache_ttl": 90
+      }
+    }
+  }
 }
 
 ```
