@@ -166,3 +166,9 @@ To enable an eventbridge bus per sandbox, set `TC_SANDBOXED_EVENTS=1` env variab
     ]
   )
 ```
+
+This also has the added advantage of routing events to arbitrary sandboxes using `tc route`
+
+```sh
+tc route --sandbox blue --env qa
+```
