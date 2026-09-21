@@ -216,6 +216,10 @@ export default defineConfig({
               link: "/workflows/remote",
             },
             {
+              label: "Develop (LLM)",
+              link: "/workflows/llm",
+            },
+            {
               label: "Tests",
               link: "/workflows/test",
             },

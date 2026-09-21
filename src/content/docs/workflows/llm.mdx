@@ -3,6 +3,8 @@ title: Development Workflow using LLM
 description: Dev workflow using LLM
 ---
 
+## Generate topology using LLM
+
 We can use Bedrock or Claude to generate a topology, instead of defining it manually.
 
 ```sh
@@ -20,6 +22,37 @@ This generates a topology.yml using default Skills/prompt that describes the pri
 ```sh
 tc scaffold --functions
 ```
+
+#### Using custom prompts
+
+We can also use custom prompts or Skills. These skills can be specific to projects, design consideration and costing.
+
+```
+cat Skills.md | tc scaffold --provider bedrock -e <profile> --llm --
+```
+
+#### Screencast
+
+[![llm image]][llm source]
+
+[llm image]: ../../../assets/scaffold-llm.gif
+[llm source]: ../../../assets/scaffold-llm.gif
+
+## Scaffold IaC
+
+To generate Terraform code:
+
+```
+tc scaffold -e dev --iac tf --out-dir tf
+```
+
+To generate CDK
+
+```
+tc scaffold -e dev --iac cdk --out-dir cdk
+```
+
+Other available iac options: boto, go, rust, aws-cli
 
 ### Using custom prompts
 
