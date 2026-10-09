@@ -217,7 +217,7 @@ We can set custom domains in a configuration, typically in INFRA_DIR/<topology>/
       "dev": "dev.mydomain.com"
     },
     "prod": {
-      "stable": "prod.mydomain.com"
+      "stable": ["prod.mydomain.com"]
     }
   },
   "throttling": {
@@ -238,6 +238,19 @@ We can set custom domains in a configuration, typically in INFRA_DIR/<topology>/
 
 ```
 
+The domains leaf value can either be a string or a list of strings.
+
+### Region-specific domain routing
+
+By default, tc does not update the domains. To override the behavior, we can set `TC_UPDATE_DNS=1` env var when creating or updating the topology.
+
+To explicitly route a domain to a sandbox in any region, we can do:
+
+```sh
+tc route -s yoda -e dev --region us-west-2
+```
+
+DNS routing is explicit unless `TC_UPDATE_DNS` is enabled. This is a practical way to do blue-green deploys or region failovers.
 
 ### Default configuration
 
