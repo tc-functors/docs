@@ -16,7 +16,7 @@ tc scaffold --entity functions  [--model <model-id> --skills skills/functions.md
 ## Scaffold topology.yml
 
 ```sh
-tc scaffold --topology
+tc scaffold -e AWS_PROFILE --topology
 > Architecture Description: Generate a topology to compute sum of two numbers. Notify result via channel
 ```
 This generates a topology.yml, in the current directory,  with a high-level abstract structured representation of the topology without leaking any of the infrastructure-specific components in it.
