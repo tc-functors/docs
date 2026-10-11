@@ -3,48 +3,39 @@ title: Development Workflow using LLM
 description: Dev workflow using LLM
 ---
 
-## Generate topology using LLM
+We can generate the topology (topology.yml) using natural language, it's entities (functions etc) or IAC using LLMs.
 
-We can use Bedrock or Claude to generate a topology, instead of defining it manually.
+Usage:
+```sh
+
+tc scaffold --topology [--model <model-id> --skills skills/topology.md]
+tc scaffold --iac tf|boto|rust|aws-cli [--model <model-id> --skills skills/iac.md]
+tc scaffold --entity functions  [--model <model-id> --skills skills/functions.md]
+```
+
+## Generate topology
 
 ```sh
-tc scaffold --provider bedrock -e <profile> --llm default
+tc scaffold --topology
 > Architecture Description: Generate a topology to compute sum of two numbers. Notify result via channel
 ```
-To use Anthropic/Claude, set `CLAUDE_API_KEY` env variable and
 
-```sh
-tc scaffold --provider bedrock -e <profile> --llm default
-```
+This generates a topology.yml with a high-level abstract structured representation of the topology without leaking any of the infrastructure-specific components in it.
 
-This generates a topology.yml using default Skills/prompt that describes the principles and design in entity abstraction, composition, orchestration and namespacing. We can generate the function stubs for the functions defined in the topology:
+We can also specify a skills file for the topology. It defaults to ./skills/topology.md. This skill or spec could contain a more elaborate description of the topology.
 
-```sh
-tc scaffold --functions
-```
-
-#### Using custom prompts
-
-We can also use custom prompts or Skills. These skills can be specific to projects, design consideration and costing.
-
-```
-cat Skills.md | tc scaffold --provider bedrock -e <profile> --llm --
-```
-
-#### Screencast
-
-[![llm image]][llm source]
-
-[llm image]: ../../../assets/scaffold-llm.gif
-[llm source]: ../../../assets/scaffold-llm.gif
 
 ## Scaffold IaC
+
+tc's goal is not be a deployer in the future. Instead use it's compositional feature to generate IAC that can be audited and have a lifecycle of it's own. tc does best effort to instruct LLMs to conform to the Topology spec and honor it's boundaries. In doing so, LLMs are able to generate meaningful infrastructure code that can rendered in any sandbox, account or region.
 
 To generate Terraform code:
 
 ```
-tc scaffold -e dev --iac tf --out-dir tf
+tc scaffold -e dev --iac tf --out-dir tf [--skills skills/iac.md]
 ```
+
+We can override the skills required to generate IAC using the ./skills/iac.md file.
 
 To generate CDK
 
@@ -54,13 +45,14 @@ tc scaffold -e dev --iac cdk --out-dir cdk
 
 Other available iac options: boto, go, rust, aws-cli
 
-### Using custom prompts
 
-We can also use custom prompts or Skills. These skills can be specific to projects, design consideration and costing.
+## Scaffold entities
 
+```sh
+tc scaffold --entity functions
 ```
-cat Skills.md | tc scaffold --provider bedrock -e <profile> --llm --
-```
+
+This scaffolds the function directories and function specs
 
 ### Screencast
 
