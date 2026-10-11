@@ -26,7 +26,7 @@ We can also specify a skills file for the topology. It defaults to ./skills/topo
 
 ## Scaffold IaC
 
-tc's goal is not be a deployer in the future. Instead use it's compositional feature to generate IAC that can be audited and have a lifecycle of it's own. tc does best effort to instruct LLMs to conform to the Topology spec and honor it's boundaries. In doing so, LLMs are able to generate meaningful infrastructure code that can rendered in any sandbox, account or region.
+One of tc's goals is to delegate deployments to IAC-based tools. We can use tc's canonical topology specification, it's compositional and entity abstractions to generate IAC that can be audited and have a lifecycle of it's own. tc does best effort to instruct LLMs to conform to the Topology spec and honor it's boundaries. In doing so, LLMs are able to generate meaningful infrastructure code that can rendered in any sandbox, account or region. This facilitates agents and humans to collaborate on structured representation of the system - the Topology spec. This spec could drive deployments, orchestration (transducers) and sophisticated CI workflows.
 
 To generate Terraform code:
 
