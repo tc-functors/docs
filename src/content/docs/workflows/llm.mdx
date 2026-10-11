@@ -34,6 +34,23 @@ To generate Terraform code:
 tc scaffold -e dev --iac tf --out-dir tf [--skills skills/iac.md]
 ```
 
+Example:
+```
+tc scaffold -e dev --iac tf
+Using bedrock model us.anthropic.claude-sonnet-4-5-20250929-v1:0
+
+Writing file iac/README.md
+Writing file iac/main.tf
+Writing file iac/terraform.tfvars.example
+Writing file iac/providers.tf
+Writing file iac/outputs.tf
+Writing file iac/iam.tf
+Writing file iac/lambda.tf
+Writing file iac/apigateway.tf
+Writing file iac/eventbridge.tf
+Writing file iac/variables.tf
+```
+
 We can override the skills required to generate IAC using the ./skills/iac.md file.
 
 To generate CDK
