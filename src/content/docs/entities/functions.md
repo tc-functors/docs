@@ -436,14 +436,17 @@ tc build --kind library --name foo --publish -e <env>
 
 ### Filesystems
 
-We can mount a filesystem by specifying a runtime attribute `mount_fs`:
+We can mount a S3 filesystem by specifying the infrastructure runtime configuration for the function. For example:
+
+```json
+
+```
 
 ```yaml
 name: fn-with-fs
 runtime:
   lang: python3.11
   package_type: image
-  mount_fs: true
   handler: handler.handler
 ```
 

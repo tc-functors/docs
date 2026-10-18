@@ -3,7 +3,64 @@ title: Environment Variables
 description: Reference - Environment variables
 ---
 
-`tc` uses special environment variables as feature bits and config overrides. The following is the list of TC environment variables:
+`tc` uses special environment variables as feature bits and config overrides.
+
+Environment variables can be region-specific or topology-specific.
+
+By default, we can specify the env vars in `{root}/infrastructure/tc/env-default` where root is git root.
+
+```sh
+TC_AUGMENT_VARS=1
+TC_BUILD_CACHE_CLEAN=1
+TC_PRUNE_EVENT_RULES=1
+TC_SFN_DEBUG=1
+TC_SFN_TRACING=1
+TC_USE_CODEARTIFACT=1
+TC_USE_SHARED_CONTEXT=1
+```
+
+We can override it in region-specific files:
+For example: `{root}/infrastructure/tc/env-us-west-2`:
+
+```sh
+TC_USE_GLOBAL_ROLES=1
+TC_USE_ASSET_STORE=1
+TC_ASSET_BUCKET=tc-assets-xxx-us-west-2-an
+```
+
+and in `{root}/infrastructure/tc/env-us-east-2`:
+
+```
+TC_VERSION_IMAGES=1
+TC_ASSET_BUCKET=tc-assets-xxx-us-east-2-an
+```
+
+We can inspect the env variables using the `tc config` command:
+
+```sh
+tc config --env --region us-west-2
+TC_AUGMENT_VARS=1
+TC_BUILD_CACHE_CLEAN=1
+TC_PRUNE_EVENT_RULES=1
+TC_SFN_DEBUG=1
+TC_SFN_TRACING=1
+TC_USE_CODEARTIFACT=1
+TC_USE_SHARED_CONTEXT=1
+TC_USE_GLOBAL_ROLES=1
+TC_USE_ASSET_STORE=1
+TC_ASSET_BUCKET=tc-assets-xxx-us-west-2-an
+```
+
+We can also override it at the topology level. For example in `{root}/infrastructure/tc/<topology>/.env`:
+
+```
+TC_ALLOW_STABLE=1
+TC_TRACE=1
+```
+
+## List of variables
+
+The following is the list of TC environment variables, scoped by functionality.
 
 ## General overrides
 

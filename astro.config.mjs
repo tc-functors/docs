@@ -237,6 +237,10 @@ export default defineConfig({
               link: "/workflows/changes",
             },
             {
+              label: "Canaries",
+              link: "/workflows/canaries",
+            },
+            {
               label: "Audit",
               link: "/workflows/audit",
             }
