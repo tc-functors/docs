@@ -7,17 +7,20 @@ Download the executable for your OS
 
 | GNU/Linux x86                                                                   | MacOSX M1/M2                                                       |
 |---------------------------------------------------------------------------------|--------------------------------------------------------------------|
-| [0.9.165](https://github.com/tc-functors/tc/releases/download/0.9.165/tc-x86_64-linux) | [0.9.165](https://github.com/tc-functors/tc/releases/download/0.9.165/tc-aarch64-macos)
+| [0.9.191](https://github.com/tc-functors/tc/releases/download/0.9.191/tc-x86_64-linux) | [0.9.191](https://github.com/tc-functors/tc/releases/download/0.9.191/tc-aarch64-macos)
 
 
-:::note
+```
+mkdir ~/bin/tc
+mv ~/Downloads/tc ~/bin/tc
+chmod +x ~/bin/tc
+export PATH=$PATH:$HOME/bin
+tc version
+```
+Add `export PATH=$PATH:$HOME/bin` to your ~/.bashrc or ~/.zshrc
 
 For Mac Users:
-
-sudo mv ~/Downloads/tc /usr/local/bin/tc
-
-sudo chmod +x /usr/local/bin/tc
-
+:::note
 The first time you run the downloaded executable you will get a popup that says it may be "malicious software"
 
 Do the following:
@@ -56,7 +59,7 @@ Install Cargo/Rust https://www.rust-lang.org/tools/install
 git clone https://github.com/tc-functors/tc.git
 cd tc
 cargo build --release
-sudo mv target/release/tc /usr/local/bin/tc
+mv target/release/tc ~/bin/tc
 ```
 
 tc is primarily a CLI app.
