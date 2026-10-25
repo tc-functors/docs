@@ -72,7 +72,7 @@ functions:
 
 ### Thunk
 
-Thunks are organized by sub-directories with a single file definition and no external dependencies. They can still have custom function.yml definitions but don't require bloated project layouts that are unnecessary in lambdas. Thunks can have custom IAM permissions in infra dir (note the infra dir can be either ./infra or {GIT_ROOT}/infrastructure/tc/<topology>)
+Thunks are organized by sub-directories with a single file definition and no external dependencies. They can optionally have custom function.yml definitions but don't require bloated project layouts that are unnecessary in lambdas. Thunks can have custom IAM permissions in infra dir (note the infra dir can be either ./infra or {GIT_ROOT}/infrastructure/tc/<topology>)
 
 ```sh
 .
@@ -95,7 +95,7 @@ Thunks are organized by sub-directories with a single file definition and no ext
 
 ### Staid
 
-Staid functions have language-specific project/function layouts and/or additional build instructions in function.yml. Staid functions generally tend to be heaver. Staids potentially can also shared functions that complicate the build process.
+Staid functions have language-specific project/function layouts and/or additional build instructions in function.yml. Staid functions generally tend to be heaver. Staids potentially can also have shared functions that complicate the build process.
 
 ```
 .
