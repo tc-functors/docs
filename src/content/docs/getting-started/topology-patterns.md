@@ -1,6 +1,6 @@
 ---
-title: Topology Layout
-description: Topology Layout
+title: Topology Patterns
+description: Topology Patterns
 ---
 
 There are 4 kinds of topology layouts, mostly based on how the functions are structured.
