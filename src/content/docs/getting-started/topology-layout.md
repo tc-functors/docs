@@ -8,7 +8,7 @@ There are 4 kinds of topology layouts, mostly based on how the functions are str
 - **nano** - A self-contained topology definition of tiny functions and entities in a single file
 - **flat** - A flat directory of single-file handlers with no dependencies or assets
 - **thunk** - A directory tree of functions with no dependencies or assets
-- **staid** - A directory tree of functions with or without dependencies, configurations and heavier artifacts.
+- **staid** - A directory tree of functions with dependencies, configurations and heavier artifacts.
 
 Let's look at these in detail.
 
