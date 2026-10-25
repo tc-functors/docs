@@ -47,7 +47,7 @@ functions:
 
 ### Flat Topology
 
-Flat functions are similar to nano functions except the code reside in separate handler files. This is useful if the handlers are reasonably larger in size but still fit in a single file.
+Flat functions are similar to nano functions except the code reside in separate handler files. This is useful if the handlers are reasonably large in size but still fit in a single file.
 
 Layout
 ```sh
