@@ -1,9 +1,32 @@
 ---
-title: Topology Patterns
-description: Topology Patterns
+title: Topology Layout
+description: Topology Layout
 ---
 
-There are 4 kinds of topology layouts, mostly based on how the functions are structured.
+Topologies can be nested and can be created/deployed recursively
+
+For example, a, b, b1 and c are nested topologies. We can `tc create` a sandbox at any level. We can have a depth of 6 topologies by default.
+
+```
+.
+└── a
+    ├── b
+    │   ├── b1
+    │   │   └── topology.yml
+    │   └── topology.yml
+    ├── c
+    │   └── topology.yml
+    └── topology.yml
+
+```
+
+Each topology contains it's own set of entities (functions, events, routes etc). Let's see the different kinds of a single topology layout.
+
+
+## Single Topology Layout
+
+
+There are 4 kinds of a single topology layout, mostly based on how the functions are structured.
 
 - **nano** - A self-contained topology definition of tiny functions and entities in a single file
 - **flat** - A flat directory of single-file handlers with no dependencies or assets
