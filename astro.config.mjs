@@ -70,8 +70,8 @@ export default defineConfig({
               link: "/getting-started/hello-world",
             },
             {
-              label: "Scaffolding",
-              link: "/getting-started/scaffolding",
+              label: "Topology Layout",
+              link: "/getting-started/topology-layout",
             }
 	]
 
